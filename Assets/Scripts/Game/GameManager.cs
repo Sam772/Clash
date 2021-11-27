@@ -134,6 +134,7 @@ public class GameManager : NetworkBehaviour {
         }
         return teamToReturn;
     }
+    
     public void resetUnitsMovements(GameObject teamToReset) {
         foreach (Transform unit in teamToReset.transform) {
             unit.GetComponent<Unit>().MoveAgain();
@@ -234,7 +235,7 @@ public class GameManager : NetworkBehaviour {
                 cursorX = selectedXTile;
                 cursorY = selectedYTile;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                tileBeingDisplayed = hit.transform.parent.gameObject.GetComponent<Unit>().tileBeingOccupied;
+                //tileBeingDisplayed = hit.transform.parent.gameObject.GetComponent<Unit>().tileBeingOccupied;
             }
             else if (tileBeingDisplayed != hit.transform.gameObject) {
                 if (hit.transform.parent.gameObject.GetComponent<Unit>().movementQueue.Count == 0) {
@@ -247,7 +248,7 @@ public class GameManager : NetworkBehaviour {
                     cursorX = selectedXTile;
                     cursorY = selectedYTile;
                     TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                    tileBeingDisplayed = hit.transform.parent.GetComponent<Unit>().tileBeingOccupied; 
+                    //tileBeingDisplayed = hit.transform.parent.GetComponent<Unit>().tileBeingOccupied; 
                 }
             }
         }

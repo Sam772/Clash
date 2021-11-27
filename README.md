@@ -7,5 +7,5 @@ Unity Version:
 
 Packages used:
 -----------------------------------------------------------------
-Mirror
+Mirror 53.0
 ParrelSync

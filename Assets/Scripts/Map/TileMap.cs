@@ -90,17 +90,31 @@ public class TileMap : NetworkBehaviour {
     }
 
     private void Update() {
-        MouseClickToSelectUnit();
+        // moves from here but crashes for having no tileclick
+        //MouseClickToSelectUnit();
         if (Input.GetMouseButtonDown(0)) {
             if (selectedUnit == null) {
+                GeneratePathFindingGraph();
+                SetIfTileIsOccupied();
                 MouseClickToSelectUnitV2();
+                //moves from here but crashes for having no tileclick
+                // GameObject tempSelectedUnit = GMS.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile;
+                // DisableHighlightUnitRange();
+                // selectedUnit = tempSelectedUnit;
+                // selectedUnit.GetComponent<Unit>().map = this;
+                // selectedUnit.GetComponent<Unit>().SetMovementState(1);
+                // unitSelected = true;
+                // HighlightUnitRange();
+                MouseClickToSelectUnit();
             }
-            else if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1) && selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {
+            else if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1)
+                    && selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {
+
                 if (SelectTileToMoveTo()) {
                     Debug.Log("movement path has been located");
                     unitSelectedPreviousX = selectedUnit.GetComponent<Unit>().x;
                     unitSelectedPreviousY = selectedUnit.GetComponent<Unit>().y;
-                    previousOccupiedTile = selectedUnit.GetComponent<Unit>().tileBeingOccupied;
+                    //previousOccupiedTile = selectedUnit.GetComponent<Unit>().tileBeingOccupied;
                     selectedUnit.GetComponent<Unit>().SetWalkingAnimation();
                     MoveUnit();
                     StartCoroutine(MoveUnitAndFinalise());
@@ -212,7 +226,7 @@ public class TileMap : NetworkBehaviour {
             foreach (Transform unitOnTeam in team) { 
                 int unitX = unitOnTeam.GetComponent<Unit>().x;
                 int unitY = unitOnTeam.GetComponent<Unit>().y;
-                unitOnTeam.GetComponent<Unit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
+                //unitOnTeam.GetComponent<Unit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
                 tilesOnMap[unitX, unitY].GetComponent<TileClick>().unitOnTile = unitOnTeam.gameObject;
             }
         }
@@ -437,7 +451,7 @@ public class TileMap : NetworkBehaviour {
                 tilesOnMap[unitSelectedPreviousX, unitSelectedPreviousY].GetComponent<TileClick>().unitOnTile = selectedUnit;
                 selectedUnit.GetComponent<Unit>().x = unitSelectedPreviousX;
                 selectedUnit.GetComponent<Unit>().y = unitSelectedPreviousY;
-                selectedUnit.GetComponent<Unit>().tileBeingOccupied = previousOccupiedTile;
+                //selectedUnit.GetComponent<Unit>().tileBeingOccupied = previousOccupiedTile;
                 selectedUnit.transform.position = TileCoordToWorldCoord(unitSelectedPreviousX, unitSelectedPreviousY);
                 selectedUnit.GetComponent<Unit>().SetMovementState(0);
                 selectedUnit = null;

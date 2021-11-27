@@ -15,9 +15,7 @@ public class NewNetworkManager : NetworkManager {
         [SerializeField] private NewNetworkRoomPlayer roomPlayerPrefab;
         [SerializeField] private NewNetworkGamePlayer gamePlayerPrefab;
 
-        [SerializeField] private Unit prefab;
-
-        [SerializeField] private GameObject knightPrefab;
+        [SerializeField] private Unit knightPrefab;
 
         //[SerializeField] private PlayerManager prefab;
         //[SerializeField] private TileMap boardPrefab;
@@ -184,9 +182,21 @@ public class NewNetworkManager : NetworkManager {
     private void SetupGame() {
         for (int i = GamePlayers.Count - 1; i >= 0; i--) {
             var conn = GamePlayers[i].connectionToClient;
-
-            GameObject knight = Instantiate(knightPrefab);
-            NetworkServer.Spawn(knight.gameObject, conn);
+            // If Host
+            if (i == 1) {
+                int x = 3;
+                for (int j = 0; j < 3; j++) {
+                    Unit knight = Instantiate(knightPrefab, new Vector3(x++, 0.75f, 0), Quaternion.identity);
+                    NetworkServer.Spawn(knight.gameObject, conn);
+                }
+                // If Client
+                } else if (i == 0){
+                    int x = 3;
+                    for (int j = 0; j < 3; j++) {
+                        Unit knight = Instantiate(knightPrefab, new Vector3(x++, 0.75f, 9), Quaternion.identity);
+                        NetworkServer.Spawn(knight.gameObject, conn);
+                    }
+            }
         }
 
             var gameData = Instantiate(gameDataPrefab);

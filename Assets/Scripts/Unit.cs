@@ -109,6 +109,10 @@ public class Unit : NetworkBehaviour {
         else {
             StartCoroutine(MoveOverSeconds(transform.gameObject, path[path.Count - 1]));
             Debug.Log("moving unit");
+            Debug.Log(connectionToClient);
+            // client connection to server is null?
+            Debug.Log(connectionToServer);
+            Debug.Log(hasAuthority);
         }
      }
 
@@ -218,8 +222,8 @@ public class Unit : NetworkBehaviour {
 
         x = endNode.x;
         y = endNode.y;
-        tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
-        tileBeingOccupied = map.tilesOnMap[x, y];
+        //tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
+        //tileBeingOccupied = map.tilesOnMap[x, y];
         movementQueue.Dequeue();
     }
 

@@ -146,13 +146,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: KnightPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -510,13 +514,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: KnightPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -524,7 +532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1146,13 +1154,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: KnightPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1160,7 +1172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1209,6 +1221,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
   m_PrefabInstance: {fileID: 615207777}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &621133553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 621133555}
+  - component: {fileID: 621133554}
+  m_Layer: 0
+  m_Name: PosOne
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &621133554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621133553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f84591ce72545258ea98cb7518d8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &621133555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621133553}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2, y: 0.75, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &673919907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,7 +2200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392410202167415416, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6392410202167415416, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2186,6 +2241,10 @@ PrefabInstance:
     - target: {fileID: 6392410202167415422, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: m_Name
       value: CaptainPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6392410202167415422, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6392410202167415423, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: healthBar
@@ -2362,6 +2421,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1982857145}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &987131649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 987131651}
+  - component: {fileID: 987131650}
+  m_Layer: 0
+  m_Name: PosTwo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &987131650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987131649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f84591ce72545258ea98cb7518d8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &987131651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987131649}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3, y: 0.75, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1042821800
 GameObject:
@@ -3418,13 +3520,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: KnightPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3572,49 +3678,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560074824}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1603606288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1603606290}
-  - component: {fileID: 1603606289}
-  m_Layer: 0
-  m_Name: Spawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1603606289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603606288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f84591ce72545258ea98cb7518d8b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1603606290
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603606288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 0, z: 3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1699762825
 GameObject:
   m_ObjectHideFlags: 0
@@ -3674,7 +3737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6392410202167415416, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6392410202167415416, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3715,6 +3778,10 @@ PrefabInstance:
     - target: {fileID: 6392410202167415422, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: m_Name
       value: CaptainPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6392410202167415422, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6392410202167415423, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
       propertyPath: teamNum
@@ -4566,13 +4633,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: KnightPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4789,13 +4860,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: KnightPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
       propertyPath: m_LocalPosition.y

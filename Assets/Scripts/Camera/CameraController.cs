@@ -24,24 +24,24 @@ public class CameraController : MonoBehaviour {
     void HandleMovementInput() {
 
         // || Input.GetKey(KeyCode.UpArrow
-        if (Input.GetKey(KeyCode.T)) {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
             newPosition += (transform.TransformDirection(0, 1, 0) * movementSpeed);
         }
-        if (Input.GetKey(KeyCode.G)) {
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
             newPosition += (transform.TransformDirection(0, 1, 0) * -movementSpeed);
         }
-        if (Input.GetKey(KeyCode.H)) {
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             newPosition += (transform.right * movementSpeed);
         }
-        if (Input.GetKey(KeyCode.F)) {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
             newPosition += (transform.right * -movementSpeed);
         }
 
         // for zooming
-        if (Input.GetKey(KeyCode.R)) {
+        if (Input.GetKey(KeyCode.Q)) {
             newZoom += zoomAmount;
         }
-        if (Input.GetKey(KeyCode.Y)) {
+        if (Input.GetKey(KeyCode.E)) {
             newZoom -= zoomAmount;
         }
 
