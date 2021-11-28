@@ -50,6 +50,8 @@ public class TileMap : NetworkBehaviour {
     public bool unitSelected = false;
     public int unitSelectedPreviousX;
     public int unitSelectedPreviousY;
+
+    //[SyncVar]
     public GameObject previousOccupiedTile;
 
     [Header("Highlight Materials")]
@@ -114,7 +116,7 @@ public class TileMap : NetworkBehaviour {
                     Debug.Log("movement path has been located");
                     unitSelectedPreviousX = selectedUnit.GetComponent<Unit>().x;
                     unitSelectedPreviousY = selectedUnit.GetComponent<Unit>().y;
-                    //previousOccupiedTile = selectedUnit.GetComponent<Unit>().tileBeingOccupied;
+                    previousOccupiedTile = selectedUnit.GetComponent<Unit>().tileBeingOccupied;
                     selectedUnit.GetComponent<Unit>().SetWalkingAnimation();
                     MoveUnit();
                     StartCoroutine(MoveUnitAndFinalise());
@@ -221,29 +223,27 @@ public class TileMap : NetworkBehaviour {
         }
     }
 
+    //[ClientRpc]
     public void SetIfTileIsOccupied() {
         foreach (Transform team in unitsOnBoard.transform) {
             foreach (Transform unitOnTeam in team) { 
                 int unitX = unitOnTeam.GetComponent<Unit>().x;
                 int unitY = unitOnTeam.GetComponent<Unit>().y;
-                //unitOnTeam.GetComponent<Unit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
+                unitOnTeam.GetComponent<Unit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
                 tilesOnMap[unitX, unitY].GetComponent<TileClick>().unitOnTile = unitOnTeam.gameObject;
             }
         }
     }
 
-    //[Command(requiresAuthority=false)]
     public void MoveUnit() {
-        // seems to be stopping at this log and doesnt progress further
-        Debug.Log("before if statement");
         if (selectedUnit != null) {
-            Debug.Log("moving unit");
             selectedUnit.GetComponent<Unit>().MoveNextTile();
         }
     }
     public Vector3 TileCoordToWorldCoord(int x, int y) {
         return new Vector3(x, 0.75f, y);
     }
+    
     public void GeneratePathTo(int x, int y) {
         if (selectedUnit.GetComponent<Unit>().x == x && selectedUnit.GetComponent<Unit>().y == y) {
             Debug.Log("clicked the same tile that the unit is standing on");
@@ -451,7 +451,7 @@ public class TileMap : NetworkBehaviour {
                 tilesOnMap[unitSelectedPreviousX, unitSelectedPreviousY].GetComponent<TileClick>().unitOnTile = selectedUnit;
                 selectedUnit.GetComponent<Unit>().x = unitSelectedPreviousX;
                 selectedUnit.GetComponent<Unit>().y = unitSelectedPreviousY;
-                //selectedUnit.GetComponent<Unit>().tileBeingOccupied = previousOccupiedTile;
+                selectedUnit.GetComponent<Unit>().tileBeingOccupied = previousOccupiedTile;
                 selectedUnit.transform.position = TileCoordToWorldCoord(unitSelectedPreviousX, unitSelectedPreviousY);
                 selectedUnit.GetComponent<Unit>().SetMovementState(0);
                 selectedUnit = null;

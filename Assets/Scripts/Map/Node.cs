@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node{
+public class Node {
     // we need this for figuring out movement
     public List<Node> neighbours;
     public int x;

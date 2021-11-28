@@ -6,7 +6,10 @@ using Mirror;
 using TMPro;
 public class Unit : NetworkBehaviour {
     public int teamNum;
+    // syncs the tiles to the other client
+    [SyncVar]
     public int x;
+    [SyncVar]
     public int y;
     public bool coroutineRunning;
     public Queue<int> movementQueue;
@@ -14,40 +17,30 @@ public class Unit : NetworkBehaviour {
     public float visualMovementSpeed = .15f;
     public Material unitWaitMaterial;
     public Material unitMaterial;
-
     public Animator animator;
-
     public GameObject tileBeingOccupied;
-
     public GameObject damagedParticle;
-
     public string unitName;
     public int moveSpeed;    
     public int attackRange;
     public int attackDamage;
     public int maxHealthPoints;
     public int currentHealthPoints;
-
     public Sprite unitSprite;
-
     [Header("UI Elements")]
     public Canvas healthBarCanvas;
     public TMP_Text hitPointsText;
     public Image healthBar;
-
     public Canvas damagePopupCanvas;
     public TMP_Text damagePopupText;
     public Image damageBackdrop;
-
     public TileMap map;
     public Transform startPoint;
     public Transform endPoint;
     public float moveSpeedTime = 1f;
-
     public GameObject holder2D;
     private float journeyLength;
     public bool unitInMovement;
-
     //--------------------------------------
 
     // protected override void OnInit() {
@@ -59,9 +52,6 @@ public class Unit : NetworkBehaviour {
     }
 
     void Update() {
-        // not recognising local player
-        // sending this for every unit on the map
-        // make debug logs for checks
         if (Input.GetKeyDown(KeyCode.X)) {
             Debug.Log("Going to Server");
             TestCommand();
@@ -100,23 +90,33 @@ public class Unit : NetworkBehaviour {
         holder2D.transform.forward = Camera.main.transform.forward;
     }
 
-    //[Command(requiresAuthority=false)]
+
+    [Command(requiresAuthority = false)]
+    // not needed on player object apparently
     public void MoveNextTile() {
+        //  && path[path.Count - 1] == null
+        if (path == null) {
+            Debug.Log("no path");
+            Debug.Log(path[path.Count - 1]);
+            return;
+        }
+        Debug.Log(path[path.Count - 1]);
+        Debug.Log(path);
+        Debug.Log(path.Count);
         if (path.Count == 0) {
-            Debug.Log("can't move");
             return;
         }
         else {
             StartCoroutine(MoveOverSeconds(transform.gameObject, path[path.Count - 1]));
-            Debug.Log("moving unit");
-            Debug.Log(connectionToClient);
-            // client connection to server is null?
-            Debug.Log(connectionToServer);
-            Debug.Log(hasAuthority);
         }
-     }
+    }
 
-    [ClientRpc]
+    [Command(requiresAuthority=false)]
+    public void CmdUpdateTileMap(int newX, int newY) {
+        newX = x;
+        newY = y;
+    }
+
     public void MoveAgain() {
         path = null;
         SetMovementState(0);
@@ -196,17 +196,17 @@ public class Unit : NetworkBehaviour {
 
     public IEnumerator FadeOut() {
         combatQueue.Enqueue(1);
-        Renderer rend = GetComponentInChildren<SpriteRenderer>();
+        //Renderer rend = GetComponentInChildren<SpriteRenderer>();
         for (float f = 1f; f >= .05; f -= 0.01f) {
-            Color c = rend.material.color;
-            c.a = f;
-            rend.material.color = c;
+            // Color c = rend.material.color;
+            // c.a = f;
+            // rend.material.color = c;
             yield return new WaitForEndOfFrame();
         }
         combatQueue.Dequeue();
     }
 
-    public IEnumerator MoveOverSeconds(GameObject objectToMove,Node endNode) {
+    public IEnumerator MoveOverSeconds(GameObject objectToMove, Node endNode) {
         movementQueue.Enqueue(1);
         path.RemoveAt(0);
         while (path.Count != 0) {
@@ -220,11 +220,13 @@ public class Unit : NetworkBehaviour {
         visualMovementSpeed = 0.15f;
         transform.position = map.TileCoordToWorldCoord(endNode.x, endNode.y);
 
+        // end points for movement
         x = endNode.x;
         y = endNode.y;
         //tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
         //tileBeingOccupied = map.tilesOnMap[x, y];
         movementQueue.Dequeue();
+        //CmdUpdateTileMap(x, y);
     }
 
     public IEnumerator DisplayDamageEnum(int damageTaken) {

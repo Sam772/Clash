@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1014571496863255905}
   - component: {fileID: 7058292127683340277}
   - component: {fileID: 171952797636562240}
+  - component: {fileID: 6620895088897195140}
   - component: {fileID: 5533830943197848655}
-  - component: {fileID: 8886983720011010482}
   m_Layer: 0
   m_Name: TileGrass
   m_TagString: Tile
@@ -97,23 +97,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5533830943197848655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3612488483178945816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6771eab822605c2458d92f50c35fa5f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  unitOnTile: {fileID: 0}
-  map: {fileID: 0}
---- !u!114 &8886983720011010482
+--- !u!114 &6620895088897195140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,3 +114,19 @@ MonoBehaviour:
   visible: 0
   m_AssetId: e7cf8c5860eb4f448af63eb8e134cf8b
   hasSpawned: 0
+--- !u!114 &5533830943197848655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3612488483178945816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6771eab822605c2458d92f50c35fa5f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileX: 0
+  tileY: 0
+  unitOnTile: {fileID: 0}
+  map: {fileID: 0}

@@ -11,8 +11,8 @@ public class GameManager : NetworkBehaviour {
 
     public int PlayerID => gamePlayer.ID;
 
-        private NewNetworkManager room;
-        private NewNetworkGamePlayer gamePlayer;
+    private NewNetworkManager room;
+    private NewNetworkGamePlayer gamePlayer;
 
     //------------------------------------------------------
 
@@ -39,6 +39,7 @@ public class GameManager : NetworkBehaviour {
     public GameObject unitsOnBoard;
     public GameObject team1;
     public GameObject team2;
+    public Unit teamCheck;
     public GameObject unitBeingDisplayed;
     public GameObject tileBeingDisplayed;
     public bool displayingUnitInfo;
@@ -149,12 +150,11 @@ public class GameManager : NetworkBehaviour {
                 playerPhaseText.SetText("Player 2 Phase");
                 Debug.Log("Banner slides left");
             }
-            else{
+            else {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
                 playerPhaseText.SetText("Player 1 Phase");
-                Debug.Log("Bannes slides right");
+                Debug.Log("Banner slides right");
             }
-        Debug.Log($"Old team {oldV} New team {newV}");
     }
 
     [Command(requiresAuthority = false)]
@@ -187,6 +187,7 @@ public class GameManager : NetworkBehaviour {
         for(int i = 0; i < numberOfTeams; i++) {
             GameObject team = returnTeam(i);
             if(team == returnTeam(currentTeam)) {
+                // if (teamCheck.teamNum == 1) { change colour of team one units}
                 foreach (Transform unit in team.transform) {
                     unit.GetComponent<Unit>().ChangeHealthBarColour(0);
                 }
@@ -235,7 +236,7 @@ public class GameManager : NetworkBehaviour {
                 cursorX = selectedXTile;
                 cursorY = selectedYTile;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                //tileBeingDisplayed = hit.transform.parent.gameObject.GetComponent<Unit>().tileBeingOccupied;
+                tileBeingDisplayed = hit.transform.parent.gameObject.GetComponent<Unit>().tileBeingOccupied;
             }
             else if (tileBeingDisplayed != hit.transform.gameObject) {
                 if (hit.transform.parent.gameObject.GetComponent<Unit>().movementQueue.Count == 0) {
@@ -248,7 +249,7 @@ public class GameManager : NetworkBehaviour {
                     cursorX = selectedXTile;
                     cursorY = selectedYTile;
                     TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                    //tileBeingDisplayed = hit.transform.parent.GetComponent<Unit>().tileBeingOccupied; 
+                    tileBeingDisplayed = hit.transform.parent.GetComponent<Unit>().tileBeingOccupied; 
                 }
             }
         }

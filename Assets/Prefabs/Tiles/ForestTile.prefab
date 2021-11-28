@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1826792802245875720}
   - component: {fileID: 2488590811911620976}
   - component: {fileID: 5677415344414761381}
-  - component: {fileID: 1855322777956419752}
   - component: {fileID: 1216863288820096071}
+  - component: {fileID: 1855322777956419752}
   m_Layer: 0
   m_Name: ForestTile
   m_TagString: Tile
@@ -97,22 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1855322777956419752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9042678163635310917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6771eab822605c2458d92f50c35fa5f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileX: 0
-  tileY: 0
-  unitOnTile: {fileID: 0}
-  map: {fileID: 0}
 --- !u!114 &1216863288820096071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,3 +114,19 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 5f1c550107a62de469da22266d667081
   hasSpawned: 0
+--- !u!114 &1855322777956419752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9042678163635310917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6771eab822605c2458d92f50c35fa5f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileX: 0
+  tileY: 0
+  unitOnTile: {fileID: 0}
+  map: {fileID: 0}
