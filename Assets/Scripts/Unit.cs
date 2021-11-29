@@ -7,11 +7,10 @@ using TMPro;
 public class Unit : NetworkBehaviour {
     public int teamNum;
     // syncs the tiles to the other client
-    [SyncVar]
+    [SyncVar(hook=nameof(OnXChange))]
     public int x;
-    [SyncVar]
+    [SyncVar(hook=nameof(OnYChange))]
     public int y;
-    public bool coroutineRunning;
     public Queue<int> movementQueue;
     public Queue<int> combatQueue;
     public float visualMovementSpeed = .15f;
@@ -19,7 +18,6 @@ public class Unit : NetworkBehaviour {
     public Material unitMaterial;
     public Animator animator;
     public GameObject tileBeingOccupied;
-    public GameObject damagedParticle;
     public string unitName;
     public int moveSpeed;    
     public int attackRange;
@@ -35,12 +33,7 @@ public class Unit : NetworkBehaviour {
     public TMP_Text damagePopupText;
     public Image damageBackdrop;
     public TileMap map;
-    public Transform startPoint;
-    public Transform endPoint;
-    public float moveSpeedTime = 1f;
     public GameObject holder2D;
-    private float journeyLength;
-    public bool unitInMovement;
     //--------------------------------------
 
     // protected override void OnInit() {
@@ -72,7 +65,6 @@ public class Unit : NetworkBehaviour {
     }
     public MovementStates unitMoveState;
     public List<Node> path = null;
-    public List<Node> pathForMovement = null;
     public bool completedMovement = false;
     private void Awake() {
         animator = holder2D.GetComponent<Animator>();
@@ -90,14 +82,21 @@ public class Unit : NetworkBehaviour {
         holder2D.transform.forward = Camera.main.transform.forward;
     }
 
+    public void OnXChange(int oldX, int newX) {
+        //MoveNextTile();
+        //Debug.Log("test1");
+    }
 
-    [Command(requiresAuthority = false)]
-    // not needed on player object apparently
+    public void OnYChange(int oldY, int newY) {
+        //Debug.Log("test2");
+        //MoveNextTile();
+    }
+
+    //[Command(requiresAuthority=false)]
     public void MoveNextTile() {
-        //  && path[path.Count - 1] == null
         if (path == null) {
             Debug.Log("no path");
-            Debug.Log(path[path.Count - 1]);
+            Debug.Log(path);
             return;
         }
         Debug.Log(path[path.Count - 1]);
@@ -113,8 +112,10 @@ public class Unit : NetworkBehaviour {
 
     [Command(requiresAuthority=false)]
     public void CmdUpdateTileMap(int newX, int newY) {
-        newX = x;
-        newY = y;
+        // set the x and y syncvar tiles to a different 
+        // variables and pass them through as a command
+        x = newX;
+        y = newY;
     }
 
     public void MoveAgain() {
@@ -223,6 +224,11 @@ public class Unit : NetworkBehaviour {
         // end points for movement
         x = endNode.x;
         y = endNode.y;
+
+        if (!isServer) {
+        CmdUpdateTileMap(x, y);
+        }
+
         //tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
         //tileBeingOccupied = map.tilesOnMap[x, y];
         movementQueue.Dequeue();

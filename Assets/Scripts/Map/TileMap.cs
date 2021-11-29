@@ -7,7 +7,6 @@ public class TileMap : NetworkBehaviour {
 
     [Header("Manager Scripts")]
     // for handling battles
-    public BattleManager BMS;
     // for handling game things
     public GameManager GMS;
     
@@ -113,11 +112,12 @@ public class TileMap : NetworkBehaviour {
                     && selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {
 
                 if (SelectTileToMoveTo()) {
-                    Debug.Log("movement path has been located");
+                    Debug.Log("move path exists");
                     unitSelectedPreviousX = selectedUnit.GetComponent<Unit>().x;
                     unitSelectedPreviousY = selectedUnit.GetComponent<Unit>().y;
                     previousOccupiedTile = selectedUnit.GetComponent<Unit>().tileBeingOccupied;
-                    selectedUnit.GetComponent<Unit>().SetWalkingAnimation();
+                    //selectedUnit.GetComponent<Unit>().SetWalkingAnimation();
+                    // from this check this is where client cannot sync
                     MoveUnit();
                     StartCoroutine(MoveUnitAndFinalise());
                 }
@@ -235,15 +235,18 @@ public class TileMap : NetworkBehaviour {
         }
     }
 
+    //[Command(requiresAuthority=false)]
     public void MoveUnit() {
         if (selectedUnit != null) {
+            Debug.Log(selectedUnit);
             selectedUnit.GetComponent<Unit>().MoveNextTile();
         }
     }
+
     public Vector3 TileCoordToWorldCoord(int x, int y) {
         return new Vector3(x, 0.75f, y);
     }
-    
+
     public void GeneratePathTo(int x, int y) {
         if (selectedUnit.GetComponent<Unit>().x == x && selectedUnit.GetComponent<Unit>().y == y) {
             Debug.Log("clicked the same tile that the unit is standing on");
@@ -393,7 +396,7 @@ public class TileMap : NetworkBehaviour {
                     DisableHighlightUnitRange();
                     Debug.Log("ITS THE SAME UNIT JUST WAIT");
                     selectedUnit.GetComponent<Unit>().Wait();
-                    selectedUnit.GetComponent<Unit>().SetWaitIdleAnimation();
+                    //selectedUnit.GetComponent<Unit>().SetWaitIdleAnimation();
                     selectedUnit.GetComponent<Unit>().SetMovementState(3);
                     DeselectUnit();
                     }
@@ -623,7 +626,7 @@ public class TileMap : NetworkBehaviour {
             yield return new WaitForEndOfFrame();
         }
         FinaliseMovementPosition();
-        selectedUnit.GetComponent<Unit>().SetSelectedAnimation();
+        //selectedUnit.GetComponent<Unit>().SetSelectedAnimation();
     }
     public IEnumerator DeselectAfterMovements(GameObject unit, GameObject enemy) {
         selectedUnit.GetComponent<Unit>().SetMovementState(3);

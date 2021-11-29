@@ -25,7 +25,6 @@ public class GameManager : NetworkBehaviour {
     public TMP_Text UIunitMoveSpeed;
     public TMP_Text UIunitName;
     public UnityEngine.UI.Image UIunitSprite;
-
     public Canvas UIunitCanvas;
     public GameObject playerPhaseBlock;
     private Animator playerPhaseAnim;
@@ -36,7 +35,6 @@ public class GameManager : NetworkBehaviour {
 
     [SyncVar(hook = nameof(OnPlayChange))]
     public int currentTeam;
-    public GameObject unitsOnBoard;
     public GameObject team1;
     public GameObject team2;
     public Unit teamCheck;
@@ -57,7 +55,6 @@ public class GameManager : NetworkBehaviour {
     public Material UICursor;
     public int routeToX;
     public int routeToY;
-    public GameObject quadThatIsOneAwayFromUnit;
 
     public void Start() {
         currentTeam = 0;
