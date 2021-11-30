@@ -55,24 +55,7 @@ public class NewNetworkManager : NetworkManager {
                 : Instantiate(gamePlayerPrefab).gameObject;
 
             NetworkServer.AddPlayerForConnection(conn, player);
-
-            // var unit = SceneManager.GetActiveScene().path == gameScene
-            //         ? Instantiate(prefab).gameObject : Instantiate(prefab).gameObject;
-            //         NetworkServer.AddPlayerForConnection(conn, unit);
-
-        // add player at correct spawn position
-        // Transform start = numPlayers == 0 ? PositionOne : PositionTwo;
-        // GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
-        // NetworkServer.AddPlayerForConnection(conn, player);
     }
-
-    // public override void OnServerConnect(NetworkConnection conn) {
-    //     Debug.Log("Player connected to server");
-    // }
-
-    // public override void OnClientConnect(NetworkConnection conn) {
-    //     Debug.Log("Client connected");
-    // }
 
     public override void OnClientDisconnect(NetworkConnection conn)
         {
@@ -153,18 +136,6 @@ public class NewNetworkManager : NetworkManager {
 
                     var conn = RoomPlayers[i].connectionToClient;
                     NetworkServer.ReplacePlayerForConnection(conn, gamePlayer.gameObject);
-                    
-                    // Transform start = numPlayers == 0 ? PositionOne : PositionTwo;
-                    // var gamePlayer2 = Instantiate(prefab, start.position, start.rotation);
-                    // NetworkServer.ReplacePlayerForConnection(conn, gamePlayer2.gameObject);
-
-                    // Transform start = numPlayers == 0 ? PositionOne : PositionTwo;
-                    // GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
-                    // NetworkServer.AddPlayerForConnection(conn, player);
-
-                    // var unit = SceneManager.GetActiveScene().path == gameScene
-            //         ? Instantiate(prefab).gameObject : Instantiate(prefab).gameObject;
-            //         NetworkServer.AddPlayerForConnection(conn, unit);
                 }
             }
 

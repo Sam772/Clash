@@ -35,9 +35,9 @@ public class GameManager : NetworkBehaviour {
 
     [SyncVar(hook = nameof(OnPlayChange))]
     public int currentTeam;
-    public GameObject team1;
-    public GameObject team2;
-    public Unit teamCheck;
+    [SerializeField] private GameObject team1;
+    [SerializeField] private GameObject team2;
+    public GameObject unitRefresh;
     public GameObject unitBeingDisplayed;
     public GameObject tileBeingDisplayed;
     public bool displayingUnitInfo;
@@ -68,6 +68,9 @@ public class GameManager : NetworkBehaviour {
     }
 
     public void Update() {
+        if (Input.GetKeyDown(KeyCode.X)){
+            Debug.Log(unitRefresh);
+        }
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit)) {
             CursorUIUpdate();
@@ -122,6 +125,15 @@ public class GameManager : NetworkBehaviour {
     public void SetCurrentTeamUI() {
         currentTeamUI.SetText("Player " + (currentTeam+1).ToString() + " Phase");
     }
+
+    // has two gameobjects
+    // iterates through team gameobjects
+
+    // need to use gameobject of unit to check unit team
+    // set unit team to return team
+    // mapunits gameobject is irrelevant
+
+    // uses i to fit units into their teams
     public GameObject returnTeam(int i) {
         GameObject teamToReturn = null;
         if (i == 0) {
@@ -134,8 +146,31 @@ public class GameManager : NetworkBehaviour {
     }
     
     public void resetUnitsMovements(GameObject teamToReset) {
+        // this is checking the child gameobjects of the team object
         foreach (Transform unit in teamToReset.transform) {
+            //if (unit.GetComponent<Unit>().teamNum == 0)
             unit.GetComponent<Unit>().MoveAgain();
+            // unitRefresh = GameObject.FindGameObjectWithTag("Unit");
+            // for (int i=0; i < unitRefresh.length; i++)
+            // Debug.Log(unitRefresh(i));
+        }
+    }
+
+    public void TeamHealthbarColorUpdate() {
+        for(int i = 0; i < numberOfTeams; i++) {
+            GameObject team = returnTeam(i);
+            if(team == returnTeam(currentTeam)) {
+                // iterating children
+                foreach (Transform unit in team.transform) {
+                    unit.GetComponent<Unit>().ChangeHealthBarColour(0);
+                }
+            }
+            else {
+                // iterating children
+                foreach (Transform unit in team.transform) {
+                    unit.GetComponent<Unit>().ChangeHealthBarColour(1);
+                }
+            }
         }
     }
 
@@ -178,23 +213,6 @@ public class GameManager : NetworkBehaviour {
         if (currentTeam == numberOfTeams) {
             currentTeam = 0;
         } 
-    }
-
-    public void TeamHealthbarColorUpdate() {
-        for(int i = 0; i < numberOfTeams; i++) {
-            GameObject team = returnTeam(i);
-            if(team == returnTeam(currentTeam)) {
-                // if (teamCheck.teamNum == 1) { change colour of team one units}
-                foreach (Transform unit in team.transform) {
-                    unit.GetComponent<Unit>().ChangeHealthBarColour(0);
-                }
-            }
-            else {
-                foreach (Transform unit in team.transform) {
-                    unit.GetComponent<Unit>().ChangeHealthBarColour(1);
-                }
-            }
-        }
     }
 
     public void checkIfUnitsRemain(GameObject unit, GameObject enemy) {
@@ -552,14 +570,14 @@ public class GameManager : NetworkBehaviour {
         while (enemy.GetComponent<Unit>().combatQueue.Count != 0) {
             yield return new WaitForEndOfFrame();
         }
-        if (team1.transform.childCount == 0) {
-            displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
-        }
-        else if (team2.transform.childCount == 0) {
-            displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
-        }
+        // if (team1.transform.childCount == 0) {
+        //     displayWinnerUI.enabled = true;
+        //     displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
+        // }
+        // else if (team2.transform.childCount == 0) {
+        //     displayWinnerUI.enabled = true;
+        //     displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+        // }
     }
 
     public void win() {

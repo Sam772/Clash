@@ -6,20 +6,14 @@ using Mirror;
 public class TileMap : NetworkBehaviour {
 
     [Header("Manager Scripts")]
-    // for handling battles
-    // for handling game things
     public GameManager GMS;
     
     [Header("Tiles")]
-    // types of tiles
     public TileType[] tileTypes;
-    // for creating an array of tiles
     public int[,] tiles;
 
     [Header("Map Units")]
-    // the units on the map
     public GameObject unitsOnBoard;
-    // the tiles on the map
     public GameObject[,] tilesOnMap;
     public GameObject[,] quadOnMap;
     public GameObject[,] quadOnMapForUnitMovementDisplay;
@@ -27,8 +21,6 @@ public class TileMap : NetworkBehaviour {
     public GameObject mapUI;
     public GameObject mapCursorUI;
     public GameObject mapUnitMovementUI;
-
-    // for pathfinding 
     public List<Node> currentPath = null;
     public Node[,] graph;
 
@@ -50,7 +42,6 @@ public class TileMap : NetworkBehaviour {
     public int unitSelectedPreviousX;
     public int unitSelectedPreviousY;
 
-    //[SyncVar]
     public GameObject previousOccupiedTile;
 
     [Header("Highlight Materials")]
@@ -65,7 +56,6 @@ public class TileMap : NetworkBehaviour {
     public NewNetworkGamePlayer Owner;
 
     public int ID;
-    
 
     protected GameData GameData;
 
@@ -98,14 +88,6 @@ public class TileMap : NetworkBehaviour {
                 GeneratePathFindingGraph();
                 SetIfTileIsOccupied();
                 MouseClickToSelectUnitV2();
-                //moves from here but crashes for having no tileclick
-                // GameObject tempSelectedUnit = GMS.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile;
-                // DisableHighlightUnitRange();
-                // selectedUnit = tempSelectedUnit;
-                // selectedUnit.GetComponent<Unit>().map = this;
-                // selectedUnit.GetComponent<Unit>().SetMovementState(1);
-                // unitSelected = true;
-                // HighlightUnitRange();
                 MouseClickToSelectUnit();
             }
             else if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1)
@@ -117,7 +99,6 @@ public class TileMap : NetworkBehaviour {
                     unitSelectedPreviousY = selectedUnit.GetComponent<Unit>().y;
                     previousOccupiedTile = selectedUnit.GetComponent<Unit>().tileBeingOccupied;
                     //selectedUnit.GetComponent<Unit>().SetWalkingAnimation();
-                    // from this check this is where client cannot sync
                     MoveUnit();
                     StartCoroutine(MoveUnitAndFinalise());
                 }
@@ -223,7 +204,6 @@ public class TileMap : NetworkBehaviour {
         }
     }
 
-    //[ClientRpc]
     public void SetIfTileIsOccupied() {
         foreach (Transform team in unitsOnBoard.transform) {
             foreach (Transform unitOnTeam in team) { 
@@ -235,10 +215,8 @@ public class TileMap : NetworkBehaviour {
         }
     }
 
-    //[Command(requiresAuthority=false)]
     public void MoveUnit() {
         if (selectedUnit != null) {
-            Debug.Log(selectedUnit);
             selectedUnit.GetComponent<Unit>().MoveNextTile();
         }
     }
@@ -356,7 +334,7 @@ public class TileMap : NetworkBehaviour {
             }
          }
     }
-    //[Command(requiresAuthority=false)]
+
     public void FinaliseMovementPosition() {
         tilesOnMap[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y].GetComponent<TileClick>().unitOnTile = selectedUnit;
         selectedUnit.GetComponent<Unit>().SetMovementState(2);
@@ -381,24 +359,23 @@ public class TileMap : NetworkBehaviour {
         }
     }
 
-    //[Command(requiresAuthority=false)]
     public void FinaliseOption() {
-    RaycastHit hit;
-    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    HashSet<Node> attackableTiles = GetUnitAttackOptionsFromPosition();
-    if (Physics.Raycast(ray, out hit)) {
-        if (hit.transform.gameObject.CompareTag("Tile")) {
-            if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
-                GameObject unitOnTile = hit.transform.GetComponent<TileClick>().unitOnTile;
-                int unitX = unitOnTile.GetComponent<Unit>().x;
-                int unitY = unitOnTile.GetComponent<Unit>().y;
-                if (unitOnTile == selectedUnit) {
-                    DisableHighlightUnitRange();
-                    Debug.Log("ITS THE SAME UNIT JUST WAIT");
-                    selectedUnit.GetComponent<Unit>().Wait();
-                    //selectedUnit.GetComponent<Unit>().SetWaitIdleAnimation();
-                    selectedUnit.GetComponent<Unit>().SetMovementState(3);
-                    DeselectUnit();
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        HashSet<Node> attackableTiles = GetUnitAttackOptionsFromPosition();
+        if (Physics.Raycast(ray, out hit)) {
+            if (hit.transform.gameObject.CompareTag("Tile")) {
+                if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
+                    GameObject unitOnTile = hit.transform.GetComponent<TileClick>().unitOnTile;
+                    int unitX = unitOnTile.GetComponent<Unit>().x;
+                    int unitY = unitOnTile.GetComponent<Unit>().y;
+                    if (unitOnTile == selectedUnit) {
+                        DisableHighlightUnitRange();
+                        Debug.Log("ITS THE SAME UNIT JUST WAIT");
+                        selectedUnit.GetComponent<Unit>().Wait();
+                        //selectedUnit.GetComponent<Unit>().SetWaitIdleAnimation();
+                        selectedUnit.GetComponent<Unit>().SetMovementState(3);
+                        DeselectUnit();
                     }
                     else if (unitOnTile.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum && attackableTiles.Contains(graph[unitX,unitY])) {
                         if (unitOnTile.GetComponent<Unit>().currentHealthPoints > 0) {
@@ -408,31 +385,32 @@ public class TileMap : NetworkBehaviour {
                             StartCoroutine(DeselectAfterMovements(selectedUnit, unitOnTile));
                         }
                     }                                     
+                }
             }
-        }
-        else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {
-            GameObject unitClicked = hit.transform.parent.gameObject;
-            int unitX = unitClicked.GetComponent<Unit>().x;
-            int unitY = unitClicked.GetComponent<Unit>().y;
-            if (unitClicked == selectedUnit) {
-                DisableHighlightUnitRange();
-                Debug.Log("ITS THE SAME UNIT JUST WAIT");
-                selectedUnit.GetComponent<Unit>().Wait();
-                selectedUnit.GetComponent<Unit>().SetWaitIdleAnimation();
-                selectedUnit.GetComponent<Unit>().SetMovementState(3);
-                DeselectUnit();
-            }
-            else if (unitClicked.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum && attackableTiles.Contains(graph[unitX, unitY])) {
+            else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {
+                GameObject unitClicked = hit.transform.parent.gameObject;
+                int unitX = unitClicked.GetComponent<Unit>().x;
+                int unitY = unitClicked.GetComponent<Unit>().y;
+                if (unitClicked == selectedUnit) {
+                    DisableHighlightUnitRange();
+                    Debug.Log("ITS THE SAME UNIT JUST WAIT");
+                    selectedUnit.GetComponent<Unit>().Wait();
+                    selectedUnit.GetComponent<Unit>().SetWaitIdleAnimation();
+                    selectedUnit.GetComponent<Unit>().SetMovementState(3);
+                    DeselectUnit();
+                }
+                else if (unitClicked.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum && attackableTiles.Contains(graph[unitX, unitY])) {
                     if (unitClicked.GetComponent<Unit>().currentHealthPoints > 0) {
                         Debug.Log("We clicked an enemy that should be attacked");
                         Debug.Log("Add Code to Attack enemy");
                         // StartCoroutine(BMS.attack(selectedUnit, unitClicked));
                         StartCoroutine(DeselectAfterMovements(selectedUnit, unitClicked));
                     }
+                }
             }
-        }
-    } 
-}
+        } 
+    }
+
     public void DeselectUnit() {  
         if (selectedUnit != null) {
             if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1)) {
@@ -462,6 +440,7 @@ public class TileMap : NetworkBehaviour {
             }
         }
     }
+
     public void HighlightUnitRange() {
         HashSet<Node> finalMovementHighlight = new HashSet<Node>();
         HashSet<Node> totalAttackableTiles = new HashSet<Node>();
@@ -484,6 +463,7 @@ public class TileMap : NetworkBehaviour {
         selectedUnitMoveRange = finalMovementHighlight;
         selectedUnitTotalRange = GetUnitTotalRange(finalMovementHighlight, totalAttackableTiles);
     }
+
     public void DisableUnitUIRoute() {
         foreach(GameObject quad in quadOnMapForUnitMovementDisplay) {
             if (quad.GetComponent<Renderer>().enabled == true) {    
@@ -491,6 +471,7 @@ public class TileMap : NetworkBehaviour {
             }
         }
     }
+
     public HashSet<Node> GetUnitMovementOptions() {
         float[,] cost = new float[mapSizeX, mapSizeY];
         HashSet<Node> UIHighlight = new HashSet<Node>();
@@ -525,12 +506,14 @@ public class TileMap : NetworkBehaviour {
         Debug.Log("We have used the function to calculate it this time");
         return finalMovementHighlight;
     }
+
     public HashSet<Node> GetUnitTotalRange(HashSet<Node> finalMovementHighlight, HashSet<Node> totalAttackableTiles) {
         HashSet<Node> unionTiles = new HashSet<Node>();
         unionTiles.UnionWith(finalMovementHighlight);
         unionTiles.UnionWith(totalAttackableTiles);
         return unionTiles;
     }
+
     public HashSet<Node> GetUnitTotalAttackableTiles(HashSet<Node> finalMovementHighlight, int attRange, Node unitInitialNode) {
         HashSet<Node> tempNeighbourHash = new HashSet<Node>();
         HashSet<Node> neighbourHash = new HashSet<Node>();
@@ -558,6 +541,7 @@ public class TileMap : NetworkBehaviour {
         totalAttackableTiles.Remove(unitInitialNode);
         return (totalAttackableTiles);
     }
+
     public HashSet<Node> GetUnitAttackOptionsFromPosition() {
         HashSet<Node> tempNeighbourHash = new HashSet<Node>();
         HashSet<Node> neighbourHash = new HashSet<Node>();
@@ -582,6 +566,7 @@ public class TileMap : NetworkBehaviour {
         neighbourHash.Remove(initialNode);
         return neighbourHash;
     }
+
     public HashSet<Node> GetTileUnitIsOccupying() {
        
         int x = selectedUnit.GetComponent<Unit>().x;
@@ -590,28 +575,33 @@ public class TileMap : NetworkBehaviour {
         singleTile.Add(graph[x, y]);
         return singleTile;
     }
+
     public void HighlightTileUnitIsOccupying() {
         if (selectedUnit != null) {
             HighlightMovementRange(GetTileUnitIsOccupying());
         }
     }
+
     public void HighlightUnitAttackOptionsFromPosition() {
         if (selectedUnit != null) {
             HighlightEnemiesInRange(GetUnitAttackOptionsFromPosition());
         }
     }
+
     public void HighlightMovementRange(HashSet<Node> movementToHighlight) {
         foreach (Node n in movementToHighlight) {
             quadOnMap[n.x, n.y].GetComponent<Renderer>().material = blueUIMat;
             quadOnMap[n.x, n.y].GetComponent<MeshRenderer>().enabled = true;
         }
     }
+
     public void HighlightEnemiesInRange(HashSet<Node> enemiesToHighlight) {
         foreach (Node n in enemiesToHighlight) {
             quadOnMap[n.x, n.y].GetComponent<Renderer>().material = redUIMat;
             quadOnMap[n.x, n.y].GetComponent<MeshRenderer>().enabled = true;
         }
     }
+
     public void DisableHighlightUnitRange() {
         foreach(GameObject quad in quadOnMap) {
             if(quad.GetComponent<Renderer>().enabled == true) {
@@ -619,6 +609,7 @@ public class TileMap : NetworkBehaviour {
             }
         }
     }
+
     public IEnumerator MoveUnitAndFinalise() {
         DisableHighlightUnitRange();
         DisableUnitUIRoute();
@@ -628,6 +619,7 @@ public class TileMap : NetworkBehaviour {
         FinaliseMovementPosition();
         //selectedUnit.GetComponent<Unit>().SetSelectedAnimation();
     }
+
     public IEnumerator DeselectAfterMovements(GameObject unit, GameObject enemy) {
         selectedUnit.GetComponent<Unit>().SetMovementState(3);
         DisableHighlightUnitRange();
@@ -642,6 +634,7 @@ public class TileMap : NetworkBehaviour {
         Debug.Log("All animations done playing");
         DeselectUnit();
     }
+    
     public bool SelectTileToMoveTo() {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

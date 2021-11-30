@@ -6,10 +6,9 @@ using Mirror;
 using TMPro;
 public class Unit : NetworkBehaviour {
     public int teamNum;
-    // syncs the tiles to the other client
-    [SyncVar(hook=nameof(OnXChange))]
+    [SyncVar]
     public int x;
-    [SyncVar(hook=nameof(OnYChange))]
+    [SyncVar]
     public int y;
     public Queue<int> movementQueue;
     public Queue<int> combatQueue;
@@ -34,6 +33,7 @@ public class Unit : NetworkBehaviour {
     public Image damageBackdrop;
     public TileMap map;
     public GameObject holder2D;
+
     //--------------------------------------
 
     // protected override void OnInit() {
@@ -42,18 +42,6 @@ public class Unit : NetworkBehaviour {
 
     public void SetupUnit(GameData data, int playerId) {
 
-    }
-
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.X)) {
-            Debug.Log("Going to Server");
-            TestCommand();
-        }
-    }
-
-    [Command(requiresAuthority = false)]
-    void TestCommand(){
-        Debug.Log("Came from client");
     }
 
     //--------------------------------------
@@ -82,26 +70,7 @@ public class Unit : NetworkBehaviour {
         holder2D.transform.forward = Camera.main.transform.forward;
     }
 
-    public void OnXChange(int oldX, int newX) {
-        //MoveNextTile();
-        //Debug.Log("test1");
-    }
-
-    public void OnYChange(int oldY, int newY) {
-        //Debug.Log("test2");
-        //MoveNextTile();
-    }
-
-    //[Command(requiresAuthority=false)]
     public void MoveNextTile() {
-        if (path == null) {
-            Debug.Log("no path");
-            Debug.Log(path);
-            return;
-        }
-        Debug.Log(path[path.Count - 1]);
-        Debug.Log(path);
-        Debug.Log(path.Count);
         if (path.Count == 0) {
             return;
         }
@@ -112,8 +81,6 @@ public class Unit : NetworkBehaviour {
 
     [Command(requiresAuthority=false)]
     public void CmdUpdateTileMap(int newX, int newY) {
-        // set the x and y syncvar tiles to a different 
-        // variables and pass them through as a command
         x = newX;
         y = newY;
     }
@@ -123,7 +90,6 @@ public class Unit : NetworkBehaviour {
         SetMovementState(0);
         completedMovement = false;
         gameObject.GetComponentInChildren<Renderer>().material = unitMaterial;
-        
         SetIdleAnimation();
     }
 
@@ -163,12 +129,12 @@ public class Unit : NetworkBehaviour {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
     }
+
     public void DealDamage(int x) {
         currentHealthPoints = currentHealthPoints - x;
         UpdateHealthUI();
     }
     
-    //[Command(requiresAuthority=false)]
     public void Wait() {
         gameObject.GetComponentInChildren<Renderer>().material = unitWaitMaterial;
     }
@@ -188,6 +154,7 @@ public class Unit : NetworkBehaviour {
             StartCoroutine(CheckIfRoutinesRunning());     
         }
     }
+
     public IEnumerator CheckIfRoutinesRunning() {
         while (combatQueue.Count>0) {
             yield return new WaitForEndOfFrame();
@@ -232,7 +199,6 @@ public class Unit : NetworkBehaviour {
         //tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
         //tileBeingOccupied = map.tilesOnMap[x, y];
         movementQueue.Dequeue();
-        //CmdUpdateTileMap(x, y);
     }
 
     public IEnumerator DisplayDamageEnum(int damageTaken) {
@@ -252,7 +218,6 @@ public class Unit : NetworkBehaviour {
         combatQueue.Dequeue();
     }
 
-    //[Command(requiresAuthority=false)]
     public void ResetPath() {
         path = null;
         completedMovement = false;
@@ -262,6 +227,7 @@ public class Unit : NetworkBehaviour {
         damagePopupCanvas.enabled = true;
         damagePopupText.SetText(damageTaken.ToString());
     }
+
     public void DisableDisplayDamage() {
         damagePopupCanvas.enabled = false;
     }
