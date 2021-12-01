@@ -682,7 +682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   sendInterval: 0.05
   syncPosition: 1
   syncRotation: 1
@@ -730,32 +730,27 @@ MonoBehaviour:
   teamNum: 0
   x: 0
   y: 0
-  coroutineRunning: 0
   visualMovementSpeed: 0.15
   unitWaitMaterial: {fileID: 2100000, guid: 3af884d40cf656044862445e371c7e6b, type: 2}
   unitMaterial: {fileID: 2100000, guid: 335dc8a8c490d75428690c8da73002c2, type: 2}
   animator: {fileID: 0}
   tileBeingOccupied: {fileID: 0}
-  damagedParticle: {fileID: 0}
+  damagedParticle: {fileID: 1908652125826162151, guid: 66dc3b0b00d9ec2449372775c9528d29, type: 3}
   unitName: Captain
   moveSpeed: 2
   attackRange: 1
   attackDamage: 5
   maxHealthPoints: 10
-  currentHealthPoints: 0
+  currentHealthPoints: 10
   unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
-  healthBarCanvas: {fileID: 0}
-  hitPointsText: {fileID: 0}
-  healthBar: {fileID: 0}
-  damagePopupCanvas: {fileID: 0}
-  damagePopupText: {fileID: 0}
-  damageBackdrop: {fileID: 0}
+  healthBarCanvas: {fileID: 6392410202385012739}
+  hitPointsText: {fileID: 6392410201379123322}
+  healthBar: {fileID: 6392410202018261340}
+  damagePopupCanvas: {fileID: 6392410201139915360}
+  damagePopupText: {fileID: 6392410200828871526}
+  damageBackdrop: {fileID: 6392410200890316527}
   map: {fileID: 0}
-  startPoint: {fileID: 0}
-  endPoint: {fileID: 0}
-  moveSpeedTime: 1
   holder2D: {fileID: 7167615610641930586}
-  unitInMovement: 0
   unitMoveState: 0
   completedMovement: 0
 --- !u!1 &6392410202385012743

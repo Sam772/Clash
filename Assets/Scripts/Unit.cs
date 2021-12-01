@@ -17,11 +17,13 @@ public class Unit : NetworkBehaviour {
     public Material unitMaterial;
     public Animator animator;
     public GameObject tileBeingOccupied;
+    public GameObject damagedParticle;
     public string unitName;
     public int moveSpeed;    
     public int attackRange;
     public int attackDamage;
     public int maxHealthPoints;
+    [SyncVar]
     public int currentHealthPoints;
     public Sprite unitSprite;
     [Header("UI Elements")]
@@ -124,12 +126,14 @@ public class Unit : NetworkBehaviour {
             unitMoveState = MovementStates.Wait;
         }
     }
-
+    //[ClientRpc]
     public void UpdateHealthUI() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
     }
 
+    // syncs over combat but still takes counters, object isnt destroyed and damage text isnt synced
+    [ClientRpc]
     public void DealDamage(int x) {
         currentHealthPoints = currentHealthPoints - x;
         UpdateHealthUI();

@@ -6,6 +6,7 @@ using Mirror;
 public class TileMap : NetworkBehaviour {
 
     [Header("Manager Scripts")]
+    public BattleManager BMS;
     public GameManager GMS;
     
     [Header("Tiles")]
@@ -403,7 +404,7 @@ public class TileMap : NetworkBehaviour {
                     if (unitClicked.GetComponent<Unit>().currentHealthPoints > 0) {
                         Debug.Log("We clicked an enemy that should be attacked");
                         Debug.Log("Add Code to Attack enemy");
-                        // StartCoroutine(BMS.attack(selectedUnit, unitClicked));
+                        StartCoroutine(BMS.attack(selectedUnit, unitClicked));
                         StartCoroutine(DeselectAfterMovements(selectedUnit, unitClicked));
                     }
                 }

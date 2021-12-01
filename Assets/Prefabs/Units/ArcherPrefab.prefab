@@ -361,9 +361,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3194674972596997602}
-  - component: {fileID: 3194674972596997601}
   - component: {fileID: 50522655885226377}
   - component: {fileID: 3040184471979254226}
+  - component: {fileID: 5211542070338752294}
+  - component: {fileID: 3194674972596997601}
   m_Layer: 0
   m_Name: ArcherPrefab
   m_TagString: Unit
@@ -388,38 +389,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3194674972596997601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3194674972596997603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc407008371a9274d9430c91a1d9e392, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamNum: 0
-  x: 0
-  y: 0
-  visualMovementSpeed: 0.15
-  unitWaitMaterial: {fileID: 2100000, guid: 3af884d40cf656044862445e371c7e6b, type: 2}
-  unitMaterial: {fileID: 2100000, guid: 605f215d7720afb4ca822f905d2bc43a, type: 2}
-  tileBeingOccupied: {fileID: 0}
-  unitName: Archer
-  moveSpeed: 4
-  attackRange: 2
-  attackDamage: 2
-  maxHealthPoints: 4
-  currentHealthPoints: 0
-  map: {fileID: 0}
-  startPoint: {fileID: 0}
-  endPoint: {fileID: 0}
-  moveSpeedTime: 1
-  unitInMovement: 0
-  unitMoveState: 0
-  completedMovement: 0
 --- !u!114 &50522655885226377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +424,7 @@ MonoBehaviour:
   sendInterval: 0.05
   syncPosition: 1
   syncRotation: 1
-  syncScale: 1
+  syncScale: 0
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
@@ -466,6 +435,62 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &5211542070338752294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194674972596997603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5881ec1d5b5c54b9cf85d7805a6b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  ID: 0
+  IsCurrentPlayer: 0
+--- !u!114 &3194674972596997601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194674972596997603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc407008371a9274d9430c91a1d9e392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  teamNum: 0
+  x: 0
+  y: 0
+  visualMovementSpeed: 0.15
+  unitWaitMaterial: {fileID: 2100000, guid: 3af884d40cf656044862445e371c7e6b, type: 2}
+  unitMaterial: {fileID: 2100000, guid: 605f215d7720afb4ca822f905d2bc43a, type: 2}
+  animator: {fileID: 0}
+  tileBeingOccupied: {fileID: 0}
+  damagedParticle: {fileID: 0}
+  unitName: Archer
+  moveSpeed: 4
+  attackRange: 2
+  attackDamage: 2
+  maxHealthPoints: 4
+  currentHealthPoints: 4
+  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
+  healthBarCanvas: {fileID: 3194674973022981538}
+  hitPointsText: {fileID: 3194674973995354287}
+  healthBar: {fileID: 3194674972781321841}
+  damagePopupCanvas: {fileID: 3194674972478403097}
+  damagePopupText: {fileID: 3194674972552342829}
+  damageBackdrop: {fileID: 3194674972748794896}
+  map: {fileID: 0}
+  holder2D: {fileID: 3194674972223442061}
+  unitMoveState: 0
+  completedMovement: 0
 --- !u!1 &3194674972748794898
 GameObject:
   m_ObjectHideFlags: 0

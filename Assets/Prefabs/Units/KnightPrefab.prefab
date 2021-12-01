@@ -191,7 +191,6 @@ MonoBehaviour:
   teamNum: 0
   x: 0
   y: 0
-  coroutineRunning: 0
   visualMovementSpeed: 0.15
   unitWaitMaterial: {fileID: 2100000, guid: 3af884d40cf656044862445e371c7e6b, type: 2}
   unitMaterial: {fileID: 2100000, guid: 605f215d7720afb4ca822f905d2bc43a, type: 2}
@@ -203,7 +202,7 @@ MonoBehaviour:
   attackRange: 1
   attackDamage: 3
   maxHealthPoints: 5
-  currentHealthPoints: 0
+  currentHealthPoints: 5
   unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
   healthBarCanvas: {fileID: 43821925669178094}
   hitPointsText: {fileID: 43821926805037719}
@@ -212,11 +211,7 @@ MonoBehaviour:
   damagePopupText: {fileID: 43821926285726091}
   damageBackdrop: {fileID: 43821926358565890}
   map: {fileID: 0}
-  startPoint: {fileID: 0}
-  endPoint: {fileID: 0}
-  moveSpeedTime: 1
   holder2D: {fileID: 4275521981178448823}
-  unitInMovement: 0
   unitMoveState: 0
   completedMovement: 0
 --- !u!1 &43821925669178090

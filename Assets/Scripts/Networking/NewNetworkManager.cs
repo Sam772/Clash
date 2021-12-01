@@ -15,7 +15,9 @@ public class NewNetworkManager : NetworkManager {
         [SerializeField] private NewNetworkRoomPlayer roomPlayerPrefab;
         [SerializeField] private NewNetworkGamePlayer gamePlayerPrefab;
 
+        [SerializeField] private Unit captainPrefab;
         [SerializeField] private Unit knightPrefab;
+        [SerializeField] private Unit archerPrefab;
 
         //[SerializeField] private PlayerManager prefab;
         //[SerializeField] private TileMap boardPrefab;
@@ -167,6 +169,8 @@ public class NewNetworkManager : NetworkManager {
                         Unit knight = Instantiate(knightPrefab, new Vector3(x++, 0.75f, 9), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                     }
+                    Unit archer = Instantiate(archerPrefab, new Vector3(3, 0.75f, 8), Quaternion.identity);
+                        NetworkServer.Spawn(archer.gameObject, conn);
             }
         }
 
