@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Mirror;
 
 public class PlayerManager : NetworkBehaviour {
+    // NO LONGER USED 
     [SerializeField] public Text status;
 
     // speed of player

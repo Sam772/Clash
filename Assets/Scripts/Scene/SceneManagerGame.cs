@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 public class SceneManagerGame : MonoBehaviour {
     public Canvas mainCanvas;
     public Canvas helpCanvas;

@@ -8,12 +8,9 @@ using Mirror;
 public class GameManager : NetworkBehaviour {
 
     public GameData Data { get; private set; }
-
     public int PlayerID => gamePlayer.ID;
-
     private NewNetworkManager room;
     private NewNetworkGamePlayer gamePlayer;
-
     //------------------------------------------------------
 
     [Header("UI GameObjects")]
@@ -586,79 +583,70 @@ public class GameManager : NetworkBehaviour {
     }
     //------------------------------------------------------
 
-    public struct Dependencies
-        {
-            public NewNetworkManager NetworkManager;
-            public GameData Data;
+    public struct Dependencies {
+        public NewNetworkManager NetworkManager;
+        public GameData Data;
 
-            public bool IsValid()
-            {
-                return Data != null && NetworkManager != null;
-            }
+        //public Material material;
+
+        public bool IsValid() {
+            return Data != null && NetworkManager != null;
+        }
+    }
+
+    public void SetDependencies(Dependencies dependencies) {
+        if (!dependencies.IsValid()) {
+            Debug.LogError("Tried to setup with invalid dependencies");
+            // TODO exit to menu?
+            return;
         }
 
-        public void SetDependencies(Dependencies dependencies)
-        {
-            if (!dependencies.IsValid())
-            {
-                Debug.LogError("Tried to setup with invalid dependencies");
-                // TODO exit to menu?
-                return;
-            }
-
-            room = dependencies.NetworkManager;
-            Data = dependencies.Data;
+        room = dependencies.NetworkManager;
+        Data = dependencies.Data;
+        //material = dependencies.material;
             
-            //Data.Init(this, config);
-            //Grid.Init(this);
+        //Data.Init(this, config);
+        //Grid.Init(this);
             
-            //StartCoroutine(AwaitNetworkedPlayerRoutine());
-        }
+        //StartCoroutine(AwaitNetworkedPlayerRoutine());
+    }
 
     public void SetGamePlayer (NewNetworkGamePlayer player) {
         gamePlayer = player;
     }
 
-    public NewNetworkGamePlayer GetPlayerFromID(int id)
-        {
-            return room.GamePlayers.FirstOrDefault(p => p.ID == id);
+    public NewNetworkGamePlayer GetPlayerFromID(int id) {
+        return room.GamePlayers.FirstOrDefault(p => p.ID == id);
+    }
+
+    public void StartGameClient() { 
+        Debug.Log("Game started for client");
+    }
+
+    public void StartGameServer() {
+        SetupPlayers();
+        Data.NextTurn();
+        Data.SetGameStarted();
+            
+        //Camera.ScrollTo(Grid.GetStartLocation(gamePlayer.ID));
+            
+        //Cells.RegisterCellLifecycleObserver(Data);
+            
+        Debug.Log("Game started for server");
+
+        foreach (var player in room.GamePlayers) {
+            player.RpcNotifyGameStart();
         }
+    }
 
-        public void StartGameClient()
-        {
-            
-            Debug.Log("Game started for client");
+    private void SetupPlayers() {
+        foreach (var player in room.GamePlayers) {
+            //Grid.SetStartingLocation(player);
+            //Data.OnSuppliesChanged(player, config.startingSupply);
         }
-
-    public void StartGameServer()
-        {
-            SetupPlayers();
-            Data.NextTurn();
-            Data.SetGameStarted();
-            
-            //Camera.ScrollTo(Grid.GetStartLocation(gamePlayer.ID));
-            
-            //Cells.RegisterCellLifecycleObserver(Data);
-            
-            Debug.Log("Game started for server");
-
-            foreach (var player in room.GamePlayers)
-            {
-                player.RpcNotifyGameStart();
-            }
-        }
-
-    private void SetupPlayers()
-        {
-            foreach (var player in room.GamePlayers)
-            {
-                //Grid.SetStartingLocation(player);
-                //Data.OnSuppliesChanged(player, config.startingSupply);
-            }
-
             //UI.UpdatePlayerInfo(room.GamePlayers);
-        }
+    }
 
-        public bool IsCurrentPlayer(int playerID) => Data.IsCurrentPlayer(playerID);
-        public bool IsCurrentPlayer(NewNetworkGamePlayer player) => Data.IsCurrentPlayer(player.ID);
+    public bool IsCurrentPlayer(int playerID) => Data.IsCurrentPlayer(playerID);
+    public bool IsCurrentPlayer(NewNetworkGamePlayer player) => Data.IsCurrentPlayer(player.ID);
 }

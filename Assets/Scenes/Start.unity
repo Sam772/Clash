@@ -370,7 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 119735092}
   m_Layer: 0
-  m_Name: unitQuadMovementIndicator
+  m_Name: UnitQuadMovementIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 400170870}
   - component: {fileID: 400170869}
   m_Layer: 5
-  m_Name: Text
+  m_Name: EndTurnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1137,7 +1137,7 @@ GameObject:
   - component: {fileID: 673919910}
   - component: {fileID: 673919909}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: PhaseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1364,7 +1364,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719295855}
   m_Layer: 0
-  m_Name: unitQuadCursor
+  m_Name: UnitQuadCursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2145,7 +2145,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 766626150}
         m_TargetAssemblyTypeName: SceneManagerGame, Assembly-CSharp
         m_MethodName: LoadTitleScreen
         m_Mode: 1
@@ -2514,6 +2514,10 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3170064012
       objectReference: {fileID: 0}
+    - target: {fileID: 7286425654824838832, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
+      propertyPath: serverOnly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
 --- !u!4 &1073075763 stripped
@@ -2745,7 +2749,7 @@ GameObject:
   - component: {fileID: 1168686528}
   - component: {fileID: 1168686529}
   m_Layer: 5
-  m_Name: phaseCanvas
+  m_Name: PhaseCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2769,7 +2773,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1950, y: 0}
+  m_AnchoredPosition: {x: -1950, y: -95}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1168686529
@@ -3452,7 +3456,7 @@ GameObject:
   - component: {fileID: 1502623973}
   - component: {fileID: 1502623972}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: BackToTitleScreenText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3835,6 +3839,10 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3843037904
       objectReference: {fileID: 0}
+    - target: {fileID: 8444969586624743955, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
+      propertyPath: serverOnly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
 --- !u!4 &1641453668 stripped
@@ -3852,7 +3860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1699762826}
   m_Layer: 0
-  m_Name: unitQuadHighlightList
+  m_Name: UnitQuadHighlightList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4492,7 +4500,7 @@ GameObject:
   - component: {fileID: 1923893940}
   - component: {fileID: 1923893939}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: PhasePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

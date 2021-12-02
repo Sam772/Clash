@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameUI : MonoBehaviour {
-    #pragma warning disable 649
+        #pragma warning disable 649
         [Header("HUD")]
         [SerializeField] private PlayerInfo player1;
         [SerializeField] private PlayerInfo player2;
@@ -22,7 +22,7 @@ public class GameUI : MonoBehaviour {
         [Header("World")]
         //[SerializeField] private HealthBars healthBars;
         //[SerializeField] private FloatingUI floatingUI;
-#pragma warning restore 649
+        #pragma warning restore 649
 
         private NewNetworkGamePlayer player;
         private bool isCursorInUI;

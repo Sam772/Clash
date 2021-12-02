@@ -5,11 +5,9 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
     public float movementSpeed;
     public float movementTime;
-
     public Transform cameraTransform;
     public Vector3 zoomAmount;
     public Vector3 newZoom;
-
     public Vector3 newPosition;
 
     void Start() {
@@ -22,7 +20,6 @@ public class CameraController : MonoBehaviour {
     }
  
     void HandleMovementInput() {
-
         // || Input.GetKey(KeyCode.UpArrow
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
             newPosition += (transform.TransformDirection(0, 1, 0) * movementSpeed);

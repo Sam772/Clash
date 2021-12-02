@@ -9,5 +9,4 @@ public enum Units {
         Knight = 2,
 
         Archer = 3
-    
 }

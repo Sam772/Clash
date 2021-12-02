@@ -5,7 +5,5 @@ using System;
 
 [Serializable]
 public class GameConfig {
-
     public int startingSupply = 5;
-    
 }
