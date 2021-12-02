@@ -569,16 +569,17 @@ public class GameManager : NetworkBehaviour {
         while (enemy.GetComponent<Unit>().combatQueue.Count != 0) {
             yield return new WaitForEndOfFrame();
         }
-        // if (team1.transform.childCount == 0) {
-        //     displayWinnerUI.enabled = true;
-        //     displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
-        // }
-        // else if (team2.transform.childCount == 0) {
-        //     displayWinnerUI.enabled = true;
-        //     displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
-        // }
+        if (team1.transform.childCount == 0) {
+            displayWinnerUI.enabled = true;
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
+        }
+        else if (team2.transform.childCount == 0) {
+            displayWinnerUI.enabled = true;
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+        }
     }
 
+    [ClientRpc]
     public void win() {
         displayWinnerUI.enabled = true;
         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Winner!");
