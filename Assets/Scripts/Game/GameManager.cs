@@ -6,8 +6,7 @@ using TMPro;
 using Mirror;
 
 public class GameManager : NetworkBehaviour {
-
-    public GameData Data { get; private set; }
+public GameData Data { get; private set; }
     public int PlayerID => gamePlayer.ID;
     private NewNetworkManager room;
     private NewNetworkGamePlayer gamePlayer;
@@ -131,42 +130,66 @@ public class GameManager : NetworkBehaviour {
     // mapunits gameobject is irrelevant
 
     // uses i to fit units into their teams
-    public GameObject returnTeam(int i) {
-        GameObject teamToReturn = null;
-        if (i == 0) {
-            teamToReturn = team1;
-        }
-        else if (i == 1) {
-            teamToReturn = team2;
-        }
-        return teamToReturn;
+    // public GameObject returnTeam(int i) {
+    //     GameObject teamToReturn = null;
+    //     if (i == 0) {
+    //         teamToReturn = team1;
+    //     }
+    //     else if (i == 1) {
+    //         teamToReturn = team2;
+    //     }
+    //     return teamToReturn;
+    // }
+
+    public int returnTeam(GameObject unit) {
+        return unit.GetComponent<Unit>().teamNum;
     }
     
-    public void resetUnitsMovements(GameObject teamToReset) {
-        // this is checking the child gameobjects of the team object
-        foreach (Transform unit in teamToReset.transform) {
-            //if (unit.GetComponent<Unit>().teamNum == 0)
-            unit.GetComponent<Unit>().MoveAgain();
-            // unitRefresh = GameObject.FindGameObjectWithTag("Unit");
-            // for (int i=0; i < unitRefresh.length; i++)
-            // Debug.Log(unitRefresh(i));
+    // public void resetUnitsMovements(GameObject teamToReset) {
+    //     // this is checking the child gameobjects of the team object
+    //     foreach (Transform unit in teamToReset.transform) {
+    //         //if (unit.GetComponent<Unit>().teamNum == 0)
+    //         unit.GetComponent<Unit>().MoveAgain();
+    //         // unitRefresh = GameObject.FindGameObjectWithTag("Unit");
+    //         // for (int i=0; i < unitRefresh.length; i++)
+    //         // Debug.Log(unitRefresh(i));
+    //     }
+    // }
+
+    public void resetUnitsMovements(int teamToReset) {
+        Unit[] unitsList = FindObjectsOfType<Unit>();
+        foreach (Unit unit in unitsList) {
+            if (unit.GetComponent<Unit>().teamNum == teamToReset) {
+                unit.GetComponent<Unit>().MoveAgain();
+            }
         }
     }
 
+    // public void TeamHealthbarColorUpdate() {
+    //     for(int i = 0; i < numberOfTeams; i++) {
+    //         GameObject team = returnTeam(i);
+    //         if(team == returnTeam(currentTeam)) {
+    //             // iterating children
+    //             foreach (Transform unit in team.transform) {
+    //                 unit.GetComponent<Unit>().ChangeHealthBarColour(0);
+    //             }
+    //         }
+    //         else {
+    //             // iterating children
+    //             foreach (Transform unit in team.transform) {
+    //                 unit.GetComponent<Unit>().ChangeHealthBarColour(1);
+    //             }
+    //         }
+    //     }
+    // }
+
     public void TeamHealthbarColorUpdate() {
-        for(int i = 0; i < numberOfTeams; i++) {
-            GameObject team = returnTeam(i);
-            if(team == returnTeam(currentTeam)) {
-                // iterating children
-                foreach (Transform unit in team.transform) {
-                    unit.GetComponent<Unit>().ChangeHealthBarColour(0);
-                }
-            }
-            else {
-                // iterating children
-                foreach (Transform unit in team.transform) {
-                    unit.GetComponent<Unit>().ChangeHealthBarColour(1);
-                }
+        Unit[] unitsList = FindObjectsOfType<Unit>();
+        foreach (Unit unit in unitsList) {
+            if (unit.GetComponent<Unit>().teamNum == 0) {
+                unit.GetComponent<Unit>().ChangeHealthBarColour(0);
+            } else if (unit.GetComponent<Unit>().teamNum == 1) {
+                unit.GetComponent<Unit>().ChangeHealthBarColour(1);
             }
         }
     }
@@ -205,13 +228,20 @@ public class GameManager : NetworkBehaviour {
 
     [Command(requiresAuthority=false)]
     public void SwitchCurrentPlayer() {
-        resetUnitsMovements(returnTeam(currentTeam));
+        resetUnitsMovements(currentTeam);
+        //currentTeam = (currentTeam + 1) % 1;
         currentTeam++;
         if (currentTeam == numberOfTeams) {
             currentTeam = 0;
-        } 
+        }
+        // resetUnitsMovements(returnTeam(currentTeam));
+        // currentTeam++;
+        // if (currentTeam == numberOfTeams) {
+        //     currentTeam = 0;
+        // } 
     }
 
+    [ClientRpc]
     public void checkIfUnitsRemain(GameObject unit, GameObject enemy) {
         //  Debug.Log(team1.transform.childCount);
         //  Debug.Log(team2.transform.childCount);
@@ -576,8 +606,6 @@ public class GameManager : NetworkBehaviour {
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
         }
     }
-
-    [ClientRpc]
     public void win() {
         displayWinnerUI.enabled = true;
         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Winner!");

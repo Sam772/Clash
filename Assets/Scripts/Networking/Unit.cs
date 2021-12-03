@@ -130,6 +130,7 @@ public class Unit : NetworkBehaviour {
             unitMoveState = MovementStates.Wait;
         }
     }
+    
     //[ClientRpc]
     public void UpdateHealthUI() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
