@@ -52,7 +52,8 @@ public class BattleManager : NetworkBehaviour {
     [ClientRpc]
     public void destroyObject(GameObject unitToDestroy) {
         //Destroy(unitToDestroy);
-        NetworkServer.Destroy(unitToDestroy);
+        //NetworkServer.Destroy(unitToDestroy);
+        NetworkServer.UnSpawn(unitToDestroy);
     }
 
     public IEnumerator attack(GameObject unit, GameObject enemy) {

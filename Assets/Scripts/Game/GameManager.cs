@@ -52,6 +52,7 @@ public class GameManager : NetworkBehaviour {
     public Material UICursor;
     public int routeToX;
     public int routeToY;
+    public NewNetworkGamePlayer player;
     public void Start() {
         currentTeam = 0;
         SetCurrentTeamUI();

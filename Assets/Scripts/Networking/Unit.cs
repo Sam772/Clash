@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Mirror;
 using TMPro;
 public class Unit : NetworkBehaviour {
+    [SyncVar]
     public int teamNum;
     [SyncVar]
     public int x;
@@ -15,6 +16,8 @@ public class Unit : NetworkBehaviour {
     public float visualMovementSpeed = .15f;
     public Material unitWaitMaterial;
     public Material unitMaterial;
+    [SyncVar]
+    public Color unitTwoColour = Color.red;
     public Animator animator;
     public GameObject tileBeingOccupied;
     public GameObject damagedParticle;
@@ -26,6 +29,7 @@ public class Unit : NetworkBehaviour {
     [SyncVar]
     public int currentHealthPoints;
     public Sprite unitSprite;
+
     [Header("UI Elements")]
     public Canvas healthBarCanvas;
     public TMP_Text hitPointsText;
@@ -133,7 +137,7 @@ public class Unit : NetworkBehaviour {
     }
 
     // syncs over combat but still takes counters, object isnt destroyed and damage text isnt synced
-    [ClientRpc]
+    [Command(requiresAuthority=false)]
     public void DealDamage(int x) {
         currentHealthPoints = currentHealthPoints - x;
         UpdateHealthUI();

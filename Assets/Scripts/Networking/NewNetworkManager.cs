@@ -21,6 +21,8 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private Unit knightPrefab;
     [SerializeField] private Unit archerPrefab;
 
+    private Material unitTwoMaterial;
+
     //[SerializeField] private PlayerManager prefab;
     //[SerializeField] private TileMap boardPrefab;
     [SerializeField] private GameData gameDataPrefab;
@@ -130,29 +132,43 @@ public class NewNetworkManager : NetworkManager {
     private void SetupGame() {
         for (int i = GamePlayers.Count - 1; i >= 0; i--) {
             var conn = GamePlayers[i].connectionToClient;
-            // If Host
+            // If Host (Player One)
             if (i == 1) {
                 int x = 3;
                 for (int j = 0; j < 3; j++) {
                     Unit knight = Instantiate(knightPrefab, new Vector3(x++, 0.75f, 0), Quaternion.identity);
                     NetworkServer.Spawn(knight.gameObject, conn);
                 }
-                // If Client
+                // If Client (Player Two)
                 } else if (i == 0) {
                     int x = 3;
                     for (int j = 0; j < 3; j++) {
                         Unit knight = Instantiate(knightPrefab, new Vector3(x++, 0.75f, 9), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                         knight.GetComponent<Unit>().unitMaterial = playerTwoMat;
-                        //knight.GetComponent<MeshRenderer>().material = playerTwoMat;
+                        knight.GetComponent<Unit>().teamNum = 1;
+                        // unitTwoMaterial = new Material(knight.GetComponent<MeshRenderer>().material);
+                        // unitTwoMaterial.color = knight.GetComponent<Unit>().unitTwoColour;
+                        // knight.GetComponent<MeshRenderer>().material = unitTwoMaterial;
+                        //knight.GetComponent<Unit>().unitTwoColour = Color.red;
+                        knight.GetComponent<MeshRenderer>().material = playerTwoMat;
+                        //UpdateColour(knight);
                     }
                     Unit archer = Instantiate(archerPrefab, new Vector3(3, 0.75f, 8), Quaternion.identity);
                     NetworkServer.Spawn(archer.gameObject, conn);
-            }
+                    archer.GetComponent<Unit>().unitMaterial = playerTwoMat;
+                    archer.GetComponent<Unit>().teamNum = 1;
+                    archer.GetComponent<MeshRenderer>().material = playerTwoMat;
+                }
         }
-            var gameData = Instantiate(gameDataPrefab);
-            NetworkServer.Spawn(gameData.gameObject);
+        var gameData = Instantiate(gameDataPrefab);
+        NetworkServer.Spawn(gameData.gameObject);
     }
+
+    // [ClientRpc]
+    // public void UpdateColour(Unit unit){
+    //     unit.GetComponent<MeshRenderer>().material = playerTwoMat;
+    // }
 
     public void RegisterGameData(GameData data) {
         gameManagerDependencies.Data = data;
