@@ -20,7 +20,6 @@ public class Unit : NetworkBehaviour {
     public Color unitTwoColour = Color.red;
     public Animator animator;
     public GameObject tileBeingOccupied;
-    public GameObject damagedParticle;
     public string unitName;
     public int moveSpeed;    
     public int attackRange;
@@ -41,10 +40,6 @@ public class Unit : NetworkBehaviour {
     public GameObject holder2D;
 
     //--------------------------------------
-
-    // protected override void OnInit() {
-    //     SetupUnit(GameData, PlayerId);
-    // }
 
     public void SetupUnit(GameData data, int playerId) {
 
@@ -96,7 +91,6 @@ public class Unit : NetworkBehaviour {
         SetMovementState(0);
         completedMovement = false;
         gameObject.GetComponentInChildren<Renderer>().material = unitMaterial;
-        SetIdleAnimation();
     }
 
     public MovementStates GetMovementStateEnum(int i) {
@@ -130,7 +124,7 @@ public class Unit : NetworkBehaviour {
             unitMoveState = MovementStates.Wait;
         }
     }
-    
+
     //[ClientRpc]
     public void UpdateHealthUI() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
@@ -197,7 +191,6 @@ public class Unit : NetworkBehaviour {
         visualMovementSpeed = 0.15f;
         transform.position = map.TileCoordToWorldCoord(endNode.x, endNode.y);
 
-        // end points for movement
         x = endNode.x;
         y = endNode.y;
 
@@ -239,28 +232,5 @@ public class Unit : NetworkBehaviour {
 
     public void DisableDisplayDamage() {
         damagePopupCanvas.enabled = false;
-    }
-
-    public void SetSelectedAnimation() {
-        
-        animator.SetTrigger("toSelected");
-    }
-    public void SetIdleAnimation() {        
-        animator.SetTrigger("toIdle");
-    }
-    public void SetWalkingAnimation() {
-        animator.SetTrigger("toWalking");
-    }
-
-    public void SetAttackAnimation() {
-       animator.SetTrigger("toAttacking");
-    }
-
-    public void SetWaitIdleAnimation() {
-        animator.SetTrigger("toIdleWait");
-    }
-       
-    public void SetDieAnimation() {
-        animator.SetTrigger("dieTrigger");
     }
 }

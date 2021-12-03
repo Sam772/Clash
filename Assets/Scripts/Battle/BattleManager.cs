@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager GMS;
     private bool battleStatus;
-    public void battle(GameObject initiator, GameObject recipient) {
+    public void Battle(GameObject initiator, GameObject recipient) {
         battleStatus = true;
         var initiatorUnit = initiator.GetComponent<Unit>();
         var recipientUnit = recipient.GetComponent<Unit>();
@@ -13,55 +12,52 @@ public class BattleManager : NetworkBehaviour {
         int recipientAtt = recipientUnit.attackDamage;
         if (initiatorUnit.attackRange == recipientUnit.attackRange) {
             recipientUnit.DealDamage(initiatorAtt);
-            if (checkIfDead(recipient)) {
+            if (CheckIfDead(recipient)) {
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
                 battleStatus = false;
-                GMS.checkIfUnitsRemain(initiator, recipient);
+                GMS.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
             initiatorUnit.DealDamage(recipientAtt);
-            if (checkIfDead(initiator)) {
+            if (CheckIfDead(initiator)) {
                 initiator.transform.parent = null;
                 initiatorUnit.UnitDie();
                 battleStatus = false;
-                GMS.checkIfUnitsRemain(initiator, recipient);
+                GMS.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
         }
         else {
             recipientUnit.DealDamage(initiatorAtt);
-            if (checkIfDead(recipient)) {
+            if (CheckIfDead(recipient)) {
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
                 battleStatus = false;
-                GMS.checkIfUnitsRemain(initiator, recipient);
+                GMS.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
         }
         battleStatus = false;
     }
 
-    public bool checkIfDead(GameObject unitToCheck) {
+    public bool CheckIfDead(GameObject unitToCheck) {
         if (unitToCheck.GetComponent<Unit>().currentHealthPoints <= 0) {
             return true;
         }
         return false;
     }
 
-    //[Command(requiresAuthority=false)]
-    public void destroyObject(GameObject unitToDestroy) {
+    public void DestroyObject(GameObject unitToDestroy) {
         //Destroy(unitToDestroy);
-        //NetworkServer.Destroy(unitToDestroy);
         NetworkServer.Destroy(unitToDestroy);
     }
 
-    public IEnumerator attack(GameObject unit, GameObject enemy) {
+    public IEnumerator Attack(GameObject unit, GameObject enemy) {
         battleStatus = true;
         float elapsedTime = 0;
         Vector3 startingPos = unit.transform.position;
         Vector3 endingPos = enemy.transform.position;
-        unit.GetComponent<Unit>().SetWalkingAnimation();
         while (elapsedTime < .25f) {
             unit.transform.position = Vector3.Lerp(startingPos, startingPos+((((endingPos - startingPos) / (endingPos - startingPos).magnitude)).normalized*.5f), (elapsedTime / .25f));
             elapsedTime += Time.deltaTime;
@@ -75,26 +71,25 @@ public class BattleManager : NetworkBehaviour {
             else {
                 StartCoroutine(enemy.GetComponent<Unit>().DisplayDamageEnum(unit.GetComponent<Unit>().attackDamage));
             }
-            battle(unit, enemy);
+            Battle(unit, enemy);
             yield return new WaitForEndOfFrame();
         }
         if (unit != null) {
-           StartCoroutine(returnAfterAttack(unit, startingPos));
+           StartCoroutine(ReturnAfterAttack(unit, startingPos));
         }
     }
 
-    public IEnumerator returnAfterAttack(GameObject unit, Vector3 endPoint) {
+    public IEnumerator ReturnAfterAttack(GameObject unit, Vector3 endPoint) {
         float elapsedTime = 0;
         while (elapsedTime < .30f) {
             unit.transform.position = Vector3.Lerp(unit.transform.position, endPoint, (elapsedTime / .25f));
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        unit.GetComponent<Unit>().SetWaitIdleAnimation();
         unit.GetComponent<Unit>().Wait();
     }
 
-    public Vector3 getDirection(GameObject unit, GameObject enemy) {
+    public Vector3 GetDirection(GameObject unit, GameObject enemy) {
         Vector3 startingPos = unit.transform.position;
         Vector3 endingPos = enemy.transform.position;
         return (((endingPos - startingPos) / (endingPos - startingPos).magnitude)).normalized;

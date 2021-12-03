@@ -12,7 +12,7 @@ public GameData Data { get; private set; }
     private NewNetworkGamePlayer gamePlayer;
     //------------------------------------------------------
 
-    [Header("UI GameObjects")]
+    [Header("UI Elements")]
     public TMP_Text currentTeamUI;
     public Canvas displayWinnerUI;
     public TMP_Text UIunitCurrentHealth;
@@ -33,7 +33,6 @@ public GameData Data { get; private set; }
     public int currentTeam;
     [SerializeField] private GameObject team1;
     [SerializeField] private GameObject team2;
-    public GameObject unitRefresh;
     public GameObject unitBeingDisplayed;
     public GameObject tileBeingDisplayed;
     public bool displayingUnitInfo;
@@ -56,6 +55,7 @@ public GameData Data { get; private set; }
         currentTeam = 0;
         SetCurrentTeamUI();
         TeamHealthbarColorUpdate();
+        displayingUnitInfo = false;
         playerPhaseAnim = playerPhaseBlock.GetComponent<Animator>();
         playerPhaseText = playerPhaseBlock.GetComponentInChildren<TextMeshProUGUI>();
         unitPathToCursor = new List<Node>();
@@ -64,9 +64,6 @@ public GameData Data { get; private set; }
     }
 
     public void Update() {
-        if (Input.GetKeyDown(KeyCode.X)){
-            Debug.Log(unitRefresh);
-        }
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit)) {
             CursorUIUpdate();
@@ -75,7 +72,7 @@ public GameData Data { get; private set; }
                 if (TMS.selectedUnitMoveRange.Contains(TMS.graph[cursorX, cursorY])) {
                     if (cursorX != TMS.selectedUnit.GetComponent<Unit>().x || cursorY != TMS.selectedUnit.GetComponent<Unit>().y) {
                         if (!unitPathExists&&TMS.selectedUnit.GetComponent<Unit>().movementQueue.Count==0) {                           
-                            unitPathToCursor = generateCursorRouteTo(cursorX, cursorY);
+                            unitPathToCursor = GenerateCursorRouteTo(cursorX, cursorY);
                             routeToX = cursorX;
                             routeToY = cursorY;
                             if (unitPathToCursor.Count != 0) {                                                                 
@@ -88,11 +85,11 @@ public GameData Data { get; private set; }
                                     }
                                     else if (i!=0 && (i+1)!=unitPathToCursor.Count) {
                                         //This is used to set the indicator for tiles excluding the first/last tile
-                                        setCorrectRouteWithInputAndOutput(nodeX, nodeY,i);
+                                        SetCorrectRouteWithInputAndOutput(nodeX, nodeY,i);
                                     }
                                     else if (i == unitPathToCursor.Count-1) {
                                         //This is used to set the indicator for the final tile;
-                                        setCorrectRouteFinalTile(nodeX, nodeY, i);
+                                        SetCorrectRouteFinalTile(nodeX, nodeY, i);
                                     }
                                     TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = true;
                                 } 
@@ -122,14 +119,6 @@ public GameData Data { get; private set; }
         currentTeamUI.SetText("Player " + (currentTeam+1).ToString() + " Phase");
     }
 
-    // has two gameobjects
-    // iterates through team gameobjects
-
-    // need to use gameobject of unit to check unit team
-    // set unit team to return team
-    // mapunits gameobject is irrelevant
-
-    // uses i to fit units into their teams
     // public GameObject returnTeam(int i) {
     //     GameObject teamToReturn = null;
     //     if (i == 0) {
@@ -141,7 +130,7 @@ public GameData Data { get; private set; }
     //     return teamToReturn;
     // }
 
-    public int returnTeam(GameObject unit) {
+    public int ReturnTeam(GameObject unit) {
         return unit.GetComponent<Unit>().teamNum;
     }
     
@@ -156,7 +145,7 @@ public GameData Data { get; private set; }
     //     }
     // }
 
-    public void resetUnitsMovements(int teamToReset) {
+    public void ResetUnitsMovements(int teamToReset) {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
             if (unit.GetComponent<Unit>().teamNum == teamToReset) {
@@ -200,17 +189,15 @@ public GameData Data { get; private set; }
             if (oldV == 0) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
                 playerPhaseText.SetText("Player 2 Phase");
-                Debug.Log("Banner slides left");
             }
             else {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
                 playerPhaseText.SetText("Player 1 Phase");
-                Debug.Log("Banner slides right");
             }
     }
 
     [Command(requiresAuthority = false)]
-    public void endTurn() {
+    public void EndTurn() {
         if (TMS.selectedUnit == null) {
             SwitchCurrentPlayer();
             if (currentTeam == 1) {
@@ -228,24 +215,18 @@ public GameData Data { get; private set; }
 
     [Command(requiresAuthority=false)]
     public void SwitchCurrentPlayer() {
-        resetUnitsMovements(currentTeam);
+        ResetUnitsMovements(currentTeam);
         //currentTeam = (currentTeam + 1) % 1;
         currentTeam++;
         if (currentTeam == numberOfTeams) {
             currentTeam = 0;
         }
         // resetUnitsMovements(returnTeam(currentTeam));
-        // currentTeam++;
-        // if (currentTeam == numberOfTeams) {
-        //     currentTeam = 0;
-        // } 
     }
 
     [ClientRpc]
-    public void checkIfUnitsRemain(GameObject unit, GameObject enemy) {
-        //  Debug.Log(team1.transform.childCount);
-        //  Debug.Log(team2.transform.childCount);
-        StartCoroutine(checkIfUnitsRemainCoroutine(unit,enemy));
+    public void CheckIfUnitsRemain(GameObject unit, GameObject enemy) {
+        StartCoroutine(CheckIfUnitsRemainCoroutine(unit,enemy));
     }
     
     public void CursorUIUpdate() {
@@ -349,43 +330,33 @@ public GameData Data { get; private set; }
         }
     }
 
-    public List<Node> generateCursorRouteTo(int x, int y) {
+    public List<Node> GenerateCursorRouteTo(int x, int y) {
         if (TMS.selectedUnit.GetComponent<Unit>().x == x && TMS.selectedUnit.GetComponent<Unit>().y == y) {
-            Debug.Log("clicked the same tile that the unit is standing on");
             currentPathForUnitRoute = new List<Node>();  
             return currentPathForUnitRoute;
         }
-        if (TMS.unitCanEnterTile(x, y) == false) {
-            //cant move into something so we can probably just return
-            //cant set this endpoint as our goal
+        if (TMS.UnitCanEnterTile(x, y) == false) {
             return null;
         }
 
-        //TMS.selectedUnit.GetComponent<UnitScript>().path = null;
         currentPathForUnitRoute = null;
-        //from wiki dijkstra's
         Dictionary<Node, float> dist = new Dictionary<Node, float>();
         Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
         Node source = TMS.graph[TMS.selectedUnit.GetComponent<Unit>().x, TMS.selectedUnit.GetComponent<Unit>().y];
         Node target = TMS.graph[x, y];
         dist[source] = 0;
         prev[source] = null;
-        //Unchecked nodes
         List<Node> unvisited = new List<Node>();
 
-        //Initialize
         foreach (Node n in TMS.graph) {
-            //Initialize to infite distance as we don't know the answer
-            //Also some places are infinity
             if (n != source) {
                 dist[n] = Mathf.Infinity;
                 prev[n] = null;
             }
             unvisited.Add(n);
         }
-        //if there is a node in the unvisited list lets check it
+
         while (unvisited.Count > 0) {
-            //u will be the unvisited node with the shortest distance
             Node u = null;
             foreach (Node possibleU in unvisited) {
                 if (u == null || dist[possibleU] < dist[u]) {
@@ -400,7 +371,6 @@ public GameData Data { get; private set; }
             unvisited.Remove(u);
 
             foreach (Node n in u.neighbours) {
-                //float alt = dist[u] + u.DistanceTo(n);
                 float alt = dist[u] + TMS.costToEnterTile(n.x, n.y);
                 if (alt < dist[n]) {
                     dist[n] = alt;
@@ -408,25 +378,21 @@ public GameData Data { get; private set; }
                 }
             }
         }
-        //if were here we found shortest path, or no path exists
         if (prev[target] == null) {
-            //No route;
             return null;
         }
         currentPathForUnitRoute = new List<Node>();
         Node curr = target;
 
-        //Step through the current path and add it to the chain
         while (curr != null) {
             currentPathForUnitRoute.Add(curr);
             curr = prev[curr];
         }
-        //Now currPath is from target to our source, we need to reverse it from source to target.
         currentPathForUnitRoute.Reverse();
         return currentPathForUnitRoute;
     }
 
-    public void resetQuad(GameObject quadToReset) {
+    public void ResetQuad(GameObject quadToReset) {
         quadToReset.GetComponent<Renderer>().material = UICursor;
         quadToReset.transform.eulerAngles = new Vector3(90, 0, 0); 
     }
@@ -438,7 +404,7 @@ public GameData Data { get; private set; }
         quadToManipulate.GetComponent<Renderer>().enabled = true;
     }
 
-    public Vector2 directionBetween(Vector2 currentVector, Vector2 nextVector) {
+    public Vector2 DirectionBetween(Vector2 currentVector, Vector2 nextVector) {
         Vector2 vectorDirection = (nextVector - currentVector).normalized;
         if (vectorDirection == Vector2.right) {
             return Vector2.right;
@@ -458,96 +424,79 @@ public GameData Data { get; private set; }
         }
     }
 
-    public void setCorrectRouteWithInputAndOutput(int nodeX,int nodeY,int i) {
+    public void SetCorrectRouteWithInputAndOutput(int nodeX,int nodeY,int i) {
         Vector2 previousTile = new Vector2(unitPathToCursor[i - 1].x + 1, unitPathToCursor[i - 1].y + 1);
         Vector2 currentTile = new Vector2(unitPathToCursor[i].x + 1, unitPathToCursor[i].y + 1);
         Vector2 nextTile = new Vector2(unitPathToCursor[i + 1].x + 1, unitPathToCursor[i + 1].y + 1);
-        Vector2 backToCurrentVector = directionBetween(previousTile, currentTile);
-        Vector2 currentToFrontVector = directionBetween(currentTile, nextTile);
-
-        //Right (UP/DOWN/RIGHT)
+        Vector2 backToCurrentVector = DirectionBetween(previousTile, currentTile);
+        Vector2 currentToFrontVector = DirectionBetween(currentTile, nextTile);
         if (backToCurrentVector == Vector2.right && currentToFrontVector == Vector2.right) {
-            //Debug.Log("[IN[R]]->[Out[R]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.right && currentToFrontVector == Vector2.up) {
-            //Debug.Log("[IN[R]]->[Out[UP]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.right && currentToFrontVector == Vector2.down) {
-            //Debug.Log("[IN[R]]->[Out[DOWN]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
-        //Left (UP/DOWN/LEFT)
         else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.left) {
-            //Debug.Log("[IN[L]]->[Out[L]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.up) {
-            //Debug.Log("[IN[L]]->[Out[UP]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.down) {
-            //Debug.Log("[IN[L]]->[Out[DOWN]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
-        //UP (UP/RIGHT/LEFT)
         else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.up) {
-            //Debug.Log("[IN[UP]]->[Out[UP]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.right) {
-            //Debug.Log("[IN[UP]]->[Out[R]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.left) {
-            //Debug.Log("[IN[UP]]->[Out[L]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
-        //DOWN (DOWN/RIGHT/LEFT)
         else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.down) {
-            //Debug.Log("[IN[DOWN]]->[Out[DOWN]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.right) {
-            //Debug.Log("[IN[DOWN]]->[Out[R]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.left) {
-            //Debug.Log("[IN[DOWN]]->[Out[L]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
@@ -555,34 +504,29 @@ public GameData Data { get; private set; }
         }
     }
 
-    public void setCorrectRouteFinalTile(int nodeX,int nodeY,int i) {
+    public void SetCorrectRouteFinalTile(int nodeX,int nodeY,int i) {
         Vector2 previousTile = new Vector2(unitPathToCursor[i - 1].x + 1, unitPathToCursor[i - 1].y + 1);
         Vector2 currentTile = new Vector2(unitPathToCursor[i].x + 1, unitPathToCursor[i].y + 1);
-        Vector2 backToCurrentVector = directionBetween(previousTile, currentTile);
-
+        Vector2 backToCurrentVector = DirectionBetween(previousTile, currentTile);
         if (backToCurrentVector == Vector2.right) {
-            //Debug.Log("[IN[R]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.left) {
-            //Debug.Log("[IN[L]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.up) {
-            //Debug.Log("[IN[U]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
         }
         else if (backToCurrentVector == Vector2.down) {
-            //Debug.Log("[IN[D]]");
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
@@ -590,7 +534,7 @@ public GameData Data { get; private set; }
         }
     }
 
-    public IEnumerator checkIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
+    public IEnumerator CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
         while (unit.GetComponent<Unit>().combatQueue.Count != 0) {
             yield return new WaitForEndOfFrame();
         }
@@ -606,7 +550,7 @@ public GameData Data { get; private set; }
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
         }
     }
-    public void win() {
+    public void Win() {
         displayWinnerUI.enabled = true;
         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Winner!");
     }
@@ -616,8 +560,6 @@ public GameData Data { get; private set; }
         public NewNetworkManager NetworkManager;
         public GameData Data;
 
-        //public Material material;
-
         public bool IsValid() {
             return Data != null && NetworkManager != null;
         }
@@ -626,18 +568,11 @@ public GameData Data { get; private set; }
     public void SetDependencies(Dependencies dependencies) {
         if (!dependencies.IsValid()) {
             Debug.LogError("Tried to setup with invalid dependencies");
-            // TODO exit to menu?
             return;
         }
 
         room = dependencies.NetworkManager;
         Data = dependencies.Data;
-        //material = dependencies.material;
-            
-        //Data.Init(this, config);
-        //Grid.Init(this);
-            
-        //StartCoroutine(AwaitNetworkedPlayerRoutine());
     }
 
     public void SetGamePlayer (NewNetworkGamePlayer player) {
@@ -656,11 +591,6 @@ public GameData Data { get; private set; }
         SetupPlayers();
         Data.NextTurn();
         Data.SetGameStarted();
-            
-        //Camera.ScrollTo(Grid.GetStartLocation(gamePlayer.ID));
-            
-        //Cells.RegisterCellLifecycleObserver(Data);
-            
         Debug.Log("Game started for server");
 
         foreach (var player in room.GamePlayers) {
@@ -670,10 +600,7 @@ public GameData Data { get; private set; }
 
     private void SetupPlayers() {
         foreach (var player in room.GamePlayers) {
-            //Grid.SetStartingLocation(player);
-            //Data.OnSuppliesChanged(player, config.startingSupply);
         }
-            //UI.UpdatePlayerInfo(room.GamePlayers);
     }
 
     public bool IsCurrentPlayer(int playerID) => Data.IsCurrentPlayer(playerID);

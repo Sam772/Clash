@@ -864,7 +864,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1042821803}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: endTurn
+        m_MethodName: EndTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2202,8 +2202,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1042821802}
   - component: {fileID: 1042821801}
-  - component: {fileID: 1042821803}
   - component: {fileID: 1042821805}
+  - component: {fileID: 1042821803}
   - component: {fileID: 1042821804}
   m_Layer: 0
   m_Name: GameManager
@@ -2305,7 +2305,6 @@ MonoBehaviour:
   currentTeam: 0
   team1: {fileID: 2121587343}
   team2: {fileID: 2067103251}
-  unitRefresh: {fileID: 0}
   unitBeingDisplayed: {fileID: 0}
   tileBeingDisplayed: {fileID: 0}
   displayingUnitInfo: 0

@@ -669,10 +669,10 @@ MonoBehaviour:
   y: 0
   visualMovementSpeed: 0.15
   unitWaitMaterial: {fileID: 2100000, guid: 3af884d40cf656044862445e371c7e6b, type: 2}
-  unitMaterial: {fileID: 2100000, guid: 335dc8a8c490d75428690c8da73002c2, type: 2}
+  unitMaterial: {fileID: 2100000, guid: 605f215d7720afb4ca822f905d2bc43a, type: 2}
+  unitTwoColour: {r: 1, g: 0, b: 0, a: 1}
   animator: {fileID: 0}
   tileBeingOccupied: {fileID: 0}
-  damagedParticle: {fileID: 1908652125826162151, guid: 66dc3b0b00d9ec2449372775c9528d29, type: 3}
   unitName: Captain
   moveSpeed: 2
   attackRange: 1

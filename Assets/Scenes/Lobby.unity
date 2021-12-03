@@ -1953,13 +1953,14 @@ MonoBehaviour:
   - {fileID: 6816094273420639370, guid: ff87f00f3a4239c48b653a59efc2d347, type: 3}
   - {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
   - {fileID: 3194674972596997603, guid: fa246a9c481de4843b1ea6d221b90d6b, type: 3}
+  - {fileID: 6392410202167415422, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
   minPlayers: 2
   menuScene: Assets/Scenes/Lobby.unity
   gameScene: Assets/Scenes/Start.unity
   playerTwoMat: {fileID: 2100000, guid: 335dc8a8c490d75428690c8da73002c2, type: 2}
   roomPlayerPrefab: {fileID: 2541264716250324250, guid: cdaa3d798f5fd4b46a68ca4ee75c98fe, type: 3}
   gamePlayerPrefab: {fileID: 1878441529161525201, guid: 58ff51323dda32d43a3378f9196a5c76, type: 3}
-  captainPrefab: {fileID: 0}
+  captainPrefab: {fileID: 6392410202167415423, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
   knightPrefab: {fileID: 43821925479923858, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
   archerPrefab: {fileID: 3194674972596997601, guid: fa246a9c481de4843b1ea6d221b90d6b, type: 3}
   gameDataPrefab: {fileID: 8563972802724201946, guid: ff87f00f3a4239c48b653a59efc2d347, type: 3}

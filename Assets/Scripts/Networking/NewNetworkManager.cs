@@ -134,16 +134,23 @@ public class NewNetworkManager : NetworkManager {
             var conn = GamePlayers[i].connectionToClient;
             // If Host (Player One)
             if (i == 1) {
-                int x = 3;
-                for (int j = 0; j < 3; j++) {
-                    Unit knight = Instantiate(knightPrefab, new Vector3(x++, 0.75f, 0), Quaternion.identity);
+                int x = 1;
+                for (int j = 0; j < 2; j++) {
+                    Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
                     NetworkServer.Spawn(knight.gameObject, conn);
                 }
+                int x2 = 1;
+                for (int j = 0; j < 2; j++) {
+                    Unit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 0), Quaternion.identity);
+                    NetworkServer.Spawn(archer.gameObject, conn);
+                }
+                Unit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 1), Quaternion.identity); 
+                NetworkServer.Spawn(captain.gameObject, conn);
                 // If Client (Player Two)
                 } else if (i == 0) {
-                    int x = 3;
-                    for (int j = 0; j < 3; j++) {
-                        Unit knight = Instantiate(knightPrefab, new Vector3(x++, 0.75f, 9), Quaternion.identity);
+                    int x = 1;
+                    for (int j = 0; j < 2; j++) {
+                        Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                         knight.GetComponent<Unit>().unitMaterial = playerTwoMat;
                         knight.GetComponent<Unit>().teamNum = 1;
@@ -154,11 +161,19 @@ public class NewNetworkManager : NetworkManager {
                         knight.GetComponent<MeshRenderer>().material = playerTwoMat;
                         //UpdateColour(knight);
                     }
-                    Unit archer = Instantiate(archerPrefab, new Vector3(3, 0.75f, 8), Quaternion.identity);
+                    int x2 = 1;
+                    for (int j = 0; j < 2; j++) {
+                    Unit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 9), Quaternion.identity);
                     NetworkServer.Spawn(archer.gameObject, conn);
                     archer.GetComponent<Unit>().unitMaterial = playerTwoMat;
                     archer.GetComponent<Unit>().teamNum = 1;
                     archer.GetComponent<MeshRenderer>().material = playerTwoMat;
+                    }
+                    Unit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 8), Quaternion.identity); 
+                    NetworkServer.Spawn(captain.gameObject, conn);
+                    captain.GetComponent<Unit>().unitMaterial = playerTwoMat;
+                    captain.GetComponent<Unit>().teamNum = 1;
+                    captain.GetComponent<MeshRenderer>().material = playerTwoMat;
                 }
         }
         var gameData = Instantiate(gameDataPrefab);
