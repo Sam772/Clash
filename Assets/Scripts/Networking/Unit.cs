@@ -16,12 +16,12 @@ public class Unit : NetworkBehaviour {
     public float visualMovementSpeed = .15f;
     public Material unitWaitMaterial;
     public Material unitMaterial;
-    [SyncVar]
+    [SyncVar(hook=nameof(ChangeColor))]
     public Color unitTwoColour = Color.red;
     public Animator animator;
     public GameObject tileBeingOccupied;
     public string unitName;
-    public int moveSpeed;    
+    public int moveSpeed;
     public int attackRange;
     public int attackDamage;
     public int maxHealthPoints;
@@ -69,6 +69,10 @@ public class Unit : NetworkBehaviour {
     public void LateUpdate() {
         healthBarCanvas.transform.forward = Camera.main.transform.forward;
         holder2D.transform.forward = Camera.main.transform.forward;
+    }
+
+    public void ChangeColor(Color oldColour, Color newColour) {
+        unitTwoColour = newColour;
     }
 
     public void MoveNextTile() {
@@ -125,14 +129,23 @@ public class Unit : NetworkBehaviour {
         }
     }
 
-    //[ClientRpc]
+    [ClientRpc]
     public void UpdateHealthUI() {
+        healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
+        hitPointsText.SetText(currentHealthPoints.ToString());
+        //UpdateHealthClient();
+    }
+
+    //[ClientRpc]
+    public void UpdateHealthClient() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
     }
 
-    // syncs over combat but still takes counters, object isnt destroyed and damage text isnt synced
+    // updates actual health server/client and healthbar on server
     [Command(requiresAuthority=false)]
+    // updates actual health server -> client and healthbar on server/client
+    //[ClientRpc]
     public void DealDamage(int x) {
         currentHealthPoints = currentHealthPoints - x;
         UpdateHealthUI();
@@ -198,8 +211,8 @@ public class Unit : NetworkBehaviour {
         CmdUpdateTileMap(x, y);
         }
 
-        //tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
-        //tileBeingOccupied = map.tilesOnMap[x, y];
+        tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
+        tileBeingOccupied = map.tilesOnMap[x, y];
         movementQueue.Dequeue();
     }
 

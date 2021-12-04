@@ -14,7 +14,6 @@ public class TileMap : NetworkBehaviour {
     public int[,] tiles;
 
     [Header("Map Units")]
-    public GameObject unitsOnBoard;
     public GameObject[,] tilesOnMap;
     public GameObject[,] quadOnMap;
     public GameObject[,] quadOnMapForUnitMovementDisplay;
@@ -181,13 +180,12 @@ public class TileMap : NetworkBehaviour {
     }
 
     public void SetIfTileIsOccupied() {
-        foreach (Transform team in unitsOnBoard.transform) {
-            foreach (Transform unitOnTeam in team) { 
-                int unitX = unitOnTeam.GetComponent<Unit>().x;
-                int unitY = unitOnTeam.GetComponent<Unit>().y;
-                unitOnTeam.GetComponent<Unit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
-                tilesOnMap[unitX, unitY].GetComponent<TileClick>().unitOnTile = unitOnTeam.gameObject;
-            }
+        Unit[] unitsList = FindObjectsOfType<Unit>();
+        foreach (Unit unitOnTeam in unitsList) { 
+            int unitX = unitOnTeam.GetComponent<Unit>().x;
+            int unitY = unitOnTeam.GetComponent<Unit>().y;
+            unitOnTeam.GetComponent<Unit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
+            tilesOnMap[unitX, unitY].GetComponent<TileClick>().unitOnTile = unitOnTeam.gameObject;
         }
     }
 
