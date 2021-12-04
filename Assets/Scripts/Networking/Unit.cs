@@ -129,23 +129,24 @@ public class Unit : NetworkBehaviour {
         }
     }
 
-    [ClientRpc]
+    //[ClientRpc]
     public void UpdateHealthUI() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
         //UpdateHealthClient();
     }
 
-    //[ClientRpc]
     public void UpdateHealthClient() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
     }
 
-    // updates actual health server/client and healthbar on server
-    [Command(requiresAuthority=false)]
     // updates actual health server -> client and healthbar on server/client
-    //[ClientRpc]
+    // [ClientRpc]
+
+    // updates actual health server/client and healthbar on server
+    // combat works properly when server initiates attacks
+    [Command(requiresAuthority=false)]
     public void DealDamage(int x) {
         currentHealthPoints = currentHealthPoints - x;
         UpdateHealthUI();
