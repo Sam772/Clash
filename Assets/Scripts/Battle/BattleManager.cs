@@ -43,14 +43,17 @@ public class BattleManager : NetworkBehaviour {
 
     public bool CheckIfDead(GameObject unitToCheck) {
         if (unitToCheck.GetComponent<Unit>().currentHealthPoints <= 0) {
+            Debug.Log("test1");
             return true;
         }
+        Debug.Log(unitToCheck.GetComponent<Unit>().currentHealthPoints);
+        Debug.Log("test2");
         return false;
     }
 
     public void DestroyObject(GameObject unitToDestroy) {
-        //Destroy(unitToDestroy);
-        NetworkServer.Destroy(unitToDestroy);
+        Destroy(unitToDestroy);
+        //NetworkServer.Destroy(unitToDestroy);
     }
 
     public IEnumerator Attack(GameObject unit, GameObject enemy) {

@@ -133,22 +133,21 @@ public class Unit : NetworkBehaviour {
     public void UpdateHealthUI() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
-        //UpdateHealthClient();
     }
 
-    public void UpdateHealthClient() {
-        healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
-        hitPointsText.SetText(currentHealthPoints.ToString());
-    }
-
-    // updates actual health server -> client and healthbar on server/client
-    // [ClientRpc]
-
-    // updates actual health server/client and healthbar on server
-    // combat works properly when server initiates attacks
     [Command(requiresAuthority=false)]
     public void DealDamage(int x) {
-        currentHealthPoints = currentHealthPoints - x;
+        //currentHealthPoints = currentHealthPoints - x;
+        Debug.Log("hi");
+        UpdateDamageClient(x);
+        //UpdateHealthUI();
+    }
+
+    [ClientRpc]
+    public void UpdateDamageClient(int damage) {
+        currentHealthPoints = currentHealthPoints - damage;
+        Debug.Log(damage);
+        Debug.Log(currentHealthPoints);
         UpdateHealthUI();
     }
     
@@ -165,7 +164,9 @@ public class Unit : NetworkBehaviour {
         }
     }
 
+    //[Command(requiresAuthority=false)]
     public void UnitDie() {
+        Debug.Log("sadge");
         if (holder2D.activeSelf) {
             StartCoroutine(FadeOut());
             StartCoroutine(CheckIfRoutinesRunning());     
@@ -176,7 +177,7 @@ public class Unit : NetworkBehaviour {
         while (combatQueue.Count>0) {
             yield return new WaitForEndOfFrame();
         }
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject);
     } 
 
     public IEnumerator FadeOut() {
