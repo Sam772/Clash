@@ -119,58 +119,21 @@ public GameData Data { get; private set; }
         currentTeamUI.SetText("Player " + (currentTeam+1).ToString() + " Phase");
     }
 
-    // public GameObject returnTeam(int i) {
-    //     GameObject teamToReturn = null;
-    //     if (i == 0) {
-    //         teamToReturn = team1;
-    //     }
-    //     else if (i == 1) {
-    //         teamToReturn = team2;
-    //     }
-    //     return teamToReturn;
-    // }
-
     public int ReturnTeam(GameObject unit) {
         return unit.GetComponent<Unit>().teamNum;
     }
-    
-    // public void resetUnitsMovements(GameObject teamToReset) {
-    //     // this is checking the child gameobjects of the team object
-    //     foreach (Transform unit in teamToReset.transform) {
-    //         //if (unit.GetComponent<Unit>().teamNum == 0)
-    //         unit.GetComponent<Unit>().MoveAgain();
-    //         // unitRefresh = GameObject.FindGameObjectWithTag("Unit");
-    //         // for (int i=0; i < unitRefresh.length; i++)
-    //         // Debug.Log(unitRefresh(i));
-    //     }
-    // }
 
+    [ClientRpc]
     public void ResetUnitsMovements(int teamToReset) {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
-            if (unit.GetComponent<Unit>().teamNum == teamToReset) {
-                unit.GetComponent<Unit>().MoveAgain();
-            }
+            // if (unit.GetComponent<Unit>().teamNum == teamToReset) {
+            //     Debug.Log(teamToReset);
+            //     unit.GetComponent<Unit>().MoveAgain();
+            // } else
+            unit.GetComponent<Unit>().MoveAgain();
         }
     }
-
-    // public void TeamHealthbarColorUpdate() {
-    //     for(int i = 0; i < numberOfTeams; i++) {
-    //         GameObject team = returnTeam(i);
-    //         if(team == returnTeam(currentTeam)) {
-    //             // iterating children
-    //             foreach (Transform unit in team.transform) {
-    //                 unit.GetComponent<Unit>().ChangeHealthBarColour(0);
-    //             }
-    //         }
-    //         else {
-    //             // iterating children
-    //             foreach (Transform unit in team.transform) {
-    //                 unit.GetComponent<Unit>().ChangeHealthBarColour(1);
-    //             }
-    //         }
-    //     }
-    // }
 
     public void TeamHealthbarColorUpdate() {
         Unit[] unitsList = FindObjectsOfType<Unit>();
@@ -226,7 +189,12 @@ public GameData Data { get; private set; }
 
     [ClientRpc]
     public void CheckIfUnitsRemain(GameObject unit, GameObject enemy) {
-        StartCoroutine(CheckIfUnitsRemainCoroutine(unit,enemy));
+        StartCoroutine(CheckIfUnitsRemainCoroutine(unit, enemy));
+    }
+
+    [Command(requiresAuthority=false)]
+    public void UnitsRemainClient(GameObject unit, GameObject enemy) {
+        CheckIfUnitsRemain(unit, enemy);
     }
     
     public void CursorUIUpdate() {
@@ -550,6 +518,24 @@ public GameData Data { get; private set; }
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
         }
     }
+
+    // Unit[] unitsList = FindObjectsOfType<Unit>();
+    //     foreach (Unit units in unitsList) {
+    //         if (units.GetComponent<Unit>().teamNum == 0) {
+    //             if (unitsList.Length == 0) {
+    //                 displayWinnerUI.enabled = true;
+    //                 displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
+    //             }
+    //         }
+    //         if (units.GetComponent<Unit>().teamNum == 1) {
+    //             if (!units) {
+    //                 displayWinnerUI.enabled = true;
+    //                 displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+    //             }
+    //         }
+    //     }
+    // }
+    
     public void Win() {
         displayWinnerUI.enabled = true;
         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Winner!");

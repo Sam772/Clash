@@ -38,6 +38,7 @@ public class Unit : NetworkBehaviour {
     public Image damageBackdrop;
     public TileMap map;
     public GameObject holder2D;
+    private BattleManager BMS;
 
     //--------------------------------------
 
@@ -129,25 +130,29 @@ public class Unit : NetworkBehaviour {
         }
     }
 
-    //[ClientRpc]
     public void UpdateHealthUI() {
         healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
     }
 
     [Command(requiresAuthority=false)]
-    public void DealDamage(int x) {
-        //currentHealthPoints = currentHealthPoints - x;
-        Debug.Log("hi");
-        UpdateDamageClient(x);
+    public void DealDamage(int damage) {
+        currentHealthPoints = currentHealthPoints - damage;
+        if (!isServer) {
+        //currentHealthPoints = currentHealthPoints - damage;
+        //Debug.Log("health: " + currentHealthPoints);
+        }
+        UpdateDamageToClient(damage);
         //UpdateHealthUI();
     }
 
     [ClientRpc]
-    public void UpdateDamageClient(int damage) {
-        currentHealthPoints = currentHealthPoints - damage;
-        Debug.Log(damage);
-        Debug.Log(currentHealthPoints);
+    public void UpdateDamageToClient(int damageToClient) {
+        if (!isServer) {
+        currentHealthPoints = currentHealthPoints - damageToClient;
+        }
+        Debug.Log("damage dealt: " + damageToClient);
+        Debug.Log("hp of attacked unit: " + currentHealthPoints);
         UpdateHealthUI();
     }
     
@@ -164,7 +169,6 @@ public class Unit : NetworkBehaviour {
         }
     }
 
-    //[Command(requiresAuthority=false)]
     public void UnitDie() {
         Debug.Log("sadge");
         if (holder2D.activeSelf) {

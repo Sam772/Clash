@@ -12,11 +12,12 @@ public class BattleManager : NetworkBehaviour {
         int recipientAtt = recipientUnit.attackDamage;
         if (initiatorUnit.attackRange == recipientUnit.attackRange) {
             recipientUnit.DealDamage(initiatorAtt);
+            //recipientUnit.UpdateDamageToClient(initiatorAtt);
             if (CheckIfDead(recipient)) {
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
                 battleStatus = false;
-                GMS.CheckIfUnitsRemain(initiator, recipient);
+                GMS.UnitsRemainClient(initiator, recipient);
                 return;
             }
             initiatorUnit.DealDamage(recipientAtt);
@@ -24,7 +25,7 @@ public class BattleManager : NetworkBehaviour {
                 initiator.transform.parent = null;
                 initiatorUnit.UnitDie();
                 battleStatus = false;
-                GMS.CheckIfUnitsRemain(initiator, recipient);
+                GMS.UnitsRemainClient(initiator, recipient);
                 return;
             }
         }
@@ -34,7 +35,7 @@ public class BattleManager : NetworkBehaviour {
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
                 battleStatus = false;
-                GMS.CheckIfUnitsRemain(initiator, recipient);
+                GMS.UnitsRemainClient(initiator, recipient);
                 return;
             }
         }
@@ -43,11 +44,12 @@ public class BattleManager : NetworkBehaviour {
 
     public bool CheckIfDead(GameObject unitToCheck) {
         if (unitToCheck.GetComponent<Unit>().currentHealthPoints <= 0) {
-            Debug.Log("test1");
+            Debug.Log("enemy dead");
             return true;
         }
-        Debug.Log(unitToCheck.GetComponent<Unit>().currentHealthPoints);
-        Debug.Log("test2");
+        // current health of enemy not being updated from client here
+        Debug.Log("current health of enemy: " + unitToCheck.GetComponent<Unit>().currentHealthPoints);
+        Debug.Log("enemy still alive");
         return false;
     }
 
