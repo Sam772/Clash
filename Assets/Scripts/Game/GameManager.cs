@@ -509,13 +509,20 @@ public GameData Data { get; private set; }
         while (enemy.GetComponent<Unit>().combatQueue.Count != 0) {
             yield return new WaitForEndOfFrame();
         }
-        if (team1.transform.childCount == 0) {
-            displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
-        }
-        else if (team2.transform.childCount == 0) {
-            displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+        Unit[] unitsList = FindObjectsOfType<Unit>();
+        foreach (Unit units in unitsList) {
+            if (units.GetComponent<Unit>().teamNum == 0) {
+                if (unitsList.Length == 5) {
+                    displayWinnerUI.enabled = true;
+                    displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
+                }
+            }
+            if (units.GetComponent<Unit>().teamNum == 1) {
+                if (unitsList.Length == 6) {
+                    displayWinnerUI.enabled = true;
+                    displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+                }
+            }
         }
     }
 
@@ -534,7 +541,15 @@ public GameData Data { get; private set; }
     //             }
     //         }
     //     }
-    // }
+
+    // if (team1.transform.childCount == 0) {
+    //         displayWinnerUI.enabled = true;
+    //         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
+    //     }
+    //     else if (team2.transform.childCount == 0) {
+    //         displayWinnerUI.enabled = true;
+    //         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+    //     }
     
     public void Win() {
         displayWinnerUI.enabled = true;
