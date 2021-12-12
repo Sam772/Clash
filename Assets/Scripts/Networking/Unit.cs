@@ -95,7 +95,7 @@ public class Unit : NetworkBehaviour {
         path = null;
         SetMovementState(0);
         completedMovement = false;
-        gameObject.GetComponentInChildren<Renderer>().material = unitMaterial;
+        gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
 
     public MovementStates GetMovementStateEnum(int i) {
@@ -157,7 +157,7 @@ public class Unit : NetworkBehaviour {
     }
     
     public void Wait() {
-        gameObject.GetComponentInChildren<Renderer>().material = unitWaitMaterial;
+        gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.gray;
     }
 
     public void ChangeHealthBarColour(int i) {
