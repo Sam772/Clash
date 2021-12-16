@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: 9c1da695f98c8294eb436b0b03ff9ff3
   - enabled: 1
-    path: Assets/Scenes/Start.unity
+    path: Assets/Scenes/MapOne.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

@@ -1,10 +1,10 @@
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Mirror;
-using System;
 using UnityEngine.SceneManagement;
+using Mirror;
 
 public class NewNetworkManager : NetworkManager {
 
@@ -12,22 +12,14 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private int minPlayers = 2;
     [Scene] [SerializeField] private string menuScene;
     [Scene] [SerializeField] private string gameScene;
-
-    [SerializeField] private Material playerTwoMat;
     [SerializeField] private NewNetworkRoomPlayer roomPlayerPrefab;
     [SerializeField] private NewNetworkGamePlayer gamePlayerPrefab;
-
     [SerializeField] private Unit captainPrefab;
     [SerializeField] private Unit knightPrefab;
     [SerializeField] private Unit archerPrefab;
-
     private Material unitTwoMaterial;
-
-    //[SerializeField] private PlayerManager prefab;
-    //[SerializeField] private TileMap boardPrefab;
     [SerializeField] private GameData gameDataPrefab;
     #pragma warning restore 649
-
     public readonly List<NewNetworkRoomPlayer> RoomPlayers = new List<NewNetworkRoomPlayer>();
     public readonly List<NewNetworkGamePlayer> GamePlayers = new List<NewNetworkGamePlayer>();
     public GameManager Game { get; private set; }
@@ -83,15 +75,6 @@ public class NewNetworkManager : NetworkManager {
         if (SceneManager.GetActiveScene().path == menuScene) {
             if (!IsLobbyReady()) return;
                 ServerChangeScene(gameScene);
-        }
-    }
-
-    public void ConnectToTestServer(bool connectAsHost) {
-        if (connectAsHost) {
-            StartCoroutine(SetupTestServerRoutine());
-        }
-        else {
-            StartClient();
         }
     }
 
@@ -152,27 +135,17 @@ public class NewNetworkManager : NetworkManager {
                     for (int j = 0; j < 2; j++) {
                         Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
-                        // knight.GetComponent<Unit>().unitMaterial = playerTwoMat;
                         knight.GetComponent<Unit>().teamNum = 1;
-                        // unitTwoMaterial = new Material(knight.GetComponent<MeshRenderer>().material);
-                        // knight.GetComponent<Unit>().unitTwoColour = Color.green;
-                        // unitTwoMaterial.color = knight.GetComponent<Unit>().unitTwoColour;
-                        // knight.GetComponent<MeshRenderer>().material = unitTwoMaterial;
-                        //knight.GetComponent<MeshRenderer>().material = playerTwoMat;
                     }
                     int x2 = 1;
                     for (int j = 0; j < 2; j++) {
                     Unit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 9), Quaternion.identity);
                     NetworkServer.Spawn(archer.gameObject, conn);
-                    //archer.GetComponent<Unit>().unitMaterial = playerTwoMat;
                     archer.GetComponent<Unit>().teamNum = 1;
-                    //archer.GetComponent<MeshRenderer>().material = playerTwoMat;
                     }
                     Unit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 8), Quaternion.identity); 
                     NetworkServer.Spawn(captain.gameObject, conn);
-                    //captain.GetComponent<Unit>().unitMaterial = playerTwoMat;
                     captain.GetComponent<Unit>().teamNum = 1;
-                    //captain.GetComponent<MeshRenderer>().material = playerTwoMat;
                 }
         }
         var gameData = Instantiate(gameDataPrefab);

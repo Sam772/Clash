@@ -1,5 +1,5 @@
 # Clash-Project
-Some random game.
+A networked multiplayer turn based game that is currently being made using unity (WIP)
 
 Unity Version:
 -----------------------------------------------------------------
