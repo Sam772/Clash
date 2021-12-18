@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour {
 
     #pragma warning disable 649
-    [SerializeField] private TitleScreen titleScreen;
+    [SerializeField] private MainScreen mainScreen;
+    [SerializeField] private PlayScreen playScreen;
     [SerializeField] private HostScreen hostScreen;
     [SerializeField] private JoinScreen joinScreen;
     [SerializeField] private Lobby lobby;
@@ -22,16 +21,17 @@ public class MainMenu : MonoBehaviour {
 
     private void Start() {
         networkManager.RegisterMainMenu(this);
-            
-        titleScreen.Setup(this);
+        mainScreen.Setup(this);
+        playScreen.Setup(this);
         hostScreen.Setup(this);
         joinScreen.Setup(this);
         lobby.Setup(this);
     }
 
+    public void PlayGameClicked() => ShowScreen(playScreen);
     public void HostGameClicked() => ShowScreen(hostScreen);
     public void JoinGameClicked() => ShowScreen(joinScreen);
-    public void ReturnToMainScreenClicked() => ShowScreen(titleScreen);
+    public void ReturnToMainScreenClicked() => ShowScreen(mainScreen);
     public void ShowLobby() => ShowScreen(lobby);
         
     public void ExitGameClicked() {
@@ -57,7 +57,8 @@ public class MainMenu : MonoBehaviour {
             
         if (screen != lobby) lobby.Hide();
         if (screen != hostScreen) hostScreen.Hide();
-        if (screen != titleScreen) titleScreen.Hide();
+        if (screen != playScreen) playScreen.Hide();
+        if (screen != mainScreen) mainScreen.Hide();
         if (screen != joinScreen) joinScreen.Hide();
             
         screen.Show();
