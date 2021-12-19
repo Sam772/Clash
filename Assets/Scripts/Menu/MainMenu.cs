@@ -4,6 +4,7 @@ public class MainMenu : MonoBehaviour {
 
     #pragma warning disable 649
     [SerializeField] private MainScreen mainScreen;
+    [SerializeField] private MapSelectionScreen mapSelectionScreen;
     [SerializeField] private PlayScreen playScreen;
     [SerializeField] private HostScreen hostScreen;
     [SerializeField] private JoinScreen joinScreen;
@@ -23,12 +24,14 @@ public class MainMenu : MonoBehaviour {
         networkManager.RegisterMainMenu(this);
         mainScreen.Setup(this);
         playScreen.Setup(this);
+        mapSelectionScreen.Setup(this);
         hostScreen.Setup(this);
         joinScreen.Setup(this);
         lobby.Setup(this);
     }
 
-    public void PlayGameClicked() => ShowScreen(playScreen);
+    public void PlayGameClicked() => ShowScreen(mapSelectionScreen);
+    public void MapOneClicked() => ShowScreen(playScreen);
     public void HostGameClicked() => ShowScreen(hostScreen);
     public void JoinGameClicked() => ShowScreen(joinScreen);
     public void ReturnToMainScreenClicked() => ShowScreen(mainScreen);
@@ -58,6 +61,7 @@ public class MainMenu : MonoBehaviour {
         if (screen != lobby) lobby.Hide();
         if (screen != hostScreen) hostScreen.Hide();
         if (screen != playScreen) playScreen.Hide();
+        if (screen != mapSelectionScreen) mapSelectionScreen.Hide();
         if (screen != mainScreen) mainScreen.Hide();
         if (screen != joinScreen) joinScreen.Hide();
             
