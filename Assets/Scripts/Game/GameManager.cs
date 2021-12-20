@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using TMPro;
 using Mirror;
 
 public class GameManager : NetworkBehaviour {
-public GameData Data { get; private set; }
+    public GameData Data { get; private set; }
     private NewNetworkManager room;
     private NewNetworkGamePlayer gamePlayer;
 
@@ -353,18 +352,6 @@ public GameData Data { get; private set; }
         return currentPathForUnitRoute;
     }
 
-    public void ResetQuad(GameObject quadToReset) {
-        quadToReset.GetComponent<Renderer>().material = UICursor;
-        quadToReset.transform.eulerAngles = new Vector3(90, 0, 0); 
-    }
-
-    public void UIunitRouteArrowDisplay(Vector2 cursorPos,Vector3 arrowRotationVector) {
-        GameObject quadToManipulate = TMS.quadOnMapForUnitMovementDisplay[(int)cursorPos.x, (int)cursorPos.y];
-        quadToManipulate.transform.eulerAngles = arrowRotationVector;
-        quadToManipulate.GetComponent<Renderer>().material = UIunitRouteArrow;
-        quadToManipulate.GetComponent<Renderer>().enabled = true;
-    }
-
     public Vector2 DirectionBetween(Vector2 currentVector, Vector2 nextVector) {
         Vector2 vectorDirection = (nextVector - currentVector).normalized;
         if (vectorDirection == Vector2.right) {
@@ -543,8 +530,6 @@ public GameData Data { get; private set; }
     //         displayWinnerUI.enabled = true;
     //         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
     //     }
-    
-    //------------------------------------------------------
 
     public struct Dependencies {
         public NewNetworkManager NetworkManager;
@@ -569,7 +554,7 @@ public GameData Data { get; private set; }
         gamePlayer = player;
     }
 
-    public void StartGameClient() { 
+    public void StartGameClient() {
         Debug.Log("Game started for client");
     }
 }

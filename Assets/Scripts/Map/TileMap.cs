@@ -44,23 +44,9 @@ public class TileMap : NetworkBehaviour {
     public GameObject previousOccupiedTile;
 
     [Header("Highlight Materials")]
-    public Material redUIMat;
-    public Material blueUIMat;
-//-----------------------------------------------
-    public int PlayerId;
-    public NewNetworkGamePlayer Owner;
-    public int ID;
-    protected GameData GameData;
-
-    public void Init(GameData data, NewNetworkGamePlayer owner) {
-        GameData = data;
-        Owner = owner;
-        PlayerId = Owner.ID;
-        OnInit();
-    }
-
-    protected virtual void OnInit() {}
-//-----------------------------------------------
+    public Material enemyRangeUIMat;
+    public Material movementTileUIMat;
+    
     private void Start() {
         GenerateMapInfo();
         GenerateMapVisuals();
@@ -69,7 +55,6 @@ public class TileMap : NetworkBehaviour {
     }
 
     private void Update() {
-        // moves from here but crashes for having no tileclick
         //MouseClickToSelectUnit();
         if (Input.GetMouseButtonDown(0)) {
             if (selectedUnit == null) {
@@ -553,14 +538,14 @@ public class TileMap : NetworkBehaviour {
 
     public void HighlightMovementRange(HashSet<Node> movementToHighlight) {
         foreach (Node n in movementToHighlight) {
-            quadOnMap[n.x, n.y].GetComponent<Renderer>().material = blueUIMat;
+            quadOnMap[n.x, n.y].GetComponent<Renderer>().material = movementTileUIMat;
             quadOnMap[n.x, n.y].GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
     public void HighlightEnemiesInRange(HashSet<Node> enemiesToHighlight) {
         foreach (Node n in enemiesToHighlight) {
-            quadOnMap[n.x, n.y].GetComponent<Renderer>().material = redUIMat;
+            quadOnMap[n.x, n.y].GetComponent<Renderer>().material = enemyRangeUIMat;
             quadOnMap[n.x, n.y].GetComponent<MeshRenderer>().enabled = true;
         }
     }

@@ -2583,7 +2583,7 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 30
   offlineScene: 
-  onlineScene: 
+  onlineScene: Assets/Scenes/MenuScreen.unity
   transport: {fileID: 1097246244}
   networkAddress: localhost
   maxConnections: 4
@@ -2598,6 +2598,14 @@ MonoBehaviour:
   - {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
   - {fileID: 3194674972596997603, guid: fa246a9c481de4843b1ea6d221b90d6b, type: 3}
   - {fileID: 6392410202167415422, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
+  showRoomGUI: 1
+  minPlayers: 2
+  roomPlayerPrefab: {fileID: -3976137953698114351, guid: cdaa3d798f5fd4b46a68ca4ee75c98fe, type: 3}
+  RoomScene: Assets/Scenes/MenuScreen.unity
+  GameplayScene: Assets/Scenes/MapOne.unity
+  _allPlayersReady: 0
+  roomSlots: []
+  clientIndex: 0
   minPlayers: 2
   menuScene: Assets/Scenes/MenuScreen.unity
   gameScene: Assets/Scenes/MapOne.unity

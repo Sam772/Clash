@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 public class JoinScreen : MenuScreen {
     #pragma warning disable 649
     [SerializeField] private TMP_InputField playerNameInput;
@@ -30,8 +31,6 @@ public class JoinScreen : MenuScreen {
         networkManager.StartClient();
 
         joinLobbyButton.interactable = false;
-            
-        // TODO restore on disconnect
     }
 
     public void ResetValidityStates() {

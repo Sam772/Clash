@@ -86,9 +86,7 @@ GameObject:
   - component: {fileID: 886710360797804643}
   - component: {fileID: 7623186966887571014}
   - component: {fileID: 3124279320382800521}
-  - component: {fileID: 6986377212324392935}
   - component: {fileID: 886710360797804644}
-  - component: {fileID: 979558877458657975}
   m_Layer: 0
   m_Name: UnitPrefab
   m_TagString: Unit
@@ -157,22 +155,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &6986377212324392935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886710360797804645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a5881ec1d5b5c54b9cf85d7805a6b63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  ID: 0
-  IsCurrentPlayer: 0
 --- !u!114 &886710360797804644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  teamNum: 0
+  team: 0
   x: 0
   y: 0
   visualMovementSpeed: 0.15
@@ -210,14 +192,6 @@ MonoBehaviour:
   holder2D: {fileID: 3999233001058480961}
   unitMoveState: 0
   completedMovement: 0
---- !u!33 &979558877458657975
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886710360797804645}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &886710361207682891
 GameObject:
   m_ObjectHideFlags: 0

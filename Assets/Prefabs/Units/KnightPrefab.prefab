@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 43821925479923861}
   - component: {fileID: 7286425654824838832}
   - component: {fileID: -6373087350865773953}
-  - component: {fileID: 7791522712482125585}
   - component: {fileID: 43821925479923858}
   - component: {fileID: 93874331256932929}
   m_Layer: 0
@@ -157,22 +156,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &7791522712482125585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43821925479923859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a5881ec1d5b5c54b9cf85d7805a6b63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  ID: 0
-  IsCurrentPlayer: 0
 --- !u!114 &43821925479923858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  teamNum: 0
+  team: 0
   x: 0
   y: 0
   visualMovementSpeed: 0.15
@@ -199,7 +182,7 @@ MonoBehaviour:
   attackDamage: 3
   maxHealthPoints: 5
   currentHealthPoints: 5
-  unitSprite: {fileID: 21300000, guid: ba0123d8f97c1b041bf0a6bfc291cbdd, type: 3}
+  unitSprite: {fileID: 21300000, guid: 8b44ae8904d4ca046869f1e731a7763e, type: 3}
   healthBarCanvas: {fileID: 43821925669178094}
   hitPointsText: {fileID: 43821926805037719}
   healthBar: {fileID: 43821925364857777}

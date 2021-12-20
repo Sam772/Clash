@@ -53,11 +53,6 @@ public class BattleManager : NetworkBehaviour {
         return false;
     }
 
-    public void DestroyObject(GameObject unitToDestroy) {
-        Destroy(unitToDestroy);
-        //NetworkServer.Destroy(unitToDestroy);
-    }
-
     public IEnumerator Attack(GameObject unit, GameObject enemy) {
         battleStatus = true;
         float elapsedTime = 0;
@@ -92,11 +87,5 @@ public class BattleManager : NetworkBehaviour {
             yield return new WaitForEndOfFrame();
         }
         unit.GetComponent<Unit>().Wait();
-    }
-
-    public Vector3 GetDirection(GameObject unit, GameObject enemy) {
-        Vector3 startingPos = unit.transform.position;
-        Vector3 endingPos = enemy.transform.position;
-        return (((endingPos - startingPos) / (endingPos - startingPos).magnitude)).normalized;
     }
 }

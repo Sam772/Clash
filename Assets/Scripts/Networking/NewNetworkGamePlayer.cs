@@ -1,8 +1,3 @@
-using System;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Mirror;
 
 public class NewNetworkGamePlayer : NetworkBehaviour {
@@ -13,10 +8,8 @@ public class NewNetworkGamePlayer : NetworkBehaviour {
     
     [SyncVar]
     public int ID;
-    public bool IsCurrentPlayer = false;
     private NewNetworkManager room;
     private GameManager game;
-    public string DisplayName => displayName;
 
     public override void OnStartClient() {
         DontDestroyOnLoad(gameObject);
@@ -47,16 +40,7 @@ public class NewNetworkGamePlayer : NetworkBehaviour {
         this.displayName = displayName;
     }
 
-    public void UpdateCurrentPlayerStatus(bool isCurrentPlayer) {
-        IsCurrentPlayer = isCurrentPlayer;
-    }
-
     private void HandleDisplayNameChanged(string oldName, string newName) {
         if (game == null) return;
-    }
-
-    [ClientRpc]
-    public void RpcNotifyGameStart() {
-        game.StartGameClient();
     }
 }
