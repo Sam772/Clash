@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
-
 public class NewNetworkManager : NetworkManager {
 
     #pragma warning disable 649
@@ -26,7 +25,6 @@ public class NewNetworkManager : NetworkManager {
     private MainMenu mainMenu;
     private GameManager.Dependencies gameManagerDependencies;
     private bool isStartGameActioned;
-    private bool isAllPlayersLoadedInGame;
 
     public override void Awake() {
         base.Awake();
@@ -78,19 +76,6 @@ public class NewNetworkManager : NetworkManager {
         }
     }
 
-    private IEnumerator SetupTestServerRoutine() {
-        StartHost();
-        while (GamePlayers.Count < minPlayers) {
-            Debug.Log("[Test Server] waiting for second player");
-            yield return new WaitForSeconds(1f);
-        }
-        SetupGame();
-        GamePlayers[0].SetDisplayName("Host");
-        GamePlayers[0].SetPlayerId(1);
-        GamePlayers[1].SetDisplayName("Client");
-        GamePlayers[1].SetPlayerId(2);
-    }
-
     public override void ServerChangeScene(string newSceneName) {
         if (gameScene == newSceneName) {
             isStartGameActioned = true;
@@ -135,17 +120,17 @@ public class NewNetworkManager : NetworkManager {
                     for (int j = 0; j < 2; j++) {
                         Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
-                        knight.GetComponent<Unit>().teamNum = 1;
+                        knight.GetComponent<Unit>().team = 1;
                     }
                     int x2 = 1;
                     for (int j = 0; j < 2; j++) {
                     Unit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 9), Quaternion.identity);
                     NetworkServer.Spawn(archer.gameObject, conn);
-                    archer.GetComponent<Unit>().teamNum = 1;
+                    archer.GetComponent<Unit>().team = 1;
                     }
                     Unit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 8), Quaternion.identity); 
                     NetworkServer.Spawn(captain.gameObject, conn);
-                    captain.GetComponent<Unit>().teamNum = 1;
+                    captain.GetComponent<Unit>().team = 1;
                 }
         }
         var gameData = Instantiate(gameDataPrefab);
@@ -161,13 +146,6 @@ public class NewNetworkManager : NetworkManager {
     private void CheckGameManagerDependencies() {
         if (gameManagerDependencies.IsValid()) {
             StartCoroutine(SetDependenciesAfterGameManagerInstantiated());
-        }
-    }
-
-    [Server]
-    public void UpdatePlayerReady() {
-        if (GamePlayers.Count == minPlayers && GamePlayers.All(p => p.IsReady)) {
-            Game.StartGameServer();
         }
     }
 

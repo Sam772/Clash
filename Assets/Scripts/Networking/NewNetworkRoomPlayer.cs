@@ -4,11 +4,9 @@ using UnityEngine;
 using Mirror;
 
 public class NewNetworkRoomPlayer : NetworkBehaviour, Lobby.IObserver{
-     public bool IsLeader = false;
-        
+    public bool IsLeader = false;
     [SyncVar(hook = nameof(HandleReadyStatusChanged))]
     public bool IsReady = false;
-        
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string DisplayName;
     private NewNetworkManager room;

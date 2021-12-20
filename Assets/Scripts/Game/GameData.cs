@@ -6,7 +6,6 @@ using System.Linq;
 using System;
 
 public class GameData : NetworkBehaviour {
-    private GameManager game;
     private NewNetworkManager room;
     private readonly List<PlayerData> playerData = new List<PlayerData>();
     private PlayerData currentPlayer;
@@ -19,10 +18,6 @@ public class GameData : NetworkBehaviour {
     [SyncVar] private GameStates state = GameStates.Initializing;
 
     public bool IsRunning => state == GameStates.Started;
-        
-    public GameConfig Config { get; private set; }
-
-    public bool IsCurrentPlayer(int playerID) => currentPlayer != null && currentPlayer.Player.ID == playerID;
 
     public override void OnStartClient() {
         room = FindObjectOfType<NewNetworkManager>();
@@ -41,12 +36,6 @@ public class GameData : NetworkBehaviour {
         playerData.RemoveAt(playerData.FindIndex(p => p.Player.ID == player.ID));
     }
 
-    public void Init(GameManager game, GameConfig config) {
-        this.game = game;
-        Config = config;
-        playerData.ForEach(d => {});
-    }
-
     public void SetGameStarted() {
         state = GameStates.Started;
     }
@@ -55,12 +44,7 @@ public class GameData : NetworkBehaviour {
         if (!isServer) return;
         var player = SetNextPlayer();
         if (player.TurnNumber > 1) {
-            //GenerateIncome(player);
         }
-    }
-
-    public PlayerData GetPlayerData(NewNetworkGamePlayer player) {
-        return playerData.First(p => p.Player.ID == player.ID);
     }
 
     private PlayerData SetNextPlayer() {
@@ -88,15 +72,6 @@ public class GameData : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcGameWon(Int16 winningPlayerId) {
-        var winner = playerData.First(p => p.Player.ID == winningPlayerId);
-        //game.UI.ShowWinner(winner);
-        currentPlayer.Player.IsCurrentPlayer = false;
-        currentPlayer = null;
-        //game.UI.SetPlayerTurn(null);
-    }
-
-    [ClientRpc]
     private void RpcSetCurrentPlayer(Int16 playerId, Int16 turnNumber) {
         currentPlayer = playerData.First(p => p.Player.ID == playerId);
         currentPlayer.TurnNumber = turnNumber;
@@ -108,11 +83,5 @@ public class GameData : NetworkBehaviour {
             }
             p.Player.UpdateCurrentPlayerStatus(isCurrentPlayer);
         }
-        //game.UI.SetPlayerTurn(currentPlayer);
-        //game.Cells.OnNewTurn(currentPlayer);
-    }
-
-    private PlayerData GetPlayerFromId(int id) {
-        return playerData.FirstOrDefault(data => data.Player.ID == id);
     }
 }

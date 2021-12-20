@@ -6,7 +6,7 @@ using Mirror;
 using TMPro;
 public class Unit : NetworkBehaviour {
     [SyncVar]
-    public int teamNum;
+    public int team;
     [SyncVar]
     public int x;
     [SyncVar]
@@ -14,10 +14,6 @@ public class Unit : NetworkBehaviour {
     public Queue<int> movementQueue;
     public Queue<int> combatQueue;
     public float visualMovementSpeed = .15f;
-    public Material unitWaitMaterial;
-    public Material unitMaterial;
-    [SyncVar(hook=nameof(ChangeColor))]
-    public Color unitTwoColour = Color.red;
     public Animator animator;
     public GameObject tileBeingOccupied;
     public string unitName;
@@ -39,14 +35,6 @@ public class Unit : NetworkBehaviour {
     public TileMap map;
     public GameObject holder2D;
     private BattleManager BMS;
-
-    //--------------------------------------
-
-    public void SetupUnit(GameData data, int playerId) {
-
-    }
-
-    //--------------------------------------
     public enum MovementStates {
         Unselected,
         Selected,
@@ -70,10 +58,6 @@ public class Unit : NetworkBehaviour {
     public void LateUpdate() {
         healthBarCanvas.transform.forward = Camera.main.transform.forward;
         holder2D.transform.forward = Camera.main.transform.forward;
-    }
-
-    public void ChangeColor(Color oldColour, Color newColour) {
-        unitTwoColour = newColour;
     }
 
     public void MoveNextTile() {
@@ -113,7 +97,6 @@ public class Unit : NetworkBehaviour {
         }
         return MovementStates.Unselected;
     }
-
 
     public void SetMovementState(int i) {
         if (i == 0) {

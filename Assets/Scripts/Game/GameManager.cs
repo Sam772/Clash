@@ -7,10 +7,8 @@ using Mirror;
 
 public class GameManager : NetworkBehaviour {
 public GameData Data { get; private set; }
-    public int PlayerID => gamePlayer.ID;
     private NewNetworkManager room;
     private NewNetworkGamePlayer gamePlayer;
-    //------------------------------------------------------
 
     [Header("UI Elements")]
     public TMP_Text currentTeamUI;
@@ -31,8 +29,6 @@ public GameData Data { get; private set; }
 
     [SyncVar(hook = nameof(OnPlayChange))]
     public int currentTeam;
-    [SerializeField] private GameObject team1;
-    [SerializeField] private GameObject team2;
     public GameObject unitBeingDisplayed;
     public GameObject tileBeingDisplayed;
     public bool displayingUnitInfo;
@@ -50,7 +46,6 @@ public GameData Data { get; private set; }
     public Material UICursor;
     public int routeToX;
     public int routeToY;
-    public NewNetworkGamePlayer player;
     public void Start() {
         currentTeam = 0;
         SetCurrentTeamUI();
@@ -84,11 +79,9 @@ public GameData Data { get; private set; }
                                         quadToUpdate.GetComponent<Renderer>().material = UICursor;
                                     }
                                     else if (i!=0 && (i+1)!=unitPathToCursor.Count) {
-                                        //This is used to set the indicator for tiles excluding the first/last tile
                                         SetCorrectRouteWithInputAndOutput(nodeX, nodeY,i);
                                     }
                                     else if (i == unitPathToCursor.Count-1) {
-                                        //This is used to set the indicator for the final tile;
                                         SetCorrectRouteFinalTile(nodeX, nodeY, i);
                                     }
                                     TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = true;
@@ -119,9 +112,9 @@ public GameData Data { get; private set; }
         currentTeamUI.SetText("Player " + (currentTeam+1).ToString() + " Phase");
     }
 
-    public int ReturnTeam(GameObject unit) {
-        return unit.GetComponent<Unit>().teamNum;
-    }
+    // public int ReturnTeam(GameObject unit) {
+    //     return unit.GetComponent<Unit>().team;
+    // }
 
     [ClientRpc]
     public void ResetUnitsMovements(int teamToReset) {
@@ -138,9 +131,9 @@ public GameData Data { get; private set; }
     public void TeamHealthbarColorUpdate() {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
-            if (unit.GetComponent<Unit>().teamNum == 0) {
+            if (unit.GetComponent<Unit>().team == 0) {
                 unit.GetComponent<Unit>().ChangeHealthBarColour(0);
-            } else if (unit.GetComponent<Unit>().teamNum == 1) {
+            } else if (unit.GetComponent<Unit>().team == 1) {
                 unit.GetComponent<Unit>().ChangeHealthBarColour(1);
             }
         }
@@ -511,13 +504,13 @@ public GameData Data { get; private set; }
         }
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit units in unitsList) {
-            if (units.GetComponent<Unit>().teamNum == 0) {
+            if (units.GetComponent<Unit>().team == 0) {
                 if (unitsList.Length == 5) {
                     displayWinnerUI.enabled = true;
                     displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
                 }
             }
-            if (units.GetComponent<Unit>().teamNum == 1) {
+            if (units.GetComponent<Unit>().team == 1) {
                 if (unitsList.Length == 6) {
                     displayWinnerUI.enabled = true;
                     displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
@@ -551,10 +544,6 @@ public GameData Data { get; private set; }
     //         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
     //     }
     
-    public void Win() {
-        displayWinnerUI.enabled = true;
-        displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Winner!");
-    }
     //------------------------------------------------------
 
     public struct Dependencies {
@@ -580,30 +569,7 @@ public GameData Data { get; private set; }
         gamePlayer = player;
     }
 
-    public NewNetworkGamePlayer GetPlayerFromID(int id) {
-        return room.GamePlayers.FirstOrDefault(p => p.ID == id);
-    }
-
     public void StartGameClient() { 
         Debug.Log("Game started for client");
     }
-
-    public void StartGameServer() {
-        SetupPlayers();
-        Data.NextTurn();
-        Data.SetGameStarted();
-        Debug.Log("Game started for server");
-
-        foreach (var player in room.GamePlayers) {
-            player.RpcNotifyGameStart();
-        }
-    }
-
-    private void SetupPlayers() {
-        foreach (var player in room.GamePlayers) {
-        }
-    }
-
-    public bool IsCurrentPlayer(int playerID) => Data.IsCurrentPlayer(playerID);
-    public bool IsCurrentPlayer(NewNetworkGamePlayer player) => Data.IsCurrentPlayer(player.ID);
 }

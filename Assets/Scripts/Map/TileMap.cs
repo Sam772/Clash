@@ -41,7 +41,6 @@ public class TileMap : NetworkBehaviour {
     public bool unitSelected = false;
     public int unitSelectedPreviousX;
     public int unitSelectedPreviousY;
-
     public GameObject previousOccupiedTile;
 
     [Header("Highlight Materials")]
@@ -266,12 +265,13 @@ public class TileMap : NetworkBehaviour {
     }
     public bool UnitCanEnterTile(int x, int y) {
         if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile != null) {
-            if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum) {
+            if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) {
                 return false;
             }
         }
         return tileTypes[tiles[x, y]].isWalkable;
     }
+
     public void MouseClickToSelectUnit() {
         GameObject tempSelectedUnit;
         RaycastHit hit;       
@@ -282,7 +282,7 @@ public class TileMap : NetworkBehaviour {
                     if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
                         tempSelectedUnit = hit.transform.GetComponent<TileClick>().unitOnTile;
                         if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0)
-                            && tempSelectedUnit.GetComponent<Unit>().teamNum == GMS.currentTeam) {
+                            && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
                             DisableHighlightUnitRange();
                             selectedUnit = tempSelectedUnit;
                             selectedUnit.GetComponent<Unit>().map = this;
@@ -295,7 +295,7 @@ public class TileMap : NetworkBehaviour {
                 else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {   
                     tempSelectedUnit = hit.transform.parent.gameObject;
                     if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0)
-                          && tempSelectedUnit.GetComponent<Unit>().teamNum == GMS.currentTeam) {
+                          && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
                         DisableHighlightUnitRange();
                         selectedUnit = tempSelectedUnit;
                         selectedUnit.GetComponent<Unit>().SetMovementState(1);
@@ -320,7 +320,7 @@ public class TileMap : NetworkBehaviour {
             if (GMS.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile != null) {
                 GameObject tempSelectedUnit = GMS.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile;
                 if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0)
-                    && tempSelectedUnit.GetComponent<Unit>().teamNum == GMS.currentTeam) {
+                    && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
                     DisableHighlightUnitRange();
                     selectedUnit = tempSelectedUnit;
                     selectedUnit.GetComponent<Unit>().map = this;
@@ -348,7 +348,7 @@ public class TileMap : NetworkBehaviour {
                         selectedUnit.GetComponent<Unit>().SetMovementState(3);
                         DeselectUnit();
                     }
-                    else if (unitOnTile.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum && attackableTiles.Contains(graph[unitX,unitY])) {
+                    else if (unitOnTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team && attackableTiles.Contains(graph[unitX,unitY])) {
                         if (unitOnTile.GetComponent<Unit>().currentHealthPoints > 0) {
                             StartCoroutine(BMS.Attack(selectedUnit, unitOnTile));
                             StartCoroutine(DeselectAfterMovements(selectedUnit, unitOnTile));
@@ -366,7 +366,7 @@ public class TileMap : NetworkBehaviour {
                     selectedUnit.GetComponent<Unit>().SetMovementState(3);
                     DeselectUnit();
                 }
-                else if (unitClicked.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum && attackableTiles.Contains(graph[unitX, unitY])) {
+                else if (unitClicked.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team && attackableTiles.Contains(graph[unitX, unitY])) {
                     if (unitClicked.GetComponent<Unit>().currentHealthPoints > 0) {
                         StartCoroutine(BMS.Attack(selectedUnit, unitClicked));
                         StartCoroutine(DeselectAfterMovements(selectedUnit, unitClicked));
@@ -418,7 +418,7 @@ public class TileMap : NetworkBehaviour {
         foreach (Node n in totalAttackableTiles) {
             if (tilesOnMap[n.x, n.y].GetComponent<TileClick>().unitOnTile != null) {
                 GameObject unitOnCurrentlySelectedTile = tilesOnMap[n.x, n.y].GetComponent<TileClick>().unitOnTile;
-                if (unitOnCurrentlySelectedTile.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum) {
+                if (unitOnCurrentlySelectedTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) {
                     finalEnemyUnitsInMovementRange.Add(n);
                 }
             }
@@ -580,7 +580,6 @@ public class TileMap : NetworkBehaviour {
             yield return new WaitForEndOfFrame();
         }
         FinaliseMovementPosition();
-        //selectedUnit.GetComponent<Unit>().SetSelectedAnimation();
     }
 
     public IEnumerator DeselectAfterMovements(GameObject unit, GameObject enemy) {
@@ -614,7 +613,7 @@ public class TileMap : NetworkBehaviour {
                 }
             }
             else if (hit.transform.gameObject.CompareTag("Unit")) {
-                if (hit.transform.parent.GetComponent<Unit>().teamNum != selectedUnit.GetComponent<Unit>().teamNum) {
+                if (hit.transform.parent.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) {
                 }
                 else if(hit.transform.parent.gameObject == selectedUnit) {    
                     GeneratePathTo(selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y);
