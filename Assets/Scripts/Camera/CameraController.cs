@@ -8,8 +8,8 @@ public class CameraController : MonoBehaviour {
     private Transform cameraTransform;
     private float zoomAmount;
     private float startYPosition;
-    public static string yAxis = "Horizontal";
-    public static string xAxis = "Vertical";
+    public static string xAxis = "Horizontal";
+    public static string yAxis = "Vertical";
         
     private void Awake() {
         zoomAmount = 1f;
@@ -23,15 +23,15 @@ public class CameraController : MonoBehaviour {
     }
 
     private void HandleMovementInput() {
-        var yAxis = Input.GetAxis(CameraController.yAxis);
         var xAxis = Input.GetAxis(CameraController.xAxis);
+        var yAxis = Input.GetAxis(CameraController.yAxis);
 
-        if (Mathf.Abs(yAxis) > 0.1f) {
-            transform.position += Vector3.right * (movementSpeed * yAxis * Time.deltaTime);
+        if (Mathf.Abs(xAxis) > 0.1f) {
+            transform.position += Vector3.right * (movementSpeed * xAxis * Time.deltaTime);
         }
 
-        if (Math.Abs(xAxis) > 0.1f) {
-            transform.position += Vector3.forward * (movementSpeed * xAxis * Time.deltaTime);
+        if (Math.Abs(yAxis) > 0.1f) {
+            transform.position += Vector3.forward * (movementSpeed * yAxis * Time.deltaTime);
         }
 
         var scrollDelta = Input.mouseScrollDelta;
