@@ -3962,12 +3962,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3155b162c4f2025478b6ccbfab9c4dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.02
-  movementTime: 5
-  cameraTransform: {fileID: 963194228}
-  zoomAmount: {x: 0, y: -0.02, z: -0.02}
-  newZoom: {x: 0, y: 0, z: 0}
-  newPosition: {x: 0, y: 0, z: 0}
+  movementSpeed: 5
+  scrollSpeed: 3
+  scrollFactor: 0.1
+  mainCamera: {fileID: 0}
+  uiCamera: {fileID: 0}
 --- !u!4 &1982857145
 Transform:
   m_ObjectHideFlags: 0

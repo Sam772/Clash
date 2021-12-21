@@ -1,46 +1,51 @@
+using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    public float movementSpeed;
-    public float movementTime;
-    public Transform cameraTransform;
-    public Vector3 zoomAmount;
-    public Vector3 newZoom;
-    public Vector3 newPosition;
-
-    void Start() {
-        newPosition = transform.position;
-        newZoom = cameraTransform.localPosition;
+    [SerializeField] private float movementSpeed = 6f;
+    [SerializeField] private float scrollSpeed = 3f;
+    [SerializeField] private float scrollMultiplier = 0.1f;
+    private Transform cameraTransform;
+    private float zoomAmount;
+    private float startYPosition;
+    public static string yAxis = "Horizontal";
+    public static string xAxis = "Vertical";
+        
+    private void Awake() {
+        zoomAmount = 1f;
+        cameraTransform = transform;
+        startYPosition = cameraTransform.position.y;
     }
 
-    void Update() {
+    private void Update() { 
         HandleMovementInput();
+        CameraZoomInput();
     }
- 
-    void HandleMovementInput() {
-        // || Input.GetKey(KeyCode.UpArrow
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
-            newPosition += (transform.TransformDirection(0, 1, 0) * movementSpeed);
-        }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
-            newPosition += (transform.TransformDirection(0, 1, 0) * -movementSpeed);
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-            newPosition += (transform.right * movementSpeed);
-        }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-            newPosition += (transform.right * -movementSpeed);
+
+    private void HandleMovementInput() {
+        var yAxis = Input.GetAxis(CameraController.yAxis);
+        var xAxis = Input.GetAxis(CameraController.xAxis);
+
+        if (Mathf.Abs(yAxis) > 0.1f) {
+            transform.position += Vector3.right * (movementSpeed * yAxis * Time.deltaTime);
         }
 
-        // for zooming
-        if (Input.GetKey(KeyCode.Q)) {
-            newZoom += zoomAmount;
-        }
-        if (Input.GetKey(KeyCode.E)) {
-            newZoom -= zoomAmount;
+        if (Math.Abs(xAxis) > 0.1f) {
+            transform.position += Vector3.forward * (movementSpeed * xAxis * Time.deltaTime);
         }
 
-        transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
-        cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
+        var scrollDelta = Input.mouseScrollDelta;
+        zoomAmount = Mathf.Clamp01(zoomAmount - scrollDelta.y * scrollMultiplier);
+    }
+
+    private void CameraZoomInput() {
+        
+        const float minimumYPosition = 3f;
+        var maximumYPosition = startYPosition;
+        var targetYPos = Mathf.Lerp(minimumYPosition, maximumYPosition, zoomAmount);
+            
+        var cameraPosition = transform.position;
+        cameraPosition.y = Mathf.Lerp(cameraPosition.y, targetYPos, Time.deltaTime * scrollSpeed);
+        transform.position = cameraPosition;
     }
 }
