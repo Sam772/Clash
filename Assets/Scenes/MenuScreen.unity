@@ -2283,7 +2283,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 621442719}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 118942037}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: MapClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1097246245}
+        m_TargetAssemblyTypeName: NewNetworkManager, Assembly-CSharp
+        m_MethodName: MapTwoClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &621442719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3405,6 +3429,8 @@ MonoBehaviour:
   minPlayers: 2
   menuScene: Assets/Scenes/MenuScreen.unity
   gameScene: Assets/Scenes/MapOne.unity
+  mapOneScene: Assets/Scenes/MapOne.unity
+  mapTwoScene: Assets/Scenes/MapTwo.unity
   roomPlayerPrefab: {fileID: 2541264716250324250, guid: cdaa3d798f5fd4b46a68ca4ee75c98fe, type: 3}
   gamePlayerPrefab: {fileID: 1878441529161525201, guid: 58ff51323dda32d43a3378f9196a5c76, type: 3}
   captainPrefab: {fileID: 6392410202167415423, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
@@ -3934,6 +3960,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 118942037}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: MapClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1097246245}
+        m_TargetAssemblyTypeName: NewNetworkManager, Assembly-CSharp
         m_MethodName: MapOneClicked
         m_Mode: 1
         m_Arguments:

@@ -10,6 +10,8 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private int minPlayers = 2;
     [Scene] [SerializeField] private string menuScene;
     [Scene] [SerializeField] private string gameScene;
+    [Scene] [SerializeField] private string mapOneScene;
+    [Scene] [SerializeField] private string mapTwoScene;
     [SerializeField] private NewNetworkRoomPlayer roomPlayerPrefab;
     [SerializeField] private NewNetworkGamePlayer gamePlayerPrefab;
     [SerializeField] private Unit captainPrefab;
@@ -94,6 +96,13 @@ public class NewNetworkManager : NetworkManager {
         if (sceneName == gameScene) {
             SetupGame();
         }
+    }
+
+    public void MapOneClicked() {
+        gameScene = mapOneScene;
+    }
+    public void MapTwoClicked() {
+        gameScene = mapTwoScene;
     }
 
     private void SetupGame() {

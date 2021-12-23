@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour {
 
     public void PlayGameClicked() => ShowScreen(mapSelectionScreen);
     public void SettingsScreenClicked() => ShowScreen(settingsScreen);
-    public void MapOneClicked() => ShowScreen(playScreen);
+    public void MapClicked() => ShowScreen(playScreen);
     public void HostGameClicked() => ShowScreen(hostScreen);
     public void JoinGameClicked() => ShowScreen(joinScreen);
     public void ReturnToMainScreenClicked() => ShowScreen(mainScreen);
