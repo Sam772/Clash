@@ -31,7 +31,7 @@ public class Lobby : MenuScreen {
         foreach (var observer in observers) {
             observer.OnBackClicked();
         }
-        Menu.ReturnToMainScreenClicked();
+        Menu.ReturnToPlayScreenClicked();
     }
 
     public void StartGameButtonClicked() {
