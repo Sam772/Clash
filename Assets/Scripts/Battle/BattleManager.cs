@@ -4,6 +4,12 @@ using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager GMS;
     private bool battleStatus;
+    // GameObject check;
+    // public void Update() {
+    //     if (check.GetComponent<Unit>().currentHealthPoints < 1)
+    //     NetworkServer.Destroy(check);
+    // }
+
     public void Battle(GameObject initiator, GameObject recipient) {
         battleStatus = true;
         var initiatorUnit = initiator.GetComponent<Unit>();

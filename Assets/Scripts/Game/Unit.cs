@@ -122,11 +122,9 @@ public class Unit : NetworkBehaviour {
     [Command(requiresAuthority=false)]
     public void DealDamage(int damage) {
         currentHealthPoints = currentHealthPoints - damage;
-        if (!isServer) {
-        //currentHealthPoints = currentHealthPoints - damage;
-        //Debug.Log("health: " + currentHealthPoints);
-        }
         UpdateDamageToClient(damage);
+        if (currentHealthPoints < 1)
+        NetworkServer.Destroy(gameObject);
         //UpdateHealthUI();
     }
 
@@ -134,6 +132,9 @@ public class Unit : NetworkBehaviour {
     public void UpdateDamageToClient(int damageToClient) {
         if (!isServer) {
         currentHealthPoints = currentHealthPoints - damageToClient;
+        // if (currentHealthPoints < 0)
+        // NetworkServer.Destroy(gameObject);
+        //BMS.CheckIfDead();
         }
         Debug.Log("damage dealt: " + damageToClient);
         Debug.Log("hp of attacked unit: " + currentHealthPoints);
