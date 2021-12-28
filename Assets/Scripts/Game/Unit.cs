@@ -62,6 +62,7 @@ public class Unit : NetworkBehaviour {
     }
 
     public void MoveNextTile() {
+        if (!hasAuthority) return;
         if (path.Count == 0) {
             return;
         }
@@ -123,9 +124,8 @@ public class Unit : NetworkBehaviour {
     public void DealDamage(int damage) {
         currentHealthPoints = currentHealthPoints - damage;
         UpdateDamageToClient(damage);
-        if (currentHealthPoints < 1)
-        NetworkServer.Destroy(gameObject);
-        // new bug zzzzz
+        // if (currentHealthPoints < 1)
+        // NetworkServer.Destroy(gameObject);
         //UpdateHealthUI();
     }
 
@@ -143,6 +143,7 @@ public class Unit : NetworkBehaviour {
     }
     
     public void Wait() {
+        if (!hasAuthority) return;
         gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.gray;
     }
 
@@ -172,11 +173,7 @@ public class Unit : NetworkBehaviour {
 
     public IEnumerator FadeOut() {
         combatQueue.Enqueue(1);
-        //Renderer rend = GetComponentInChildren<SpriteRenderer>();
         for (float f = 1f; f >= .05; f -= 0.01f) {
-            // Color c = rend.material.color;
-            // c.a = f;
-            // rend.material.color = c;
             yield return new WaitForEndOfFrame();
         }
         combatQueue.Dequeue();
@@ -223,19 +220,5 @@ public class Unit : NetworkBehaviour {
            yield return new WaitForEndOfFrame();
         }
         combatQueue.Dequeue();
-    }
-
-    public void ResetPath() {
-        path = null;
-        completedMovement = false;
-    }
-
-    public void DisplayDamage(int damageTaken) {
-        damagePopupCanvas.enabled = true;
-        damagePopupText.SetText(damageTaken.ToString());
-    }
-
-    public void DisableDisplayDamage() {
-        damagePopupCanvas.enabled = false;
     }
 }
