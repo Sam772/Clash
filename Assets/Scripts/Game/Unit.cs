@@ -125,6 +125,7 @@ public class Unit : NetworkBehaviour {
         UpdateDamageToClient(damage);
         if (currentHealthPoints < 1)
         NetworkServer.Destroy(gameObject);
+        // new bug zzzzz
         //UpdateHealthUI();
     }
 
