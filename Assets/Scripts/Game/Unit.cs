@@ -71,10 +71,18 @@ public class Unit : NetworkBehaviour {
         }
     }
 
+
     [Command(requiresAuthority=false)]
-    public void CmdUpdateTileMap(int newX, int newY) {
+    public void CmdUpdateNewPosition(int newX, int newY) {
+        tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
         x = newX;
         y = newY;
+    }
+
+    [ClientRpc]
+    public void RpcDeleteOldPosition() {
+        if (!isServer)
+        tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
     }
 
     public void MoveAgain() {
@@ -196,11 +204,10 @@ public class Unit : NetworkBehaviour {
         x = endNode.x;
         y = endNode.y;
 
-        if (!isServer) {
-        CmdUpdateTileMap(x, y);
-        }
+        CmdUpdateNewPosition(x, y);
 
         tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
+        RpcDeleteOldPosition();
         tileBeingOccupied = map.tilesOnMap[x, y];
         movementQueue.Dequeue();
     }
