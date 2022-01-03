@@ -108,21 +108,23 @@ public class NewNetworkManager : NetworkManager {
     private void SetupGame() {
         for (int i = GamePlayers.Count - 1; i >= 0; i--) {
             var conn = GamePlayers[i].connectionToClient;
-            // If Host (Player One)
-            if (i == 1) {
-                int x = 1;
-                for (int j = 0; j < 2; j++) {
-                    Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
-                    NetworkServer.Spawn(knight.gameObject, conn);
-                }
-                int x2 = 1;
-                for (int j = 0; j < 2; j++) {
-                    Unit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 0), Quaternion.identity);
-                    NetworkServer.Spawn(archer.gameObject, conn);
-                }
-                Unit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 1), Quaternion.identity); 
-                NetworkServer.Spawn(captain.gameObject, conn);
-                // If Client (Player Two)
+            // Map One
+            if (gameScene == mapOneScene) {
+                // If Host (Player One)
+                if (i == 1) {
+                    int x = 1;
+                    for (int j = 0; j < 2; j++) {
+                        Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
+                        NetworkServer.Spawn(knight.gameObject, conn);
+                    }
+                    int x2 = 1;
+                    for (int j = 0; j < 2; j++) {
+                        Unit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 0), Quaternion.identity);
+                        NetworkServer.Spawn(archer.gameObject, conn);
+                    }
+                    Unit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 1), Quaternion.identity); 
+                    NetworkServer.Spawn(captain.gameObject, conn);
+                    // If Client (Player Two)
                 } else if (i == 0) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
@@ -140,6 +142,25 @@ public class NewNetworkManager : NetworkManager {
                     NetworkServer.Spawn(captain.gameObject, conn);
                     captain.GetComponent<Unit>().team = 1;
                 }
+                // Map Two
+            } else if (gameScene == mapTwoScene) {
+                // If Host (Player One)
+                if (i == 1) {
+                    int x = 1;
+                    for (int j = 0; j < 2; j++) {
+                        Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
+                        NetworkServer.Spawn(knight.gameObject, conn);
+                    }
+                    // If Client (Player Two)
+                } else if (i == 0) {
+                   int x = 1;
+                    for (int j = 0; j < 2; j++) {
+                        Unit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
+                        NetworkServer.Spawn(knight.gameObject, conn);
+                        knight.GetComponent<Unit>().team = 1;
+                    } 
+                }
+            }
         }
         var gameData = Instantiate(gameDataPrefab);
         NetworkServer.Spawn(gameData.gameObject);
