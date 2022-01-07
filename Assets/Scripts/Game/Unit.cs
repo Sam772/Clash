@@ -15,7 +15,6 @@ public class Unit : NetworkBehaviour {
     public Queue<int> movementQueue;
     public Queue<int> combatQueue;
     public float visualMovementSpeed = .15f;
-    public Animator animator;
     public GameObject tileBeingOccupied;
     public string unitName;
     public int moveSpeed;
@@ -44,9 +43,7 @@ public class Unit : NetworkBehaviour {
     }
     public MovementStates unitMoveState;
     public List<Node> path = null;
-    public bool completedMovement = false;
     private void Awake() {
-        animator = holder2D.GetComponent<Animator>();
         movementQueue = new Queue<int>();
         combatQueue = new Queue<int>();
         x = (int)transform.position.x;
@@ -63,6 +60,7 @@ public class Unit : NetworkBehaviour {
 
     public void MoveNextTile() {
         if (!hasAuthority) return;
+        // shorten this
         if (path.Count == 0) {
             return;
         }
@@ -70,7 +68,6 @@ public class Unit : NetworkBehaviour {
             StartCoroutine(MoveOverSeconds(transform.gameObject, path[path.Count - 1]));
         }
     }
-
 
     [Command(requiresAuthority=false)]
     public void CmdUpdateNewPosition(int newX, int newY) {
@@ -88,7 +85,6 @@ public class Unit : NetworkBehaviour {
     public void MoveAgain() {
         path = null;
         SetMovementState(0);
-        completedMovement = false;
         gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
 
@@ -124,7 +120,7 @@ public class Unit : NetworkBehaviour {
     }
 
     public void UpdateHealthUI() {
-        healthBar.fillAmount = (float)currentHealthPoints / maxHealthPoints;
+        healthBar.fillAmount = (float) currentHealthPoints / maxHealthPoints;
         hitPointsText.SetText(currentHealthPoints.ToString());
     }
 
@@ -132,18 +128,14 @@ public class Unit : NetworkBehaviour {
     public void DealDamage(int damage) {
         currentHealthPoints = currentHealthPoints - damage;
         UpdateDamageToClient(damage);
-        // if (currentHealthPoints < 1)
-        // NetworkServer.Destroy(gameObject);
-        //UpdateHealthUI();
+        if (currentHealthPoints <= 0)
+        UnitDie();
     }
 
     [ClientRpc]
     public void UpdateDamageToClient(int damageToClient) {
         if (!isServer) {
         currentHealthPoints = currentHealthPoints - damageToClient;
-        // if (currentHealthPoints < 0)
-        // NetworkServer.Destroy(gameObject);
-        //BMS.CheckIfDead();
         }
         Debug.Log("damage dealt: " + damageToClient);
         Debug.Log("hp of attacked unit: " + currentHealthPoints);
@@ -173,7 +165,7 @@ public class Unit : NetworkBehaviour {
     }
 
     public IEnumerator CheckIfRoutinesRunning() {
-        while (combatQueue.Count>0) {
+        while (combatQueue.Count > 0) {
             yield return new WaitForEndOfFrame();
         }
         NetworkServer.Destroy(gameObject);
@@ -210,22 +202,5 @@ public class Unit : NetworkBehaviour {
         RpcDeleteOldPosition();
         tileBeingOccupied = map.tilesOnMap[x, y];
         movementQueue.Dequeue();
-    }
-
-    public IEnumerator DisplayDamageEnum(int damageTaken) {
-        combatQueue.Enqueue(1);
-        damagePopupText.SetText(damageTaken.ToString());
-        damagePopupCanvas.enabled = true;
-        for (float f = 1f; f >=-0.01f; f -= 0.01f) {
-            Color backDrop = damageBackdrop.GetComponent<Image>().color;
-            Color damageValue = damagePopupText.color;
-
-            backDrop.a = f;
-            damageValue.a = f;
-            damageBackdrop.GetComponent<Image>().color = backDrop;
-            damagePopupText.color = damageValue;
-           yield return new WaitForEndOfFrame();
-        }
-        combatQueue.Dequeue();
     }
 }

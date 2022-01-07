@@ -80,7 +80,7 @@ public class TileMap : NetworkBehaviour {
         }
         if (Input.GetMouseButtonDown(1)) {
             if (selectedUnit != null) {
-                if (selectedUnit.GetComponent<Unit>().movementQueue.Count == 0 && selectedUnit.GetComponent<Unit>().combatQueue.Count==0) {
+                if (selectedUnit.GetComponent<Unit>().movementQueue.Count == 0 && selectedUnit.GetComponent<Unit>().combatQueue.Count == 0) {
                     if (selectedUnit.GetComponent<Unit>().unitMoveState != selectedUnit.GetComponent<Unit>().GetMovementStateEnum(3)) {
                         DeselectUnit();
                         }
@@ -123,7 +123,7 @@ public class TileMap : NetworkBehaviour {
                 newTile.GetComponent<TileClick>().map = this;
                 newTile.transform.SetParent(tileContainer.transform);
                 tilesOnMap[x, y] = newTile;
-                GameObject gridUI = Instantiate(mapUI, new Vector3(x, 0.501f, y),Quaternion.Euler(90f,0,0));
+                GameObject gridUI = Instantiate(mapUI, new Vector3(x, 0.501f, y),Quaternion.Euler(90f ,0 ,0));
                 gridUI.transform.SetParent(UIQuadPotentialMovesContainer.transform);
                 quadOnMap[x, y] = gridUI;
                 GameObject gridUIForPathfindingDisplay = Instantiate(mapUnitMovementUI, new Vector3(x, 0.502f, y), Quaternion.Euler(90f, 0, 0));

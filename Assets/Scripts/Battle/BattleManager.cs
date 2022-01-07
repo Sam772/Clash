@@ -4,12 +4,6 @@ using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager GMS;
     private bool battleStatus;
-    // GameObject check;
-    // public void Update() {
-    //     if (check.GetComponent<Unit>().currentHealthPoints < 1)
-    //     NetworkServer.Destroy(check);
-    // }
-
     public void Battle(GameObject initiator, GameObject recipient) {
         battleStatus = true;
         var initiatorUnit = initiator.GetComponent<Unit>();
@@ -18,7 +12,6 @@ public class BattleManager : NetworkBehaviour {
         int recipientAtt = recipientUnit.attackDamage;
         if (initiatorUnit.attackRange == recipientUnit.attackRange) {
             recipientUnit.DealDamage(initiatorAtt);
-            //recipientUnit.UpdateDamageToClient(initiatorAtt);
             if (CheckIfDead(recipient)) {
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
@@ -70,13 +63,6 @@ public class BattleManager : NetworkBehaviour {
             yield return new WaitForEndOfFrame();
         }
         while (battleStatus) {
-            if(unit.GetComponent<Unit>().attackRange == enemy.GetComponent<Unit>().attackRange && enemy.GetComponent<Unit>().currentHealthPoints - unit.GetComponent<Unit>().attackDamage > 0) {
-                StartCoroutine(unit.GetComponent<Unit>().DisplayDamageEnum(enemy.GetComponent<Unit>().attackDamage));
-                StartCoroutine(enemy.GetComponent<Unit>().DisplayDamageEnum(unit.GetComponent<Unit>().attackDamage));
-            }
-            else {
-                StartCoroutine(enemy.GetComponent<Unit>().DisplayDamageEnum(unit.GetComponent<Unit>().attackDamage));
-            }
             Battle(unit, enemy);
             yield return new WaitForEndOfFrame();
         }
