@@ -4,16 +4,10 @@ using UnityEngine;
 using Mirror;
 
 public class TileMap : NetworkBehaviour {
-
-    [Header("Manager Scripts")]
     public BattleManager BMS;
     public GameManager GMS;
-    
-    [Header("Tiles")]
     public TileType[] tileTypes;
     public int[,] tiles;
-
-    [Header("Map Units")]
     public GameObject[,] tilesOnMap;
     public GameObject[,] quadOnMap;
     public GameObject[,] quadOnMapForUnitMovementDisplay;
@@ -23,27 +17,19 @@ public class TileMap : NetworkBehaviour {
     public GameObject mapUnitMovementUI;
     public List<Node> currentPath = null;
     public Node[,] graph;
-
-    [Header("Containers")]
     public GameObject tileContainer;
     public GameObject UIQuadPotentialMovesContainer;
     public GameObject UIQuadCursorContainer;
     public GameObject UIUnitMovementPathContainer;
-
-    [Header("Map Size")]
     public int mapSizeX;
     public int mapSizeY;
-
-    [Header("Selected Unit Info")]
     public GameObject selectedUnit;
     public HashSet<Node> selectedUnitTotalRange;
     public HashSet<Node> selectedUnitMoveRange;
-    public bool unitSelected = false;
-    public int unitSelectedPreviousX;
-    public int unitSelectedPreviousY;
-    public GameObject previousOccupiedTile;
-
-    [Header("Highlight Materials")]
+    private bool unitSelected = false;
+    private int unitSelectedPreviousX;
+    private int unitSelectedPreviousY;
+    private GameObject previousOccupiedTile;
     public Material enemyRangeUIMat;
     public Material movementTileUIMat;
     
@@ -55,7 +41,6 @@ public class TileMap : NetworkBehaviour {
     }
 
     private void Update() {
-        //MouseClickToSelectUnit();
         if (Input.GetMouseButtonDown(0)) {
             if (selectedUnit == null) {
                 GeneratePathFindingGraph();
@@ -63,9 +48,7 @@ public class TileMap : NetworkBehaviour {
                 MouseClickToSelectUnitV2();
                 MouseClickToSelectUnit();
             }
-            else if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1)
-                    && selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {
-
+            else if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1) && selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {
                 if (SelectTileToMoveTo()) {
                     unitSelectedPreviousX = selectedUnit.GetComponent<Unit>().x;
                     unitSelectedPreviousY = selectedUnit.GetComponent<Unit>().y;
@@ -74,20 +57,12 @@ public class TileMap : NetworkBehaviour {
                     StartCoroutine(MoveUnitAndFinalise());
                 }
             }
-            else if(selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(2)) {
-                FinaliseOption();
-            }
-        }
+            else if(selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(2)) { FinaliseOption(); } }
         if (Input.GetMouseButtonDown(1)) {
             if (selectedUnit != null) {
                 if (selectedUnit.GetComponent<Unit>().movementQueue.Count == 0 && selectedUnit.GetComponent<Unit>().combatQueue.Count == 0) {
-                    if (selectedUnit.GetComponent<Unit>().unitMoveState != selectedUnit.GetComponent<Unit>().GetMovementStateEnum(3)) {
-                        DeselectUnit();
-                        }
-                    }
-                else if (selectedUnit.GetComponent<Unit>().movementQueue.Count == 1) {
-                    selectedUnit.GetComponent<Unit>().visualMovementSpeed = 0.5f;
-                }
+                    if (selectedUnit.GetComponent<Unit>().unitMoveState != selectedUnit.GetComponent<Unit>().GetMovementStateEnum(3)) { DeselectUnit(); }}
+                else if (selectedUnit.GetComponent<Unit>().movementQueue.Count == 1) { selectedUnit.GetComponent<Unit>().visualMovementSpeed = 0.5f; }
             }
         }  
     }
@@ -95,17 +70,10 @@ public class TileMap : NetworkBehaviour {
     public void GenerateMapInfo() {
         tiles = new int[mapSizeX, mapSizeY];
         for (int x = 0; x < mapSizeX; x++) {
-            for (int y = 0; y < mapSizeY; y++) {
-                tiles[x, y] = 0;
-            }
+            for (int y = 0; y < mapSizeY; y++) { tiles[x, y] = 0; }
         }
-        tiles[1, 4] = 1;
-        tiles[2, 6] = 1;
-        tiles[3, 2] = 1;
-        tiles[4, 5] = 1;
-        tiles[9, 4] = 1;
-        tiles[6, 3] = 1;
-        tiles[7, 7] = 1;
+        tiles[1, 4] = 1; tiles[2, 6] = 1; tiles[3, 2] = 1; tiles[4, 5] = 1; 
+        tiles[9, 4] = 1; tiles[6, 3] = 1; tiles[7, 7] = 1;
     }
 
     public void GenerateMapVisuals() {
@@ -147,18 +115,10 @@ public class TileMap : NetworkBehaviour {
         }
         for (int x = 0; x < mapSizeX; x++) {
             for (int y = 0; y < mapSizeY; y++) {              
-                if (x > 0) {                   
-                    graph[x, y].neighbours.Add(graph[x - 1, y]);
-                }
-                if (x < mapSizeX-1) {                   
-                    graph[x, y].neighbours.Add(graph[x + 1, y]);
-                }
-                if (y > 0) {
-                    graph[x, y].neighbours.Add(graph[x, y - 1]);
-                }
-                if (y < mapSizeY - 1) {
-                    graph[x, y].neighbours.Add(graph[x, y + 1]);
-                } 
+                if (x > 0) { graph[x, y].neighbours.Add(graph[x - 1, y]); }
+                if (x < mapSizeX-1) { graph[x, y].neighbours.Add(graph[x + 1, y]); }
+                if (y > 0) { graph[x, y].neighbours.Add(graph[x, y - 1]); }
+                if (y < mapSizeY - 1) { graph[x, y].neighbours.Add(graph[x, y + 1]); } 
             }
         }
     }
@@ -174,9 +134,7 @@ public class TileMap : NetworkBehaviour {
     }
 
     public void MoveUnit() {
-        if (selectedUnit != null) {
-            selectedUnit.GetComponent<Unit>().MoveNextTile();
-        }
+        if (selectedUnit != null) { selectedUnit.GetComponent<Unit>().MoveNextTile(); }
     }
 
     public Vector3 TileCoordToWorldCoord(int x, int y) {
@@ -189,10 +147,7 @@ public class TileMap : NetworkBehaviour {
             selectedUnit.GetComponent<Unit>().path = currentPath;
             return;
         }
-        if (UnitCanEnterTile(x, y) == false){
-            return;
-        }
-
+        if (UnitCanEnterTile(x, y) == false){ return; }
         selectedUnit.GetComponent<Unit>().path = null;
         currentPath = null;
         Dictionary<Node, float> dist = new Dictionary<Node, float>();
@@ -212,13 +167,9 @@ public class TileMap : NetworkBehaviour {
         while (unvisited.Count > 0) {
             Node u = null;
             foreach (Node possibleU in unvisited) {
-                if (u == null || dist[possibleU] < dist[u]) {
-                    u = possibleU;
-                }
+                if (u == null || dist[possibleU] < dist[u]) { u = possibleU; }
             }
-            if (u == target) {
-                break;
-            }
+            if (u == target) { break; }
             unvisited.Remove(u);
             foreach (Node n in u.neighbours) {
                 float alt = dist[u] + costToEnterTile(n.x, n.y);
@@ -228,9 +179,7 @@ public class TileMap : NetworkBehaviour {
                 }
             }
         }
-        if (prev[target] == null) {
-            return;
-        }
+        if (prev[target] == null) { return; }
         currentPath = new List<Node>();
         Node curr = target;
         while (curr != null) {
@@ -240,19 +189,17 @@ public class TileMap : NetworkBehaviour {
         currentPath.Reverse();
         selectedUnit.GetComponent<Unit>().path = currentPath;
     }
+
     public float costToEnterTile(int x, int y) {
-        if (UnitCanEnterTile(x, y) == false) {
-            return Mathf.Infinity;
-        }
+        if (UnitCanEnterTile(x, y) == false) { return Mathf.Infinity; }
         TileType t = tileTypes[tiles[x, y]];
         float dist = t.movementCost;
         return dist;
     }
+
     public bool UnitCanEnterTile(int x, int y) {
         if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile != null) {
-            if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) {
-                return false;
-            }
+            if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) { return false; }
         }
         return tileTypes[tiles[x, y]].isWalkable;
     }
@@ -266,8 +213,7 @@ public class TileMap : NetworkBehaviour {
                 if (hit.transform.gameObject.CompareTag("Tile")) {
                     if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
                         tempSelectedUnit = hit.transform.GetComponent<TileClick>().unitOnTile;
-                        if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0)
-                            && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
+                        if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
                             DisableHighlightUnitRange();
                             selectedUnit = tempSelectedUnit;
                             selectedUnit.GetComponent<Unit>().map = this;
@@ -290,7 +236,7 @@ public class TileMap : NetworkBehaviour {
                     }
                 }
             }
-         }
+        }
     }
 
     public void FinaliseMovementPosition() {
@@ -338,7 +284,7 @@ public class TileMap : NetworkBehaviour {
                             StartCoroutine(BMS.Attack(selectedUnit, unitOnTile));
                             StartCoroutine(DeselectAfterMovements(selectedUnit, unitOnTile));
                         }
-                    }                                     
+                    }
                 }
             }
             else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {
@@ -358,7 +304,7 @@ public class TileMap : NetworkBehaviour {
                     }
                 }
             }
-        } 
+        }
     }
 
     public void DeselectUnit() {  
@@ -403,9 +349,7 @@ public class TileMap : NetworkBehaviour {
         foreach (Node n in totalAttackableTiles) {
             if (tilesOnMap[n.x, n.y].GetComponent<TileClick>().unitOnTile != null) {
                 GameObject unitOnCurrentlySelectedTile = tilesOnMap[n.x, n.y].GetComponent<TileClick>().unitOnTile;
-                if (unitOnCurrentlySelectedTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) {
-                    finalEnemyUnitsInMovementRange.Add(n);
-                }
+                if (unitOnCurrentlySelectedTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) { finalEnemyUnitsInMovementRange.Add(n); }
             }
         }
         HighlightEnemiesInRange(totalAttackableTiles);
@@ -416,9 +360,7 @@ public class TileMap : NetworkBehaviour {
 
     public void DisableUnitUIRoute() {
         foreach(GameObject quad in quadOnMapForUnitMovementDisplay) {
-            if (quad.GetComponent<Renderer>().enabled == true) {    
-                quad.GetComponent<Renderer>().enabled = false;
-            }
+            if (quad.GetComponent<Renderer>().enabled == true) { quad.GetComponent<Renderer>().enabled = false; }
         }
     }
 
@@ -432,19 +374,14 @@ public class TileMap : NetworkBehaviour {
         finalMovementHighlight.Add(unitInitialNode);
         foreach (Node n in unitInitialNode.neighbours) {
             cost[n.x, n.y] = costToEnterTile(n.x, n.y);
-            if (moveSpeed - cost[n.x, n.y] >= 0) {
-                UIHighlight.Add(n);
-            }
+            if (moveSpeed - cost[n.x, n.y] >= 0) { UIHighlight.Add(n); }
         }
         finalMovementHighlight.UnionWith(UIHighlight);
         while (UIHighlight.Count != 0) {
             foreach (Node n in UIHighlight) {
                 foreach (Node neighbour in n.neighbours) {
-                    if (!finalMovementHighlight.Contains(neighbour)) {
-                        cost[neighbour.x, neighbour.y] = costToEnterTile(neighbour.x, neighbour.y) + cost[n.x, n.y];
-                        if (moveSpeed - cost[neighbour.x, neighbour.y] >= 0) {
-                            tempUIHighlight.Add(neighbour);
-                        }
+                    if (!finalMovementHighlight.Contains(neighbour)) { cost[neighbour.x, neighbour.y] = costToEnterTile(neighbour.x, neighbour.y) + cost[n.x, n.y];
+                        if (moveSpeed - cost[neighbour.x, neighbour.y] >= 0) { tempUIHighlight.Add(neighbour); }
                     }
                 }
             }
@@ -478,9 +415,7 @@ public class TileMap : NetworkBehaviour {
                 }
                 neighbourHash = tempNeighbourHash;
                 tempNeighbourHash = new HashSet<Node>();
-                if (i < attRange - 1) {
-                    seenNodes.UnionWith(neighbourHash);
-                }
+                if (i < attRange - 1) { seenNodes.UnionWith(neighbourHash); }
             }
             neighbourHash.ExceptWith(seenNodes);
             seenNodes = new HashSet<Node>();
@@ -506,9 +441,7 @@ public class TileMap : NetworkBehaviour {
             }
             neighbourHash = tempNeighbourHash;
             tempNeighbourHash = new HashSet<Node>();
-            if (i < attRange - 1) {
-                seenNodes.UnionWith(neighbourHash);
-            }
+            if (i < attRange - 1) { seenNodes.UnionWith(neighbourHash); }
         }
         neighbourHash.ExceptWith(seenNodes);
         neighbourHash.Remove(initialNode);
@@ -516,7 +449,6 @@ public class TileMap : NetworkBehaviour {
     }
 
     public HashSet<Node> GetTileUnitIsOccupying() {
-       
         int x = selectedUnit.GetComponent<Unit>().x;
         int y = selectedUnit.GetComponent<Unit>().y;
         HashSet<Node> singleTile = new HashSet<Node>();
@@ -525,15 +457,11 @@ public class TileMap : NetworkBehaviour {
     }
 
     public void HighlightTileUnitIsOccupying() {
-        if (selectedUnit != null) {
-            HighlightMovementRange(GetTileUnitIsOccupying());
-        }
+        if (selectedUnit != null) { HighlightMovementRange(GetTileUnitIsOccupying()); }
     }
 
     public void HighlightUnitAttackOptionsFromPosition() {
-        if (selectedUnit != null) {
-            HighlightEnemiesInRange(GetUnitAttackOptionsFromPosition());
-        }
+        if (selectedUnit != null) { HighlightEnemiesInRange(GetUnitAttackOptionsFromPosition()); }
     }
 
     public void HighlightMovementRange(HashSet<Node> movementToHighlight) {
@@ -552,18 +480,14 @@ public class TileMap : NetworkBehaviour {
 
     public void DisableHighlightUnitRange() {
         foreach(GameObject quad in quadOnMap) {
-            if(quad.GetComponent<Renderer>().enabled == true) {
-                quad.GetComponent<Renderer>().enabled = false;
-            }
+            if(quad.GetComponent<Renderer>().enabled == true) { quad.GetComponent<Renderer>().enabled = false; }
         }
     }
 
     public IEnumerator MoveUnitAndFinalise() {
         DisableHighlightUnitRange();
         DisableUnitUIRoute();
-        while (selectedUnit.GetComponent<Unit>().movementQueue.Count != 0) {
-            yield return new WaitForEndOfFrame();
-        }
+        while (selectedUnit.GetComponent<Unit>().movementQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
         FinaliseMovementPosition();
     }
 
@@ -572,12 +496,8 @@ public class TileMap : NetworkBehaviour {
         DisableHighlightUnitRange();
         DisableUnitUIRoute();
         yield return new WaitForSeconds(.25f);
-        while (unit.GetComponent<Unit>().combatQueue.Count > 0) {
-            yield return new WaitForEndOfFrame();
-        }
-        while (enemy.GetComponent<Unit>().combatQueue.Count > 0) {
-            yield return new WaitForEndOfFrame();
-        }
+        while (unit.GetComponent<Unit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
+        while (enemy.GetComponent<Unit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
         DeselectUnit();
     }
     
@@ -589,7 +509,6 @@ public class TileMap : NetworkBehaviour {
                 int clickedTileX = hit.transform.GetComponent<TileClick>().tileX;
                 int clickedTileY = hit.transform.GetComponent<TileClick>().tileY;
                 Node nodeToCheck = graph[clickedTileX, clickedTileY];
-
                 if (selectedUnitMoveRange.Contains(nodeToCheck)) {
                     if ((hit.transform.gameObject.GetComponent<TileClick>().unitOnTile == null || hit.transform.gameObject.GetComponent<TileClick>().unitOnTile == selectedUnit) && (selectedUnitMoveRange.Contains(nodeToCheck))) {
                         GeneratePathTo(clickedTileX, clickedTileY);
@@ -599,6 +518,7 @@ public class TileMap : NetworkBehaviour {
             }
             else if (hit.transform.gameObject.CompareTag("Unit")) {
                 if (hit.transform.parent.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) {
+                    //?
                 }
                 else if(hit.transform.parent.gameObject == selectedUnit) {    
                     GeneratePathTo(selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y);

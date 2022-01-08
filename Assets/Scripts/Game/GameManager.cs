@@ -5,11 +5,9 @@ using TMPro;
 using Mirror;
 
 public class GameManager : NetworkBehaviour {
-    public GameData Data { get; private set; }
+    public GameData Data {get; private set;}
     private NewNetworkManager room;
     private NewNetworkGamePlayer gamePlayer;
-
-    [Header("UI Elements")]
     public TMP_Text currentTeamUI;
     public Canvas displayWinnerUI;
     public TMP_Text UIunitCurrentHealth;
@@ -46,6 +44,7 @@ public class GameManager : NetworkBehaviour {
     public int routeToX;
     public int routeToY;
     public void Start() {
+        // check this
         currentTeam = 0;
         SetCurrentTeamUI();
         TeamHealthbarColorUpdate();
@@ -77,12 +76,8 @@ public class GameManager : NetworkBehaviour {
                                         GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
                                         quadToUpdate.GetComponent<Renderer>().material = UICursor;
                                     }
-                                    else if (i!=0 && (i+1)!=unitPathToCursor.Count) {
-                                        SetCorrectRouteWithInputAndOutput(nodeX, nodeY,i);
-                                    }
-                                    else if (i == unitPathToCursor.Count-1) {
-                                        SetCorrectRouteFinalTile(nodeX, nodeY, i);
-                                    }
+                                    else if (i!=0 && (i+1)!=unitPathToCursor.Count) { SetCorrectRouteWithInputAndOutput(nodeX, nodeY,i); }
+                                    else if (i == unitPathToCursor.Count-1) { SetCorrectRouteFinalTile(nodeX, nodeY, i); }
                                     TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = true;
                                 } 
                             }
@@ -130,11 +125,8 @@ public class GameManager : NetworkBehaviour {
     public void TeamHealthbarColorUpdate() {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
-            if (unit.GetComponent<Unit>().team == 0) {
-                unit.GetComponent<Unit>().ChangeHealthBarColour(0);
-            } else if (unit.GetComponent<Unit>().team == 1) {
-                unit.GetComponent<Unit>().ChangeHealthBarColour(1);
-            }
+            if (unit.GetComponent<Unit>().team == 0) { unit.GetComponent<Unit>().ChangeHealthBarColour(0);
+            } else if (unit.GetComponent<Unit>().team == 1) { unit.GetComponent<Unit>().ChangeHealthBarColour(1); }
         }
     }
 
@@ -171,7 +163,6 @@ public class GameManager : NetworkBehaviour {
     [Command(requiresAuthority=false)]
     public void SwitchCurrentPlayer() {
         ResetUnitsMovements(currentTeam);
-        //currentTeam = (currentTeam + 1) % 1;
         currentTeam++;
         if (currentTeam == numberOfTeams) {
             currentTeam = 0;
@@ -203,7 +194,6 @@ public class GameManager : NetworkBehaviour {
                 selectedXTile = tileBeingDisplayed.GetComponent<TileClick>().tileX;
                 selectedYTile = tileBeingDisplayed.GetComponent<TileClick>().tileY;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;
-
                 selectedXTile = hit.transform.gameObject.GetComponent<TileClick>().tileX;
                 selectedYTile = hit.transform.gameObject.GetComponent<TileClick>().tileY;
                 cursorX = selectedXTile;
@@ -226,7 +216,6 @@ public class GameManager : NetworkBehaviour {
                     selectedXTile = tileBeingDisplayed.GetComponent<TileClick>().tileX;
                     selectedYTile = tileBeingDisplayed.GetComponent<TileClick>().tileY;
                     TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;
-
                     selectedXTile = hit.transform.parent.gameObject.GetComponent<Unit>().x;
                     selectedYTile = hit.transform.parent.gameObject.GetComponent<Unit>().y;
                     cursorX = selectedXTile;
@@ -248,7 +237,6 @@ public class GameManager : NetworkBehaviour {
                 displayingUnitInfo = true;
                 unitBeingDisplayed = hit.transform.parent.gameObject;
                 var highlightedUnitScript = hit.transform.parent.gameObject.GetComponent<Unit>();
-
                 UIunitCurrentHealth.SetText(highlightedUnitScript.currentHealthPoints.ToString());
                 UIunitAttackDamage.SetText(highlightedUnitScript.attackDamage.ToString());
                 UIunitAttackRange.SetText(highlightedUnitScript.attackRange.ToString());
@@ -262,7 +250,6 @@ public class GameManager : NetworkBehaviour {
                     UIunitCanvas.enabled = true;
                     displayingUnitInfo = true;
                     var highlightedUnitScript = unitBeingDisplayed.GetComponent<Unit>();
-
                     UIunitCurrentHealth.SetText(highlightedUnitScript.currentHealthPoints.ToString());
                     UIunitAttackDamage.SetText(highlightedUnitScript.attackDamage.ToString());
                     UIunitAttackRange.SetText(highlightedUnitScript.attackRange.ToString());
@@ -295,10 +282,7 @@ public class GameManager : NetworkBehaviour {
             currentPathForUnitRoute = new List<Node>();  
             return currentPathForUnitRoute;
         }
-        if (TMS.UnitCanEnterTile(x, y) == false) {
-            return null;
-        }
-
+        if (TMS.UnitCanEnterTile(x, y) == false) {return null;}
         currentPathForUnitRoute = null;
         Dictionary<Node, float> dist = new Dictionary<Node, float>();
         Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
@@ -307,7 +291,6 @@ public class GameManager : NetworkBehaviour {
         dist[source] = 0;
         prev[source] = null;
         List<Node> unvisited = new List<Node>();
-
         foreach (Node n in TMS.graph) {
             if (n != source) {
                 dist[n] = Mathf.Infinity;
@@ -315,21 +298,13 @@ public class GameManager : NetworkBehaviour {
             }
             unvisited.Add(n);
         }
-
         while (unvisited.Count > 0) {
             Node u = null;
             foreach (Node possibleU in unvisited) {
-                if (u == null || dist[possibleU] < dist[u]) {
-                    u = possibleU;
-                }
+                if (u == null || dist[possibleU] < dist[u]) { u = possibleU; }
             }
-
-            if (u == target) {
-                break;
-            }
-
+            if (u == target) { break; }
             unvisited.Remove(u);
-
             foreach (Node n in u.neighbours) {
                 float alt = dist[u] + TMS.costToEnterTile(n.x, n.y);
                 if (alt < dist[n]) {
@@ -338,12 +313,9 @@ public class GameManager : NetworkBehaviour {
                 }
             }
         }
-        if (prev[target] == null) {
-            return null;
-        }
+        if (prev[target] == null) { return null; }
         currentPathForUnitRoute = new List<Node>();
         Node curr = target;
-
         while (curr != null) {
             currentPathForUnitRoute.Add(curr);
             curr = prev[curr];
@@ -354,18 +326,10 @@ public class GameManager : NetworkBehaviour {
 
     public Vector2 DirectionBetween(Vector2 currentVector, Vector2 nextVector) {
         Vector2 vectorDirection = (nextVector - currentVector).normalized;
-        if (vectorDirection == Vector2.right) {
-            return Vector2.right;
-        }
-        else if (vectorDirection == Vector2.left) {
-            return Vector2.left;
-        }
-        else if (vectorDirection == Vector2.up) {
-            return Vector2.up;
-        }
-        else if (vectorDirection == Vector2.down) {
-            return Vector2.down;
-        }
+        if (vectorDirection == Vector2.right) { return Vector2.right; }
+        else if (vectorDirection == Vector2.left) { return Vector2.left; }
+        else if (vectorDirection == Vector2.up) { return Vector2.up; }
+        else if (vectorDirection == Vector2.down) { return Vector2.down; }
         else {
             Vector2 vectorToReturn = new Vector2();
             return vectorToReturn;
@@ -483,12 +447,8 @@ public class GameManager : NetworkBehaviour {
     }
 
     public IEnumerator CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
-        while (unit.GetComponent<Unit>().combatQueue.Count != 0) {
-            yield return new WaitForEndOfFrame();
-        }
-        while (enemy.GetComponent<Unit>().combatQueue.Count != 0) {
-            yield return new WaitForEndOfFrame();
-        }
+        while (unit.GetComponent<Unit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
+        while (enemy.GetComponent<Unit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit units in unitsList) {
             if (units.GetComponent<Unit>().team == 0) {
@@ -534,7 +494,6 @@ public class GameManager : NetworkBehaviour {
     public struct Dependencies {
         public NewNetworkManager NetworkManager;
         public GameData Data;
-
         public bool IsValid() {
             return Data != null && NetworkManager != null;
         }
@@ -545,16 +504,11 @@ public class GameManager : NetworkBehaviour {
             Debug.LogError("Tried to setup with invalid dependencies");
             return;
         }
-
         room = dependencies.NetworkManager;
         Data = dependencies.Data;
     }
 
     public void SetGamePlayer (NewNetworkGamePlayer player) {
         gamePlayer = player;
-    }
-
-    public void StartGameClient() {
-        Debug.Log("Game started for client");
     }
 }

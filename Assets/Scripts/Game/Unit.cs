@@ -60,13 +60,8 @@ public class Unit : NetworkBehaviour {
 
     public void MoveNextTile() {
         if (!hasAuthority) return;
-        // shorten this
-        if (path.Count == 0) {
-            return;
-        }
-        else {
-            StartCoroutine(MoveOverSeconds(transform.gameObject, path[path.Count - 1]));
-        }
+        if (path.Count == 0) { return; }
+        else { StartCoroutine(MoveOverSeconds(transform.gameObject, path[path.Count - 1])); }
     }
 
     [Command(requiresAuthority=false)]
@@ -78,8 +73,7 @@ public class Unit : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcDeleteOldPosition() {
-        if (!isServer)
-        tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
+        if (!isServer) { tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null; }
     }
 
     public void MoveAgain() {
@@ -89,34 +83,18 @@ public class Unit : NetworkBehaviour {
     }
 
     public MovementStates GetMovementStateEnum(int i) {
-        if (i == 0) {
-            return MovementStates.Unselected;
-        }
-        else if (i == 1) {
-            return MovementStates.Selected;
-        }
-        else if (i == 2) {
-            return MovementStates.Moved;
-        }
-        else if (i == 3) {
-            return MovementStates.Wait;
-        }
+        if (i == 0) { return MovementStates.Unselected; }
+        else if (i == 1) { return MovementStates.Selected; }
+        else if (i == 2) { return MovementStates.Moved; }
+        else if (i == 3) { return MovementStates.Wait; }
         return MovementStates.Unselected;
     }
 
     public void SetMovementState(int i) {
-        if (i == 0) {
-            unitMoveState =  MovementStates.Unselected;
-        }
-        else if (i == 1) {
-            unitMoveState = MovementStates.Selected;
-        }
-        else if (i == 2) {
-            unitMoveState = MovementStates.Moved;
-        }
-        else if (i == 3) {
-            unitMoveState = MovementStates.Wait;
-        }
+        if (i == 0) { unitMoveState =  MovementStates.Unselected; }
+        else if (i == 1) { unitMoveState = MovementStates.Selected; }
+        else if (i == 2) { unitMoveState = MovementStates.Moved; }
+        else if (i == 3) { unitMoveState = MovementStates.Wait; }
     }
 
     public void UpdateHealthUI() {
@@ -130,10 +108,13 @@ public class Unit : NetworkBehaviour {
         UpdateDamageToClient(damage);
         if (currentHealthPoints <= 0)
         UnitDie();
+        // send into checkifdead loop
+        // check if units remain
     }
 
     [ClientRpc]
     public void UpdateDamageToClient(int damageToClient) {
+        // shorten this
         if (!isServer) {
         currentHealthPoints = currentHealthPoints - damageToClient;
         }
@@ -148,16 +129,11 @@ public class Unit : NetworkBehaviour {
     }
 
     public void ChangeHealthBarColour(int i) {
-        if (i == 0) {
-            healthBar.color = Color.blue;
-        }
-        else if (i == 1) {
-            healthBar.color = Color.red;
-        }
+        if (i == 0) { healthBar.color = Color.blue; }
+        else if (i == 1) { healthBar.color = Color.red; }
     }
 
     public void UnitDie() {
-        Debug.Log("sadge");
         if (holder2D.activeSelf) {
             StartCoroutine(FadeOut());
             StartCoroutine(CheckIfRoutinesRunning());     
@@ -165,17 +141,13 @@ public class Unit : NetworkBehaviour {
     }
 
     public IEnumerator CheckIfRoutinesRunning() {
-        while (combatQueue.Count > 0) {
-            yield return new WaitForEndOfFrame();
-        }
+        while (combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
         NetworkServer.Destroy(gameObject);
     } 
 
     public IEnumerator FadeOut() {
         combatQueue.Enqueue(1);
-        for (float f = 1f; f >= .05; f -= 0.01f) {
-            yield return new WaitForEndOfFrame();
-        }
+        for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
         combatQueue.Dequeue();
     }
 
@@ -185,19 +157,14 @@ public class Unit : NetworkBehaviour {
         while (path.Count != 0) {
             Vector3 endPos = map.TileCoordToWorldCoord(path[0].x, path[0].y);
             objectToMove.transform.position = Vector3.Lerp(transform.position, endPos, visualMovementSpeed);
-            if ((transform.position - endPos).sqrMagnitude < 0.001) {
-                path.RemoveAt(0);
-            }
+            if ((transform.position - endPos).sqrMagnitude < 0.001) { path.RemoveAt(0); }
             yield return new WaitForEndOfFrame();
         }
         visualMovementSpeed = 0.15f;
         transform.position = map.TileCoordToWorldCoord(endNode.x, endNode.y);
-
         x = endNode.x;
         y = endNode.y;
-
         CmdUpdateNewPosition(x, y);
-
         tileBeingOccupied.GetComponent<TileClick>().unitOnTile = null;
         RpcDeleteOldPosition();
         tileBeingOccupied = map.tilesOnMap[x, y];

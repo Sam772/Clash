@@ -13,7 +13,6 @@ public class BattleManager : NetworkBehaviour {
         if (initiatorUnit.attackRange == recipientUnit.attackRange) {
             recipientUnit.DealDamage(initiatorAtt);
             if (CheckIfDead(recipient)) {
-                recipient.transform.parent = null;
                 recipientUnit.UnitDie();
                 battleStatus = false;
                 GMS.UnitsRemainClient(initiator, recipient);
@@ -21,7 +20,6 @@ public class BattleManager : NetworkBehaviour {
             }
             initiatorUnit.DealDamage(recipientAtt);
             if (CheckIfDead(initiator)) {
-                initiator.transform.parent = null;
                 initiatorUnit.UnitDie();
                 battleStatus = false;
                 GMS.UnitsRemainClient(initiator, recipient);
@@ -31,7 +29,6 @@ public class BattleManager : NetworkBehaviour {
         else {
             recipientUnit.DealDamage(initiatorAtt);
             if (CheckIfDead(recipient)) {
-                recipient.transform.parent = null;
                 recipientUnit.UnitDie();
                 battleStatus = false;
                 GMS.UnitsRemainClient(initiator, recipient);
@@ -58,7 +55,7 @@ public class BattleManager : NetworkBehaviour {
         Vector3 startingPos = unit.transform.position;
         Vector3 endingPos = enemy.transform.position;
         while (elapsedTime < .25f) {
-            unit.transform.position = Vector3.Lerp(startingPos, startingPos+((((endingPos - startingPos) / (endingPos - startingPos).magnitude)).normalized*.5f), (elapsedTime / .25f));
+            unit.transform.position = Vector3.Lerp(startingPos, startingPos + ((((endingPos - startingPos) / (endingPos - startingPos).magnitude)).normalized*.5f), (elapsedTime / .25f));
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -66,9 +63,7 @@ public class BattleManager : NetworkBehaviour {
             Battle(unit, enemy);
             yield return new WaitForEndOfFrame();
         }
-        if (unit != null) {
-           StartCoroutine(ReturnAfterAttack(unit, startingPos));
-        }
+        if (unit != null) { StartCoroutine(ReturnAfterAttack(unit, startingPos)); }
     }
 
     public IEnumerator ReturnAfterAttack(GameObject unit, Vector3 endPoint) {
