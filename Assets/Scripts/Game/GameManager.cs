@@ -106,18 +106,10 @@ public class GameManager : NetworkBehaviour {
         currentTeamUI.SetText("Player " + (currentTeam+1).ToString() + " Phase");
     }
 
-    // public int ReturnTeam(GameObject unit) {
-    //     return unit.GetComponent<Unit>().team;
-    // }
-
     [ClientRpc]
     public void ResetUnitsMovements(int teamToReset) {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
-            // if (unit.GetComponent<Unit>().teamNum == teamToReset) {
-            //     Debug.Log(teamToReset);
-            //     unit.GetComponent<Unit>().MoveAgain();
-            // } else
             unit.GetComponent<Unit>().MoveAgain();
         }
     }
@@ -167,7 +159,6 @@ public class GameManager : NetworkBehaviour {
         if (currentTeam == numberOfTeams) {
             currentTeam = 0;
         }
-        // resetUnitsMovements(returnTeam(currentTeam));
     }
 
     [ClientRpc]
@@ -447,49 +438,24 @@ public class GameManager : NetworkBehaviour {
     }
 
     public IEnumerator CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
+        int team1 = 0;
+        int team2 = 0;
         while (unit.GetComponent<Unit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
         while (enemy.GetComponent<Unit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit units in unitsList) {
-            if (units.GetComponent<Unit>().team == 0) {
-                if (unitsList.Length == 5) {
-                    displayWinnerUI.enabled = true;
-                    displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
-                }
-            }
-            if (units.GetComponent<Unit>().team == 1) {
-                if (unitsList.Length == 6) {
-                    displayWinnerUI.enabled = true;
-                    displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
-                }
-            }
+            if (units.GetComponent<Unit>().team == 0) { team1++; }
+            else if (units.GetComponent<Unit>().team == 1) { team2++; }
+        }
+        if (team1 == 1) {
+            displayWinnerUI.enabled = true;
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
+        }
+        if (team2 == 1) {
+            displayWinnerUI.enabled = true;
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
         }
     }
-
-    // Unit[] unitsList = FindObjectsOfType<Unit>();
-    //     foreach (Unit units in unitsList) {
-    //         if (units.GetComponent<Unit>().teamNum == 0) {
-    //             if (unitsList.Length == 0) {
-    //                 displayWinnerUI.enabled = true;
-    //                 displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
-    //             }
-    //         }
-    //         if (units.GetComponent<Unit>().teamNum == 1) {
-    //             if (!units) {
-    //                 displayWinnerUI.enabled = true;
-    //                 displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
-    //             }
-    //         }
-    //     }
-
-    // if (team1.transform.childCount == 0) {
-    //         displayWinnerUI.enabled = true;
-    //         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
-    //     }
-    //     else if (team2.transform.childCount == 0) {
-    //         displayWinnerUI.enabled = true;
-    //         displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
-    //     }
 
     public struct Dependencies {
         public NewNetworkManager NetworkManager;
