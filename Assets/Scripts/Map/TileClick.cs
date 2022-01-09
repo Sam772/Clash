@@ -4,5 +4,5 @@ public class TileClick : MonoBehaviour {
     public int tileX;
     public int tileY;
     public GameObject unitOnTile;
-    public TileMap map;
+    public GenericTileMap map;
 }

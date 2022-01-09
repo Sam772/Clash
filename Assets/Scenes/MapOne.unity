@@ -753,7 +753,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1042821803}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: EndTurn
+        m_MethodName: CmdEndTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2075,7 +2075,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1042821800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f67bb2f2fbf82f4dacf8f9f5a3043dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 17e48226cdbc96b44a625b6009274806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
@@ -2742,8 +2742,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

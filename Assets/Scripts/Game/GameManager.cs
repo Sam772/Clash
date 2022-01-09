@@ -29,7 +29,7 @@ public class GameManager : NetworkBehaviour {
     public GameObject unitBeingDisplayed;
     public GameObject tileBeingDisplayed;
     public bool displayingUnitInfo;
-    public TileMap TMS;
+    public GenericTileMap TMS;
     public int cursorX;
     public int cursorY;
     public int selectedXTile;
@@ -44,16 +44,15 @@ public class GameManager : NetworkBehaviour {
     public int routeToX;
     public int routeToY;
     public void Start() {
-        // check this
         currentTeam = 0;
         SetCurrentTeamUI();
-        TeamHealthbarColorUpdate();
+        SetTeamHealthbarColour();
         displayingUnitInfo = false;
         playerPhaseAnim = playerPhaseBlock.GetComponent<Animator>();
         playerPhaseText = playerPhaseBlock.GetComponentInChildren<TextMeshProUGUI>();
         unitPathToCursor = new List<Node>();
         unitPathExists = false;       
-        TMS = GetComponent<TileMap>();
+        TMS = GetComponent<GenericTileMap>();
     }
 
     public void Update() {
@@ -107,14 +106,14 @@ public class GameManager : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void ResetUnitsMovements(int teamToReset) {
+    public void RpcResetUnitsActions(int teamToReset) {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
             unit.GetComponent<Unit>().MoveAgain();
         }
     }
 
-    public void TeamHealthbarColorUpdate() {
+    public void SetTeamHealthbarColour() {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
             if (unit.GetComponent<Unit>().team == 0) { unit.GetComponent<Unit>().ChangeHealthBarColour(0);
@@ -123,7 +122,7 @@ public class GameManager : NetworkBehaviour {
     }
 
     public void OnPlayChange(int oldV, int newV) {
-        TeamHealthbarColorUpdate();
+        SetTeamHealthbarColour();
         if (TMS.selectedUnit == null)
             if (oldV == 0) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
@@ -136,9 +135,9 @@ public class GameManager : NetworkBehaviour {
     }
 
     [Command(requiresAuthority = false)]
-    public void EndTurn() {
+    public void CmdEndTurn() {
         if (TMS.selectedUnit == null) {
-            SwitchCurrentPlayer();
+            CmdSwitchCurrentPlayer();
             if (currentTeam == 1) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
                 playerPhaseText.SetText("Player 2 Phase");
@@ -147,14 +146,14 @@ public class GameManager : NetworkBehaviour {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
                 playerPhaseText.SetText("Player 1 Phase");
             }
-            TeamHealthbarColorUpdate();
+            SetTeamHealthbarColour();
             SetCurrentTeamUI();
         }
     }
 
     [Command(requiresAuthority=false)]
-    public void SwitchCurrentPlayer() {
-        ResetUnitsMovements(currentTeam);
+    public void CmdSwitchCurrentPlayer() {
+        RpcResetUnitsActions(currentTeam);
         currentTeam++;
         if (currentTeam == numberOfTeams) {
             currentTeam = 0;
@@ -162,13 +161,13 @@ public class GameManager : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void CheckIfUnitsRemain(GameObject unit, GameObject enemy) {
+    public void RpcCheckIfUnitsRemain(GameObject unit, GameObject enemy) {
         StartCoroutine(CheckIfUnitsRemainCoroutine(unit, enemy));
     }
 
     [Command(requiresAuthority=false)]
-    public void UnitsRemainClient(GameObject unit, GameObject enemy) {
-        CheckIfUnitsRemain(unit, enemy);
+    public void CmdUnitsRemainClient(GameObject unit, GameObject enemy) {
+        RpcCheckIfUnitsRemain(unit, enemy);
     }
     
     public void CursorUIUpdate() {
@@ -295,7 +294,7 @@ public class GameManager : NetworkBehaviour {
             if (u == target) { break; }
             unvisited.Remove(u);
             foreach (Node n in u.neighbours) {
-                float alt = dist[u] + TMS.costToEnterTile(n.x, n.y);
+                float alt = dist[u] + TMS.CostToEnterTile(n.x, n.y);
                 if (alt < dist[n]) {
                     dist[n] = alt;
                     prev[n] = u;
@@ -325,7 +324,7 @@ public class GameManager : NetworkBehaviour {
         }
     }
 
-    public void SetCorrectRouteWithInputAndOutput(int nodeX,int nodeY,int i) {
+    public void SetCorrectRouteWithInputAndOutput(int nodeX, int nodeY, int i) {
         Vector2 previousTile = new Vector2(unitPathToCursor[i - 1].x + 1, unitPathToCursor[i - 1].y + 1);
         Vector2 currentTile = new Vector2(unitPathToCursor[i].x + 1, unitPathToCursor[i].y + 1);
         Vector2 nextTile = new Vector2(unitPathToCursor[i + 1].x + 1, unitPathToCursor[i + 1].y + 1);

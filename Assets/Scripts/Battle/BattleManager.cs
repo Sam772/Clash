@@ -11,27 +11,27 @@ public class BattleManager : NetworkBehaviour {
         int initiatorAtt = initiatorUnit.attackDamage;
         int recipientAtt = recipientUnit.attackDamage;
         if (initiatorUnit.attackRange == recipientUnit.attackRange) {
-            recipientUnit.DealDamage(initiatorAtt);
+            recipientUnit.CmdDealDamage(initiatorAtt);
             if (CheckIfDead(recipient)) {
                 recipientUnit.UnitDie();
                 battleStatus = false;
-                GMS.UnitsRemainClient(initiator, recipient);
+                GMS.CmdUnitsRemainClient(initiator, recipient);
                 return;
             }
-            initiatorUnit.DealDamage(recipientAtt);
+            initiatorUnit.CmdDealDamage(recipientAtt);
             if (CheckIfDead(initiator)) {
                 initiatorUnit.UnitDie();
                 battleStatus = false;
-                GMS.UnitsRemainClient(initiator, recipient);
+                GMS.CmdUnitsRemainClient(initiator, recipient);
                 return;
             }
         }
         else {
-            recipientUnit.DealDamage(initiatorAtt);
+            recipientUnit.CmdDealDamage(initiatorAtt);
             if (CheckIfDead(recipient)) {
                 recipientUnit.UnitDie();
                 battleStatus = false;
-                GMS.UnitsRemainClient(initiator, recipient);
+                GMS.CmdUnitsRemainClient(initiator, recipient);
                 return;
             }
         }

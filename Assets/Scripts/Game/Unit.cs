@@ -32,7 +32,7 @@ public class Unit : NetworkBehaviour {
     public Canvas damagePopupCanvas;
     public TMP_Text damagePopupText;
     public Image damageBackdrop;
-    public TileMap map;
+    public GenericTileMap map;
     public GameObject holder2D;
     private BattleManager BMS;
     public enum MovementStates {
@@ -103,9 +103,9 @@ public class Unit : NetworkBehaviour {
     }
 
     [Command(requiresAuthority=false)]
-    public void DealDamage(int damage) {
+    public void CmdDealDamage(int damage) {
         currentHealthPoints = currentHealthPoints - damage;
-        UpdateDamageToClient(damage);
+        RpcDealDamageClient(damage);
         if (currentHealthPoints <= 0)
         UnitDie();
         // send into checkifdead loop
@@ -113,11 +113,8 @@ public class Unit : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void UpdateDamageToClient(int damageToClient) {
-        // shorten this
-        if (!isServer) {
-        currentHealthPoints = currentHealthPoints - damageToClient;
-        }
+    public void RpcDealDamageClient(int damageToClient) {
+        if (!isServer) { currentHealthPoints = currentHealthPoints - damageToClient; }
         Debug.Log("damage dealt: " + damageToClient);
         Debug.Log("hp of attacked unit: " + currentHealthPoints);
         UpdateHealthUI();
