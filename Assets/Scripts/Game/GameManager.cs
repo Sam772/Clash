@@ -291,9 +291,7 @@ public class GameManager : NetworkBehaviour {
         }
         while (unvisited.Count > 0) {
             Node u = null;
-            foreach (Node possibleU in unvisited) {
-                if (u == null || dist[possibleU] < dist[u]) { u = possibleU; }
-            }
+            foreach (Node possibleU in unvisited) { if (u == null || dist[possibleU] < dist[u]) { u = possibleU; }}
             if (u == target) { break; }
             unvisited.Remove(u);
             foreach (Node n in u.neighbours) {
