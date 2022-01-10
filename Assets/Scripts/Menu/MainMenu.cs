@@ -3,6 +3,8 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour {
 
     #pragma warning disable 649
+    [SerializeField] private RegisterScreen registerScreen;
+    [SerializeField] private LoginScreen loginScreen;
     [SerializeField] private MainScreen mainScreen;
     [SerializeField] private MapSelectionScreen mapSelectionScreen;
     [SerializeField] private SettingsScreen settingsScreen; 
@@ -18,11 +20,13 @@ public class MainMenu : MonoBehaviour {
 
     private void Awake() {
         networkManager = FindObjectOfType<NewNetworkManager>();
-        ReturnToMainScreenClicked();
+        BeginScreen();
     }
 
     private void Start() {
         networkManager.RegisterMainMenu(this);
+        registerScreen.Setup(this);
+        loginScreen.Setup(this);
         mainScreen.Setup(this);
         playScreen.Setup(this);
         settingsScreen.Setup(this);
@@ -32,6 +36,8 @@ public class MainMenu : MonoBehaviour {
         lobby.Setup(this);
     }
 
+    public void BeginScreen() => ShowScreen(loginScreen);
+    public void LoginButtonClicked() => ShowScreen(mainScreen);
     public void PlayGameClicked() => ShowScreen(mapSelectionScreen);
     public void SettingsScreenClicked() => ShowScreen(settingsScreen);
     public void MapClicked() => ShowScreen(playScreen);
@@ -64,6 +70,8 @@ public class MainMenu : MonoBehaviour {
         if (currentScreen == screen) return;
             
         if (screen != lobby) lobby.Hide();
+        if (screen != loginScreen) loginScreen.Hide();
+        if (screen != registerScreen) registerScreen.Hide();
         if (screen != hostScreen) hostScreen.Hide();
         if (screen != settingsScreen) settingsScreen.Hide();
         if (screen != playScreen) playScreen.Hide();

@@ -63,62 +63,49 @@ public class GameManager : NetworkBehaviour {
             if (TMS.selectedUnit != null && TMS.selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1) == TMS.selectedUnit.GetComponent<Unit>().unitMoveState) {
                 if (TMS.selectedUnitMoveRange.Contains(TMS.graph[cursorX, cursorY])) {
                     if (cursorX != TMS.selectedUnit.GetComponent<Unit>().x || cursorY != TMS.selectedUnit.GetComponent<Unit>().y) {
-                        if (!unitPathExists&&TMS.selectedUnit.GetComponent<Unit>().movementQueue.Count==0) {                           
+                        if (!unitPathExists && TMS.selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {                           
                             unitPathToCursor = GenerateCursorRouteTo(cursorX, cursorY);
                             routeToX = cursorX;
                             routeToY = cursorY;
                             if (unitPathToCursor.Count != 0) {                                                                 
-                                for(int i = 0; i < unitPathToCursor.Count; i++) {
+                                for (int i = 0; i < unitPathToCursor.Count; i++) {
                                     int nodeX = unitPathToCursor[i].x;
                                     int nodeY = unitPathToCursor[i].y;
                                     if (i == 0) {
                                         GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
                                         quadToUpdate.GetComponent<Renderer>().material = UICursor;
-                                    }
-                                    else if (i!=0 && (i+1)!=unitPathToCursor.Count) { SetCorrectRouteWithInputAndOutput(nodeX, nodeY,i); }
+                                    } else if (i != 0 && (i + 1) != unitPathToCursor.Count) { SetCorrectRouteWithInputAndOutput(nodeX, nodeY,i); }
                                     else if (i == unitPathToCursor.Count-1) { SetCorrectRouteFinalTile(nodeX, nodeY, i); }
-                                    TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = true;
-                                } 
-                            }
+                                    TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = true;}}
                             unitPathExists = true;
                         } else if (routeToX != cursorX || routeToY != cursorY) {
                             if (unitPathToCursor.Count != 0) {
                                 for (int i = 0; i < unitPathToCursor.Count; i++) {
                                     int nodeX = unitPathToCursor[i].x;
                                     int nodeY = unitPathToCursor[i].y;
-                                    TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = false;
-                                }
-                            }
-                            unitPathExists = false;
-                        }
-                    }
-                    else if(cursorX == TMS.selectedUnit.GetComponent<Unit>().x && cursorY == TMS.selectedUnit.GetComponent<Unit>().y) { 
+                                    TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = false;}}
+                            unitPathExists = false;}}
+                    else if (cursorX == TMS.selectedUnit.GetComponent<Unit>().x && cursorY == TMS.selectedUnit.GetComponent<Unit>().y) { 
                         TMS.DisableUnitUIRoute();
-                        unitPathExists = false;
-                    }
-                }               
-            }
-        }
+                        unitPathExists = false;}}}}
     }
 
     public void SetCurrentTeamUI() {
-        currentTeamUI.SetText("Player " + (currentTeam+1).ToString() + " Phase");
+        currentTeamUI.SetText("Player " + (currentTeam + 1).ToString() + " Phase");
     }
 
     [ClientRpc]
     public void RpcResetUnitsActions(int teamToReset) {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
-            unit.GetComponent<Unit>().MoveAgain();
-        }
+            unit.GetComponent<Unit>().MoveAgain();}
     }
 
     public void SetTeamHealthbarColour() {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit unit in unitsList) {
             if (unit.GetComponent<Unit>().team == 0) { unit.GetComponent<Unit>().ChangeHealthBarColour(0);
-            } else if (unit.GetComponent<Unit>().team == 1) { unit.GetComponent<Unit>().ChangeHealthBarColour(1); }
-        }
+            } else if (unit.GetComponent<Unit>().team == 1) { unit.GetComponent<Unit>().ChangeHealthBarColour(1); }}
     }
 
     public void OnPlayChange(int oldV, int newV) {
@@ -127,11 +114,9 @@ public class GameManager : NetworkBehaviour {
             if (oldV == 0) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
                 playerPhaseText.SetText("Player 2 Phase");
-            }
-            else {
+            } else {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
-                playerPhaseText.SetText("Player 1 Phase");
-            }
+                playerPhaseText.SetText("Player 1 Phase");}
     }
 
     [Command(requiresAuthority = false)]
@@ -141,14 +126,11 @@ public class GameManager : NetworkBehaviour {
             if (currentTeam == 1) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
                 playerPhaseText.SetText("Player 2 Phase");
-            }
-            else if (currentTeam == 0) {
+            } else if (currentTeam == 0) {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
-                playerPhaseText.SetText("Player 1 Phase");
-            }
+                playerPhaseText.SetText("Player 1 Phase");}
             SetTeamHealthbarColour();
-            SetCurrentTeamUI();
-        }
+            SetCurrentTeamUI();}
     }
 
     [Command(requiresAuthority=false)]
@@ -156,8 +138,7 @@ public class GameManager : NetworkBehaviour {
         RpcResetUnitsActions(currentTeam);
         currentTeam++;
         if (currentTeam == numberOfTeams) {
-            currentTeam = 0;
-        }
+            currentTeam = 0;}
     }
 
     [ClientRpc]
@@ -179,8 +160,7 @@ public class GameManager : NetworkBehaviour {
                 cursorY = selectedYTile;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
                 tileBeingDisplayed = hit.transform.gameObject;   
-            }
-            else if (tileBeingDisplayed != hit.transform.gameObject) {
+            } else if (tileBeingDisplayed != hit.transform.gameObject) {
                 selectedXTile = tileBeingDisplayed.GetComponent<TileClick>().tileX;
                 selectedYTile = tileBeingDisplayed.GetComponent<TileClick>().tileY;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;
@@ -189,10 +169,8 @@ public class GameManager : NetworkBehaviour {
                 cursorX = selectedXTile;
                 cursorY = selectedYTile;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                tileBeingDisplayed = hit.transform.gameObject;  
-            }
-        }
-        else if (hit.transform.CompareTag("Unit")) {
+                tileBeingDisplayed = hit.transform.gameObject;}
+        } else if (hit.transform.CompareTag("Unit")) {
             if (tileBeingDisplayed == null) {
                 selectedXTile = hit.transform.parent.gameObject.GetComponent<Unit>().x;
                 selectedYTile = hit.transform.parent.gameObject.GetComponent<Unit>().y;
@@ -200,8 +178,7 @@ public class GameManager : NetworkBehaviour {
                 cursorY = selectedYTile;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
                 tileBeingDisplayed = hit.transform.parent.gameObject.GetComponent<Unit>().tileBeingOccupied;
-            }
-            else if (tileBeingDisplayed != hit.transform.gameObject) {
+            } else if (tileBeingDisplayed != hit.transform.gameObject) {
                 if (hit.transform.parent.gameObject.GetComponent<Unit>().movementQueue.Count == 0) {
                     selectedXTile = tileBeingDisplayed.GetComponent<TileClick>().tileX;
                     selectedYTile = tileBeingDisplayed.GetComponent<TileClick>().tileY;
@@ -211,13 +188,9 @@ public class GameManager : NetworkBehaviour {
                     cursorX = selectedXTile;
                     cursorY = selectedYTile;
                     TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                    tileBeingDisplayed = hit.transform.parent.GetComponent<Unit>().tileBeingOccupied; 
-                }
-            }
-        }
-        else {
-            TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;
-        }
+                    tileBeingDisplayed = hit.transform.parent.GetComponent<Unit>().tileBeingOccupied;}}
+        } else {
+            TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;}
     }
 
     public void UnitUIUpdate() {
@@ -233,8 +206,7 @@ public class GameManager : NetworkBehaviour {
                 UIunitMoveSpeed.SetText(highlightedUnitScript.moveSpeed.ToString());
                 UIunitName.SetText(highlightedUnitScript.unitName);
                 UIunitSprite.sprite = highlightedUnitScript.unitSprite;
-            }
-            else if (hit.transform.CompareTag("Tile")) {
+            } else if (hit.transform.CompareTag("Tile")) {
                 if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
                     unitBeingDisplayed = hit.transform.GetComponent<TileClick>().unitOnTile;
                     UIunitCanvas.enabled = true;
@@ -245,33 +217,24 @@ public class GameManager : NetworkBehaviour {
                     UIunitAttackRange.SetText(highlightedUnitScript.attackRange.ToString());
                     UIunitMoveSpeed.SetText(highlightedUnitScript.moveSpeed.ToString());
                     UIunitName.SetText(highlightedUnitScript.unitName);
-                    UIunitSprite.sprite = highlightedUnitScript.unitSprite;
-                }
-            }
-        }
-        else if (hit.transform.gameObject.CompareTag("Tile")) {
+                    UIunitSprite.sprite = highlightedUnitScript.unitSprite;}}
+        } else if (hit.transform.gameObject.CompareTag("Tile")) {
             if (hit.transform.GetComponent<TileClick>().unitOnTile == null) {
                 UIunitCanvas.enabled = false;
                 displayingUnitInfo = false;
-            }
-            else if (hit.transform.GetComponent<TileClick>().unitOnTile != unitBeingDisplayed) {
+            } else if (hit.transform.GetComponent<TileClick>().unitOnTile != unitBeingDisplayed) {
                 UIunitCanvas.enabled = false;
-                displayingUnitInfo = false;
-            }
-        }
-        else if (hit.transform.gameObject.CompareTag("Unit")) {
+                displayingUnitInfo = false;}
+        } else if (hit.transform.gameObject.CompareTag("Unit")) {
             if (hit.transform.parent.gameObject != unitBeingDisplayed) {
                 UIunitCanvas.enabled = false;
-                displayingUnitInfo = false;
-            }
-        }
+                displayingUnitInfo = false;}}
     }
 
     public List<Node> GenerateCursorRouteTo(int x, int y) {
         if (TMS.selectedUnit.GetComponent<Unit>().x == x && TMS.selectedUnit.GetComponent<Unit>().y == y) {
             currentPathForUnitRoute = new List<Node>();  
-            return currentPathForUnitRoute;
-        }
+            return currentPathForUnitRoute;}
         if (TMS.UnitCanEnterTile(x, y) == false) {return null;}
         currentPathForUnitRoute = null;
         Dictionary<Node, float> dist = new Dictionary<Node, float>();
@@ -284,10 +247,8 @@ public class GameManager : NetworkBehaviour {
         foreach (Node n in TMS.graph) {
             if (n != source) {
                 dist[n] = Mathf.Infinity;
-                prev[n] = null;
-            }
-            unvisited.Add(n);
-        }
+                prev[n] = null;}
+            unvisited.Add(n);}
         while (unvisited.Count > 0) {
             Node u = null;
             foreach (Node possibleU in unvisited) { if (u == null || dist[possibleU] < dist[u]) { u = possibleU; }}
@@ -297,17 +258,13 @@ public class GameManager : NetworkBehaviour {
                 float alt = dist[u] + TMS.CostToEnterTile(n.x, n.y);
                 if (alt < dist[n]) {
                     dist[n] = alt;
-                    prev[n] = u;
-                }
-            }
-        }
+                    prev[n] = u;}}}
         if (prev[target] == null) { return null; }
         currentPathForUnitRoute = new List<Node>();
         Node curr = target;
         while (curr != null) {
             currentPathForUnitRoute.Add(curr);
-            curr = prev[curr];
-        }
+            curr = prev[curr];}
         currentPathForUnitRoute.Reverse();
         return currentPathForUnitRoute;
     }
@@ -320,8 +277,7 @@ public class GameManager : NetworkBehaviour {
         else if (vectorDirection == Vector2.down) { return Vector2.down; }
         else {
             Vector2 vectorToReturn = new Vector2();
-            return vectorToReturn;
-        }
+            return vectorToReturn;}
     }
 
     public void SetCorrectRouteWithInputAndOutput(int nodeX, int nodeY, int i) {
@@ -335,73 +291,61 @@ public class GameManager : NetworkBehaviour {
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.right && currentToFrontVector == Vector2.up) {
+        } else if (backToCurrentVector == Vector2.right && currentToFrontVector == Vector2.up) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.right && currentToFrontVector == Vector2.down) {
+        } else if (backToCurrentVector == Vector2.right && currentToFrontVector == Vector2.down) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.left) {
+        } else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.left) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.up) {
+        } else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.up) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.down) {
+        } else if (backToCurrentVector == Vector2.left && currentToFrontVector == Vector2.down) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.up) {
+        } else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.up) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.right) {
+        } else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.right) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.left) {
+        } else if (backToCurrentVector == Vector2.up && currentToFrontVector == Vector2.left) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.down) {
+        } else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.down) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRoute;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.right) {
+        } else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.right) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.left) {
+        } else if (backToCurrentVector == Vector2.down && currentToFrontVector == Vector2.left) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteCurve;
-            quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
+            quadToUpdate.GetComponent<Renderer>().enabled = true;}
     }
 
     public void SetCorrectRouteFinalTile(int nodeX,int nodeY,int i) {
@@ -413,25 +357,21 @@ public class GameManager : NetworkBehaviour {
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.left) {
+        } else if (backToCurrentVector == Vector2.left) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.up) {
+        } else if (backToCurrentVector == Vector2.up) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
             quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
-        else if (backToCurrentVector == Vector2.down) {
+        } else if (backToCurrentVector == Vector2.down) {
             GameObject quadToUpdate = TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY];
             quadToUpdate.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             quadToUpdate.GetComponent<Renderer>().material = UIunitRouteArrow;
-            quadToUpdate.GetComponent<Renderer>().enabled = true;
-        }
+            quadToUpdate.GetComponent<Renderer>().enabled = true;}
     }
 
     public IEnumerator CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
@@ -442,31 +382,26 @@ public class GameManager : NetworkBehaviour {
         Unit[] unitsList = FindObjectsOfType<Unit>();
         foreach (Unit units in unitsList) {
             if (units.GetComponent<Unit>().team == 0) { team1++; }
-            else if (units.GetComponent<Unit>().team == 1) { team2++; }
-        }
+            else if (units.GetComponent<Unit>().team == 1) { team2++; }}
         if (team1 == 1) {
             displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");
-        }
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");}
         if (team2 == 1) {
             displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
-        }
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");}
     }
 
     public struct Dependencies {
         public NewNetworkManager NetworkManager;
         public GameData Data;
         public bool IsValid() {
-            return Data != null && NetworkManager != null;
-        }
+            return Data != null && NetworkManager != null;}
     }
 
     public void SetDependencies(Dependencies dependencies) {
         if (!dependencies.IsValid()) {
             Debug.LogError("Tried to setup with invalid dependencies");
-            return;
-        }
+            return;}
         room = dependencies.NetworkManager;
         Data = dependencies.Data;
     }
