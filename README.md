@@ -24,3 +24,4 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 - Mirror's Networking Library
 - Unity Game Engine Version: 2020.3.21f1 LTS
 - ParrelSync
+- Microsoft Azure PlayFab Services
