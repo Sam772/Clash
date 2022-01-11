@@ -44,11 +44,15 @@ public class PlayFabManager : MonoBehaviour {
     }
 
     public void ResetPasswordButton() {
-
+        var request = new SendAccountRecoveryEmailRequest {
+            Email = emailInput.text,
+            TitleId = "37C06"
+        };
+        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset, OnError);
     }
 
     public void OnPasswordReset(SendAccountRecoveryEmailResult result) {
-
+        messageText.text = "Password reset email sent!";
     }
 
     public void OnSuccess(LoginResult result) {
