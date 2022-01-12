@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 public abstract class GenericTileMap : NetworkBehaviour {
-    public BattleManager BMS;
-    public GameManager GMS;
+    public BattleManager battleManager;
+    public GameManager gameManager;
     public TileType[] tileTypes;
     public int[,] tiles;
     public GameObject[,] tilesOnMap;
@@ -185,7 +185,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
                 if (hit.transform.gameObject.CompareTag("Tile")) {
                     if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
                         tempSelectedUnit = hit.transform.GetComponent<TileClick>().unitOnTile;
-                        if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
+                        if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<Unit>().team == gameManager.currentTeam) {
                             DisableHighlightUnitRange();
                             selectedUnit = tempSelectedUnit;
                             selectedUnit.GetComponent<Unit>().map = this;
@@ -194,7 +194,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
                             HighlightUnitRange();}}}
                 else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {   
                     tempSelectedUnit = hit.transform.parent.gameObject;
-                    if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
+                    if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<Unit>().team == gameManager.currentTeam) {
                         DisableHighlightUnitRange();
                         selectedUnit = tempSelectedUnit;
                         selectedUnit.GetComponent<Unit>().SetMovementState(1);
@@ -211,11 +211,11 @@ public abstract class GenericTileMap : NetworkBehaviour {
     }
     
     public void MouseClickToSelectUnitV2() {
-        if (unitSelected == false && GMS.tileBeingDisplayed!=null) {
-            if (GMS.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile != null) {
-                GameObject tempSelectedUnit = GMS.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile;
+        if (unitSelected == false && gameManager.tileBeingDisplayed!=null) {
+            if (gameManager.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile != null) {
+                GameObject tempSelectedUnit = gameManager.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile;
                 if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0)
-                    && tempSelectedUnit.GetComponent<Unit>().team == GMS.currentTeam) {
+                    && tempSelectedUnit.GetComponent<Unit>().team == gameManager.currentTeam) {
                     DisableHighlightUnitRange();
                     selectedUnit = tempSelectedUnit;
                     selectedUnit.GetComponent<Unit>().map = this;
@@ -240,8 +240,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
                         selectedUnit.GetComponent<Unit>().SetMovementState(3);
                         DeselectUnit();
                     } else if (unitOnTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team && attackableTiles.Contains(graph[unitX,unitY])) {
-                        if (unitOnTile.GetComponent<Unit>().currentHealthPoints > 0) {
-                            StartCoroutine(BMS.Attack(selectedUnit, unitOnTile));
+                        if (unitOnTile.GetComponent<Unit>().currentHealth > 0) {
+                            StartCoroutine(battleManager.Attack(selectedUnit, unitOnTile));
                             StartCoroutine(DeselectAfterMovements(selectedUnit, unitOnTile));}}}}
             else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {
                 GameObject unitClicked = hit.transform.parent.gameObject;
@@ -253,8 +253,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
                     selectedUnit.GetComponent<Unit>().SetMovementState(3);
                     DeselectUnit();
                 } else if (unitClicked.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team && attackableTiles.Contains(graph[unitX, unitY])) {
-                    if (unitClicked.GetComponent<Unit>().currentHealthPoints > 0) {
-                        StartCoroutine(BMS.Attack(selectedUnit, unitClicked));
+                    if (unitClicked.GetComponent<Unit>().currentHealth > 0) {
+                        StartCoroutine(battleManager.Attack(selectedUnit, unitClicked));
                         StartCoroutine(DeselectAfterMovements(selectedUnit, unitClicked));}}}}
     }
 
@@ -289,8 +289,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
         HashSet<Node> finalMovementHighlight = new HashSet<Node>();
         HashSet<Node> totalAttackableTiles = new HashSet<Node>();
         HashSet<Node> finalEnemyUnitsInMovementRange = new HashSet<Node>();
-        int attRange = selectedUnit.GetComponent<Unit>().attackRange;
-        int moveSpeed = selectedUnit.GetComponent<Unit>().moveSpeed;
+        int attRange = selectedUnit.GetComponent<Unit>().range;
+        int moveSpeed = selectedUnit.GetComponent<Unit>().move;
         Node unitInitialNode = graph[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y];
         finalMovementHighlight = GetUnitMovementOptions();
         totalAttackableTiles = GetUnitTotalAttackableTiles(finalMovementHighlight, attRange, unitInitialNode);
@@ -313,7 +313,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
         HashSet<Node> UIHighlight = new HashSet<Node>();
         HashSet<Node> tempUIHighlight = new HashSet<Node>();
         HashSet<Node> finalMovementHighlight = new HashSet<Node>();      
-        int moveSpeed = selectedUnit.GetComponent<Unit>().moveSpeed;
+        int moveSpeed = selectedUnit.GetComponent<Unit>().move;
         Node unitInitialNode = graph[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y];
         finalMovementHighlight.Add(unitInitialNode);
         foreach (Node n in unitInitialNode.neighbours) {
@@ -364,7 +364,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
         HashSet<Node> neighbourHash = new HashSet<Node>();
         HashSet<Node> seenNodes = new HashSet<Node>();
         Node initialNode = graph[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y];
-        int attRange = selectedUnit.GetComponent<Unit>().attackRange;
+        int attRange = selectedUnit.GetComponent<Unit>().range;
         neighbourHash = new HashSet<Node>();
         neighbourHash.Add(initialNode);
         for (int i = 0; i < attRange; i++) {

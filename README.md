@@ -12,7 +12,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 - Updated camera
 - User Interface changes
 - Login / Register functionality
-- Reset Password functionality
+- Password Reset functionality
 
 ## Contributors
 <table>

@@ -2080,8 +2080,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  BMS: {fileID: 1042821805}
-  GMS: {fileID: 1042821803}
+  battleManager: {fileID: 1042821805}
+  gameManager: {fileID: 1042821803}
   tileTypes:
   - name: TileGrass
     tileVisualPrefab: {fileID: 3612488483178945816, guid: e7cf8c5860eb4f448af63eb8e134cf8b, type: 3}
@@ -2147,23 +2147,12 @@ MonoBehaviour:
   UIunitSprite: {fileID: 2008821326}
   UIunitCanvas: {fileID: 1336725826}
   playerPhaseBlock: {fileID: 1168686527}
-  numberOfTeams: 2
   currentTeam: 0
-  unitBeingDisplayed: {fileID: 0}
   tileBeingDisplayed: {fileID: 0}
-  displayingUnitInfo: 0
-  TMS: {fileID: 0}
-  cursorX: 0
-  cursorY: 0
-  selectedXTile: 0
-  selectedYTile: 0
-  unitPathExists: 0
   UIunitRoute: {fileID: 2100000, guid: ecc8d47b81846e64b9d24eeb07b5abc8, type: 2}
   UIunitRouteCurve: {fileID: 2100000, guid: 3518f2de476b72b4d854a3ae7f4f3358, type: 2}
   UIunitRouteArrow: {fileID: 2100000, guid: 2d48d5549aa9aed45832d86bd2abec0d, type: 2}
   UICursor: {fileID: 2100000, guid: c542c757c06788944aee44904bc81716, type: 2}
-  routeToX: 0
-  routeToY: 0
 --- !u!114 &1042821804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2195,7 +2184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  GMS: {fileID: 1042821803}
+  gameManager: {fileID: 1042821803}
 --- !u!1 &1068612066
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 using TMPro;
-
 public class Unit : NetworkBehaviour {
     [SyncVar]
     public int team;
@@ -17,24 +16,24 @@ public class Unit : NetworkBehaviour {
     public float visualMovementSpeed = .15f;
     public GameObject tileBeingOccupied;
     public string unitName;
-    public int moveSpeed;
-    public int attackRange;
-    public int attackDamage;
-    public int maxHealthPoints;
+    public int maxHealth;
+    // create separate stats instead of just damage for calculation
+    // public int strength;
+    // public int defence;
+    // set our current damage variable using those stats
+    // damage = strength - defence;
+    public int damage;
+    public int move;
+    public int range;
     [SyncVar]
-    public int currentHealthPoints;
+    public int currentHealth;
     public Sprite unitSprite;
-
-    [Header("UI Elements")]
+    [Header("Unit Health Bar")]
     public Canvas healthBarCanvas;
     public TMP_Text hitPointsText;
     public Image healthBar;
-    public Canvas damagePopupCanvas;
-    public TMP_Text damagePopupText;
-    public Image damageBackdrop;
     public GenericTileMap map;
     public GameObject holder2D;
-    private BattleManager BMS;
     public enum MovementStates {
         Unselected,
         Selected,
@@ -46,11 +45,11 @@ public class Unit : NetworkBehaviour {
     private void Awake() {
         movementQueue = new Queue<int>();
         combatQueue = new Queue<int>();
-        x = (int)transform.position.x;
-        y = (int)transform.position.z;
+        x = (int) transform.position.x;
+        y = (int) transform.position.z;
         unitMoveState = MovementStates.Unselected;
-        currentHealthPoints = maxHealthPoints;
-        hitPointsText.SetText(currentHealthPoints.ToString());
+        currentHealth = maxHealth;
+        hitPointsText.SetText(currentHealth.ToString());
     }
 
     public void LateUpdate() {
@@ -98,15 +97,15 @@ public class Unit : NetworkBehaviour {
     }
 
     public void UpdateHealthUI() {
-        healthBar.fillAmount = (float) currentHealthPoints / maxHealthPoints;
-        hitPointsText.SetText(currentHealthPoints.ToString());
+        healthBar.fillAmount = (float) currentHealth / maxHealth;
+        hitPointsText.SetText(currentHealth.ToString());
     }
 
     [Command(requiresAuthority=false)]
     public void CmdDealDamage(int damage) {
-        currentHealthPoints = currentHealthPoints - damage;
+        currentHealth = currentHealth - damage;
         RpcDealDamageClient(damage);
-        if (currentHealthPoints <= 0)
+        if (currentHealth <= 0)
         UnitDie();
         // send into checkifdead loop
         // check if units remain
@@ -114,9 +113,9 @@ public class Unit : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcDealDamageClient(int damageToClient) {
-        if (!isServer) { currentHealthPoints = currentHealthPoints - damageToClient; }
+        if (!isServer) { currentHealth = currentHealth - damageToClient; }
         Debug.Log("damage dealt: " + damageToClient);
-        Debug.Log("hp of attacked unit: " + currentHealthPoints);
+        Debug.Log("hp of attacked unit: " + currentHealth);
         UpdateHealthUI();
     }
     

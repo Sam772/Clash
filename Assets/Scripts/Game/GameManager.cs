@@ -22,27 +22,27 @@ public class GameManager : NetworkBehaviour {
     private TMP_Text playerPhaseText;
     private Ray ray;
     private RaycastHit hit;
-    public int numberOfTeams = 2;
+    private int numberOfTeams = 2;
 
     [SyncVar(hook = nameof(OnPlayChange))]
     public int currentTeam;
-    public GameObject unitBeingDisplayed;
+    private GameObject unitBeingDisplayed;
     public GameObject tileBeingDisplayed;
-    public bool displayingUnitInfo;
-    public GenericTileMap TMS;
-    public int cursorX;
-    public int cursorY;
-    public int selectedXTile;
-    public int selectedYTile;
+    private bool displayingUnitInfo;
+    private GenericTileMap TMS;
+    private int cursorX;
+    private int cursorY;
+    private int selectedXTile;
+    private int selectedYTile;
     List<Node> currentPathForUnitRoute;
     List<Node> unitPathToCursor;
-    public bool unitPathExists;
+    private bool unitPathExists;
     public Material UIunitRoute;
     public Material UIunitRouteCurve;
     public Material UIunitRouteArrow;
     public Material UICursor;
-    public int routeToX;
-    public int routeToY;
+    private int routeToX;
+    private int routeToY;
     public void Start() {
         currentTeam = 0;
         SetCurrentTeamUI();
@@ -200,10 +200,10 @@ public class GameManager : NetworkBehaviour {
                 displayingUnitInfo = true;
                 unitBeingDisplayed = hit.transform.parent.gameObject;
                 var highlightedUnitScript = hit.transform.parent.gameObject.GetComponent<Unit>();
-                UIunitCurrentHealth.SetText(highlightedUnitScript.currentHealthPoints.ToString());
-                UIunitAttackDamage.SetText(highlightedUnitScript.attackDamage.ToString());
-                UIunitAttackRange.SetText(highlightedUnitScript.attackRange.ToString());
-                UIunitMoveSpeed.SetText(highlightedUnitScript.moveSpeed.ToString());
+                UIunitCurrentHealth.SetText(highlightedUnitScript.currentHealth.ToString());
+                UIunitAttackDamage.SetText(highlightedUnitScript.damage.ToString());
+                UIunitAttackRange.SetText(highlightedUnitScript.range.ToString());
+                UIunitMoveSpeed.SetText(highlightedUnitScript.move.ToString());
                 UIunitName.SetText(highlightedUnitScript.unitName);
                 UIunitSprite.sprite = highlightedUnitScript.unitSprite;
             } else if (hit.transform.CompareTag("Tile")) {
@@ -212,10 +212,10 @@ public class GameManager : NetworkBehaviour {
                     UIunitCanvas.enabled = true;
                     displayingUnitInfo = true;
                     var highlightedUnitScript = unitBeingDisplayed.GetComponent<Unit>();
-                    UIunitCurrentHealth.SetText(highlightedUnitScript.currentHealthPoints.ToString());
-                    UIunitAttackDamage.SetText(highlightedUnitScript.attackDamage.ToString());
-                    UIunitAttackRange.SetText(highlightedUnitScript.attackRange.ToString());
-                    UIunitMoveSpeed.SetText(highlightedUnitScript.moveSpeed.ToString());
+                    UIunitCurrentHealth.SetText(highlightedUnitScript.currentHealth.ToString());
+                    UIunitAttackDamage.SetText(highlightedUnitScript.damage.ToString());
+                    UIunitAttackRange.SetText(highlightedUnitScript.range.ToString());
+                    UIunitMoveSpeed.SetText(highlightedUnitScript.move.ToString());
                     UIunitName.SetText(highlightedUnitScript.unitName);
                     UIunitSprite.sprite = highlightedUnitScript.unitSprite;}}
         } else if (hit.transform.gameObject.CompareTag("Tile")) {
