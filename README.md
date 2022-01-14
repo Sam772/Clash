@@ -18,7 +18,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 <table>
   <tr>
     <td align="center"><a href="https://github.com/Sam772"><img src="https://avatars.githubusercontent.com/u/78389553?v=4" width="100px;" alt=""/><br /><sub><b>Samir</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/m-shah02%22%3E<img src="https://avatars.githubusercontent.com/u/54008874?v=4" width="100px;" alt=""/><br /><sub><b>Mansoor</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/m-shah02%22%3E"><img src="https://avatars.githubusercontent.com/u/54008874?v=4" width="100px;" alt=""/><br /><sub><b>Mansoor</b></sub></a><br /></td>
   </tr>
 </table>
 
