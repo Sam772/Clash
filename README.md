@@ -18,13 +18,13 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 <table>
   <tr>
     <td align="center"><a href="https://github.com/Sam772"><img src="https://avatars.githubusercontent.com/u/78389553?v=4" width="100px;" alt=""/><br /><sub><b>Samir</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/m-shah02%22%3E"><img src="https://avatars.githubusercontent.com/u/54008874?v=4" width="100px;" alt=""/><br /><sub><b>Mansoor</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/m-shah02"><img src="https://avatars.githubusercontent.com/u/54008874?v=4" width="100px;" alt=""/><br /><sub><b>Mansoor</b></sub></a><br /></td>
   </tr>
 </table>
 
 ## Tools
 - Visual Studio Code
 - Mirror's Networking Library
-- Unity Game Engine Version: 2020.3.21f1 LTS
+- Unity Game Engine Version: 2020.3.26f1 LTS
 - ParrelSync
 - Microsoft Azure PlayFab Services
