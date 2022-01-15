@@ -558,8 +558,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -105}
-  m_SizeDelta: {x: 490, y: 190}
+  m_AnchoredPosition: {x: -250, y: -100}
+  m_SizeDelta: {x: 490, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &138479681
 MonoBehaviour:
@@ -2700,8 +2700,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: 100}
-  m_SizeDelta: {x: 490, y: 190}
+  m_AnchoredPosition: {x: 250, y: 140}
+  m_SizeDelta: {x: 490, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &621442718
 MonoBehaviour:
@@ -2977,8 +2977,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 250}
-  m_SizeDelta: {x: 200, y: 90}
+  m_AnchoredPosition: {x: 400, y: 320}
+  m_SizeDelta: {x: 200, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &662933368
 MonoBehaviour:
@@ -4174,7 +4174,7 @@ GameObject:
   - component: {fileID: 1118794342}
   - component: {fileID: 1118794341}
   m_Layer: 5
-  m_Name: MapPreviewText
+  m_Name: MapTwoPreviewText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4308,6 +4308,7 @@ GameObject:
   - component: {fileID: 1118852655}
   - component: {fileID: 1118852654}
   - component: {fileID: 1118852653}
+  - component: {fileID: 1118852656}
   m_Layer: 5
   m_Name: MapSelectionOne
   m_TagString: Untagged
@@ -4333,8 +4334,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: 100}
-  m_SizeDelta: {x: 490, y: 190}
+  m_AnchoredPosition: {x: -250, y: 140}
+  m_SizeDelta: {x: 490, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1118852653
 MonoBehaviour:
@@ -4442,6 +4443,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1118852651}
   m_CullTransparentMesh: 1
+--- !u!114 &1118852656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118852651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapInfoToShow: The plains map consists of grass and forest tiles which is the recommended
+    starting map to play.
 --- !u!1 &1164402001
 GameObject:
   m_ObjectHideFlags: 0
@@ -4476,7 +4491,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -280}
+  m_AnchoredPosition: {x: 0, y: -300}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1164402003
@@ -4588,7 +4603,7 @@ GameObject:
   - component: {fileID: 1167392639}
   - component: {fileID: 1167392638}
   m_Layer: 5
-  m_Name: MapPreviewText
+  m_Name: MapOnePreviewText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5122,8 +5137,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -105}
-  m_SizeDelta: {x: 490, y: 190}
+  m_AnchoredPosition: {x: 250, y: -100}
+  m_SizeDelta: {x: 490, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1225066143
 MonoBehaviour:
@@ -5366,7 +5381,7 @@ GameObject:
   - component: {fileID: 1321849478}
   - component: {fileID: 1321849477}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MapDisplayInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5386,10 +5401,10 @@ RectTransform:
   m_Father: {fileID: 1857545019}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 495, y: -60}
+  m_SizeDelta: {x: 970, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1321849477
 MonoBehaviour:
@@ -5657,7 +5672,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 480, y: 182}
+  m_SizeDelta: {x: 480, y: 222}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418062259
 MonoBehaviour:
@@ -6843,8 +6858,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 250}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchoredPosition: {x: 0, y: 320}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1726063859
 MonoBehaviour:
@@ -7248,7 +7263,7 @@ GameObject:
   - component: {fileID: 1762056994}
   - component: {fileID: 1762056993}
   m_Layer: 5
-  m_Name: MapPreviewImage
+  m_Name: MapTwoPreviewImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7271,7 +7286,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 480, y: 182}
+  m_SizeDelta: {x: 480, y: 222}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762056993
 MonoBehaviour:
@@ -7558,7 +7573,6 @@ GameObject:
   - component: {fileID: 1857545019}
   - component: {fileID: 1857545022}
   - component: {fileID: 1857545021}
-  - component: {fileID: 1857545020}
   m_Layer: 5
   m_Name: MapSelectionInfo
   m_TagString: Untagged
@@ -7581,55 +7595,11 @@ RectTransform:
   m_Father: {fileID: 1876235900}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -250}
-  m_SizeDelta: {x: 990, y: 80}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -335}
+  m_SizeDelta: {x: 990, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1857545020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857545018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1857545021}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1857545021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7908,6 +7878,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1876235900}
   - component: {fileID: 1876235901}
+  - component: {fileID: 1876235902}
   m_Layer: 5
   m_Name: MapSelectionScreenUI
   m_TagString: Untagged
@@ -7949,6 +7920,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876235899}
   m_CullTransparentMesh: 0
+--- !u!114 &1876235902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876235899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf4dd9467459c14b9e81f5068648e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapInfoText: {fileID: 1321849477}
+  mapInfoBox: {fileID: 1857545019}
 --- !u!1 &1880090693
 GameObject:
   m_ObjectHideFlags: 0
@@ -8270,7 +8255,7 @@ GameObject:
   - component: {fileID: 1905789020}
   - component: {fileID: 1905789019}
   m_Layer: 5
-  m_Name: MapPreviewImage
+  m_Name: MapOnePreviewImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8293,7 +8278,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 480, y: 182}
+  m_SizeDelta: {x: 480, y: 222}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1905789019
 MonoBehaviour:
@@ -8443,7 +8428,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 480, y: 182}
+  m_SizeDelta: {x: 480, y: 222}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1963709148
 MonoBehaviour:
@@ -9486,7 +9471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2398689104084483383, guid: a2366ce25ed189449b342231ef0e0642, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2398689104084483383, guid: a2366ce25ed189449b342231ef0e0642, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9522,7 +9507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2398689104084483383, guid: a2366ce25ed189449b342231ef0e0642, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 200
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 2398689104084483383, guid: a2366ce25ed189449b342231ef0e0642, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
