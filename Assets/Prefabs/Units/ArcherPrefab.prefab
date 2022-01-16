@@ -218,8 +218,7 @@ MonoBehaviour:
   unitName: Archer
   maxHealth: 4
   strength: 2
-  defence: 0
-  damage: 2
+  defence: 2
   move: 4
   range: 2
   currentHealth: 4

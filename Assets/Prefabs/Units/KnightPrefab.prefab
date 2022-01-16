@@ -178,8 +178,7 @@ MonoBehaviour:
   unitName: Knight
   maxHealth: 5
   strength: 3
-  defence: 0
-  damage: 3
+  defence: 1
   move: 5
   range: 1
   currentHealth: 5

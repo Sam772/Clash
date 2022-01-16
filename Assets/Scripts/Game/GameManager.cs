@@ -11,7 +11,8 @@ public class GameManager : NetworkBehaviour {
     public TMP_Text currentTeamUI;
     public Canvas displayWinnerUI;
     public TMP_Text UICurrentHealth;
-    public TMP_Text UIDamage;
+    public TMP_Text UIStrength;
+    public TMP_Text UIDefence;
     public TMP_Text UIRange;
     public TMP_Text UIMove;
     public TMP_Text UIUnitName;
@@ -196,13 +197,14 @@ public class GameManager : NetworkBehaviour {
                 UIUnitCanvas.enabled = true;
                 displayingUnitInfo = true;
                 unitBeingDisplayed = hit.transform.parent.gameObject;
-                var highlightedUnitScript = hit.transform.parent.gameObject.GetComponent<Unit>();
-                UICurrentHealth.SetText(highlightedUnitScript.currentHealth.ToString());
-                UIDamage.SetText(highlightedUnitScript.damage.ToString());
-                UIRange.SetText(highlightedUnitScript.range.ToString());
-                UIMove.SetText(highlightedUnitScript.move.ToString());
-                UIUnitName.SetText(highlightedUnitScript.unitName);
-                UISprite.sprite = highlightedUnitScript.unitSprite;
+                var highlightedUnit = hit.transform.parent.gameObject.GetComponent<Unit>();
+                UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
+                UIStrength.SetText(highlightedUnit.strength.ToString());
+                UIDefence.SetText(highlightedUnit.defence.ToString());
+                UIRange.SetText(highlightedUnit.range.ToString());
+                UIMove.SetText(highlightedUnit.move.ToString());
+                UIUnitName.SetText(highlightedUnit.unitName);
+                UISprite.sprite = highlightedUnit.unitSprite;
             } else if (hit.transform.CompareTag("Tile")) {
                 if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
                     unitBeingDisplayed = hit.transform.GetComponent<TileClick>().unitOnTile;
@@ -210,7 +212,8 @@ public class GameManager : NetworkBehaviour {
                     displayingUnitInfo = true;
                     var highlightedUnitScript = unitBeingDisplayed.GetComponent<Unit>();
                     UICurrentHealth.SetText(highlightedUnitScript.currentHealth.ToString());
-                    UIDamage.SetText(highlightedUnitScript.damage.ToString());
+                    UIStrength.SetText(highlightedUnitScript.strength.ToString());
+                    UIDefence.SetText(highlightedUnitScript.defence.ToString());
                     UIRange.SetText(highlightedUnitScript.range.ToString());
                     UIMove.SetText(highlightedUnitScript.move.ToString());
                     UIUnitName.SetText(highlightedUnitScript.unitName);
