@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 using TMPro;
-public class Unit : NetworkBehaviour {
+public class GenericUnit : NetworkBehaviour {
+    // could be turned into GenericUnit abstract class
+    // need to define a magicDef stat or call it resistance
+    // public int resistance;
     [SyncVar]
     public int team;
     [SyncVar]

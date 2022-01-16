@@ -58,10 +58,10 @@ public class GameManager : NetworkBehaviour {
         if (Physics.Raycast(ray, out hit)) {
             CursorUIUpdate();
             UnitUIUpdate();
-            if (TMS.selectedUnit != null && TMS.selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1) == TMS.selectedUnit.GetComponent<Unit>().unitMoveState) {
+            if (TMS.selectedUnit != null && TMS.selectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(1) == TMS.selectedUnit.GetComponent<GenericUnit>().unitMoveState) {
                 if (TMS.selectedUnitMoveRange.Contains(TMS.graph[cursorX, cursorY])) {
-                    if (cursorX != TMS.selectedUnit.GetComponent<Unit>().x || cursorY != TMS.selectedUnit.GetComponent<Unit>().y) {
-                        if (!unitPathExists && TMS.selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {                           
+                    if (cursorX != TMS.selectedUnit.GetComponent<GenericUnit>().x || cursorY != TMS.selectedUnit.GetComponent<GenericUnit>().y) {
+                        if (!unitPathExists && TMS.selectedUnit.GetComponent<GenericUnit>().movementQueue.Count == 0) {                           
                             unitPathToCursor = GenerateCursorRouteTo(cursorX, cursorY);
                             routeToX = cursorX;
                             routeToY = cursorY;
@@ -83,7 +83,7 @@ public class GameManager : NetworkBehaviour {
                                     int nodeY = unitPathToCursor[i].y;
                                     TMS.quadOnMapForUnitMovementDisplay[nodeX, nodeY].GetComponent<Renderer>().enabled = false;}}
                             unitPathExists = false;}}
-                    else if (cursorX == TMS.selectedUnit.GetComponent<Unit>().x && cursorY == TMS.selectedUnit.GetComponent<Unit>().y) { 
+                    else if (cursorX == TMS.selectedUnit.GetComponent<GenericUnit>().x && cursorY == TMS.selectedUnit.GetComponent<GenericUnit>().y) { 
                         TMS.DisableUnitUIRoute();
                         unitPathExists = false;}}}}
     }
@@ -94,16 +94,16 @@ public class GameManager : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcResetUnitsActions(int teamToReset) {
-        Unit[] unitsList = FindObjectsOfType<Unit>();
-        foreach (Unit unit in unitsList) {
-            unit.GetComponent<Unit>().MoveAgain();}
+        GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
+        foreach (GenericUnit unit in unitsList) {
+            unit.GetComponent<GenericUnit>().MoveAgain();}
     }
 
     public void SetTeamHealthbarColour() {
-        Unit[] unitsList = FindObjectsOfType<Unit>();
-        foreach (Unit unit in unitsList) {
-            if (unit.GetComponent<Unit>().team == 0) { unit.GetComponent<Unit>().ChangeHealthBarColour(0);
-            } else if (unit.GetComponent<Unit>().team == 1) { unit.GetComponent<Unit>().ChangeHealthBarColour(1); }}
+        GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
+        foreach (GenericUnit unit in unitsList) {
+            if (unit.GetComponent<GenericUnit>().team == 0) { unit.GetComponent<GenericUnit>().ChangeHealthBarColour(0);
+            } else if (unit.GetComponent<GenericUnit>().team == 1) { unit.GetComponent<GenericUnit>().ChangeHealthBarColour(1); }}
     }
 
     public void OnPlayChange(int oldV, int newV) {
@@ -170,23 +170,23 @@ public class GameManager : NetworkBehaviour {
                 tileBeingDisplayed = hit.transform.gameObject;}
         } else if (hit.transform.CompareTag("Unit")) {
             if (tileBeingDisplayed == null) {
-                selectedXTile = hit.transform.parent.gameObject.GetComponent<Unit>().x;
-                selectedYTile = hit.transform.parent.gameObject.GetComponent<Unit>().y;
+                selectedXTile = hit.transform.parent.gameObject.GetComponent<GenericUnit>().x;
+                selectedYTile = hit.transform.parent.gameObject.GetComponent<GenericUnit>().y;
                 cursorX = selectedXTile;
                 cursorY = selectedYTile;
                 TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                tileBeingDisplayed = hit.transform.parent.gameObject.GetComponent<Unit>().tileBeingOccupied;
+                tileBeingDisplayed = hit.transform.parent.gameObject.GetComponent<GenericUnit>().tileBeingOccupied;
             } else if (tileBeingDisplayed != hit.transform.gameObject) {
-                if (hit.transform.parent.gameObject.GetComponent<Unit>().movementQueue.Count == 0) {
+                if (hit.transform.parent.gameObject.GetComponent<GenericUnit>().movementQueue.Count == 0) {
                     selectedXTile = tileBeingDisplayed.GetComponent<TileClick>().tileX;
                     selectedYTile = tileBeingDisplayed.GetComponent<TileClick>().tileY;
                     TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;
-                    selectedXTile = hit.transform.parent.gameObject.GetComponent<Unit>().x;
-                    selectedYTile = hit.transform.parent.gameObject.GetComponent<Unit>().y;
+                    selectedXTile = hit.transform.parent.gameObject.GetComponent<GenericUnit>().x;
+                    selectedYTile = hit.transform.parent.gameObject.GetComponent<GenericUnit>().y;
                     cursorX = selectedXTile;
                     cursorY = selectedYTile;
                     TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
-                    tileBeingDisplayed = hit.transform.parent.GetComponent<Unit>().tileBeingOccupied;}}
+                    tileBeingDisplayed = hit.transform.parent.GetComponent<GenericUnit>().tileBeingOccupied;}}
         } else {
             TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;}
     }
@@ -197,7 +197,7 @@ public class GameManager : NetworkBehaviour {
                 UIUnitCanvas.enabled = true;
                 displayingUnitInfo = true;
                 unitBeingDisplayed = hit.transform.parent.gameObject;
-                var highlightedUnit = hit.transform.parent.gameObject.GetComponent<Unit>();
+                var highlightedUnit = hit.transform.parent.gameObject.GetComponent<GenericUnit>();
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
                 UIStrength.SetText(highlightedUnit.strength.ToString());
                 UIDefence.SetText(highlightedUnit.defence.ToString());
@@ -210,7 +210,7 @@ public class GameManager : NetworkBehaviour {
                     unitBeingDisplayed = hit.transform.GetComponent<TileClick>().unitOnTile;
                     UIUnitCanvas.enabled = true;
                     displayingUnitInfo = true;
-                    var highlightedUnitScript = unitBeingDisplayed.GetComponent<Unit>();
+                    var highlightedUnitScript = unitBeingDisplayed.GetComponent<GenericUnit>();
                     UICurrentHealth.SetText(highlightedUnitScript.currentHealth.ToString());
                     UIStrength.SetText(highlightedUnitScript.strength.ToString());
                     UIDefence.SetText(highlightedUnitScript.defence.ToString());
@@ -232,14 +232,14 @@ public class GameManager : NetworkBehaviour {
     }
 
     public List<Node> GenerateCursorRouteTo(int x, int y) {
-        if (TMS.selectedUnit.GetComponent<Unit>().x == x && TMS.selectedUnit.GetComponent<Unit>().y == y) {
+        if (TMS.selectedUnit.GetComponent<GenericUnit>().x == x && TMS.selectedUnit.GetComponent<GenericUnit>().y == y) {
             currentPathForUnitRoute = new List<Node>();  
             return currentPathForUnitRoute;}
         if (TMS.UnitCanEnterTile(x, y) == false) {return null;}
         currentPathForUnitRoute = null;
         Dictionary<Node, float> dist = new Dictionary<Node, float>();
         Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
-        Node source = TMS.graph[TMS.selectedUnit.GetComponent<Unit>().x, TMS.selectedUnit.GetComponent<Unit>().y];
+        Node source = TMS.graph[TMS.selectedUnit.GetComponent<GenericUnit>().x, TMS.selectedUnit.GetComponent<GenericUnit>().y];
         Node target = TMS.graph[x, y];
         dist[source] = 0;
         prev[source] = null;
@@ -377,12 +377,12 @@ public class GameManager : NetworkBehaviour {
     public IEnumerator CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
         int team1 = 0;
         int team2 = 0;
-        while (unit.GetComponent<Unit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
-        while (enemy.GetComponent<Unit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
-        Unit[] unitsList = FindObjectsOfType<Unit>();
-        foreach (Unit units in unitsList) {
-            if (units.GetComponent<Unit>().team == 0) { team1++; }
-            else if (units.GetComponent<Unit>().team == 1) { team2++; }}
+        while (unit.GetComponent<GenericUnit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
+        while (enemy.GetComponent<GenericUnit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
+        GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
+        foreach (GenericUnit units in unitsList) {
+            if (units.GetComponent<GenericUnit>().team == 0) { team1++; }
+            else if (units.GetComponent<GenericUnit>().team == 1) { team2++; }}
         if (team1 == 1) {
             displayWinnerUI.enabled = true;
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");}

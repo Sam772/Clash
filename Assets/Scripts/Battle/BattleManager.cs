@@ -6,8 +6,8 @@ public class BattleManager : NetworkBehaviour {
     private bool battleStatus;
     public void Battle(GameObject attacker, GameObject receiver) {
         battleStatus = true;
-        var attackerUnit = attacker.GetComponent<Unit>();
-        var receiverUnit = receiver.GetComponent<Unit>();
+        var attackerUnit = attacker.GetComponent<GenericUnit>();
+        var receiverUnit = receiver.GetComponent<GenericUnit>();
         int attackerStr = attackerUnit.strength;
         int receiverStr = receiverUnit.strength;
         int attackerDef = attackerUnit.defence;
@@ -36,11 +36,11 @@ public class BattleManager : NetworkBehaviour {
     }
 
     public bool CheckIfDead(GameObject unitToCheck) {
-        if (unitToCheck.GetComponent<Unit>().currentHealth <= 0) {
+        if (unitToCheck.GetComponent<GenericUnit>().currentHealth <= 0) {
             Debug.Log("enemy dead");
             return true;}
         // current health of enemy not being updated from client here
-        Debug.Log("current health of enemy: " + unitToCheck.GetComponent<Unit>().currentHealth);
+        Debug.Log("current health of enemy: " + unitToCheck.GetComponent<GenericUnit>().currentHealth);
         Debug.Log("enemy still alive");
         return false;
     }
@@ -66,6 +66,6 @@ public class BattleManager : NetworkBehaviour {
             unit.transform.position = Vector3.Lerp(unit.transform.position, endPoint, (elapsedTime / .25f));
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();}
-        unit.GetComponent<Unit>().Wait();
+        unit.GetComponent<GenericUnit>().Wait();
     }
 }

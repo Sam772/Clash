@@ -46,19 +46,19 @@ public abstract class GenericTileMap : NetworkBehaviour {
                 SetIfTileIsOccupied();
                 MouseClickToSelectUnitV2();
                 MouseClickToSelectUnit();
-            } else if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1) && selectedUnit.GetComponent<Unit>().movementQueue.Count == 0) {
+            } else if (selectedUnit.GetComponent<GenericUnit>().unitMoveState == selectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(1) && selectedUnit.GetComponent<GenericUnit>().movementQueue.Count == 0) {
                 if (SelectTileToMoveTo()) {
-                    unitSelectedPreviousX = selectedUnit.GetComponent<Unit>().x;
-                    unitSelectedPreviousY = selectedUnit.GetComponent<Unit>().y;
-                    previousOccupiedTile = selectedUnit.GetComponent<Unit>().tileBeingOccupied;
+                    unitSelectedPreviousX = selectedUnit.GetComponent<GenericUnit>().x;
+                    unitSelectedPreviousY = selectedUnit.GetComponent<GenericUnit>().y;
+                    previousOccupiedTile = selectedUnit.GetComponent<GenericUnit>().tileBeingOccupied;
                     MoveUnit();
                     StartCoroutine(MoveUnitAndFinalise());}
-            } else if(selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(2)) { FinaliseOption(); }}
+            } else if(selectedUnit.GetComponent<GenericUnit>().unitMoveState == selectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(2)) { FinaliseOption(); }}
         if (Input.GetMouseButtonDown(1)) {
             if (selectedUnit != null) {
-                if (selectedUnit.GetComponent<Unit>().movementQueue.Count == 0 && selectedUnit.GetComponent<Unit>().combatQueue.Count == 0) {
-                    if (selectedUnit.GetComponent<Unit>().unitMoveState != selectedUnit.GetComponent<Unit>().GetMovementStateEnum(3)) { DeselectUnit(); }}
-                else if (selectedUnit.GetComponent<Unit>().movementQueue.Count == 1) { selectedUnit.GetComponent<Unit>().visualMovementSpeed = 0.5f; }
+                if (selectedUnit.GetComponent<GenericUnit>().movementQueue.Count == 0 && selectedUnit.GetComponent<GenericUnit>().combatQueue.Count == 0) {
+                    if (selectedUnit.GetComponent<GenericUnit>().unitMoveState != selectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(3)) { DeselectUnit(); }}
+                else if (selectedUnit.GetComponent<GenericUnit>().movementQueue.Count == 1) { selectedUnit.GetComponent<GenericUnit>().visualMovementSpeed = 0.5f; }
             }
         }  
     }
@@ -107,16 +107,16 @@ public abstract class GenericTileMap : NetworkBehaviour {
     }
 
     public void SetIfTileIsOccupied() {
-        Unit[] unitsList = FindObjectsOfType<Unit>();
-        foreach (Unit unitOnTeam in unitsList) { 
-            int unitX = unitOnTeam.GetComponent<Unit>().x;
-            int unitY = unitOnTeam.GetComponent<Unit>().y;
-            unitOnTeam.GetComponent<Unit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
+        GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
+        foreach (GenericUnit unitOnTeam in unitsList) { 
+            int unitX = unitOnTeam.GetComponent<GenericUnit>().x;
+            int unitY = unitOnTeam.GetComponent<GenericUnit>().y;
+            unitOnTeam.GetComponent<GenericUnit>().tileBeingOccupied = tilesOnMap[unitX, unitY];
             tilesOnMap[unitX, unitY].GetComponent<TileClick>().unitOnTile = unitOnTeam.gameObject;}
     }
 
     public void MoveUnit() {
-        if (selectedUnit != null) { selectedUnit.GetComponent<Unit>().MoveNextTile(); }
+        if (selectedUnit != null) { selectedUnit.GetComponent<GenericUnit>().MoveNextTile(); }
     }
 
     public Vector3 TileCoordToWorldCoord(int x, int y) {
@@ -124,16 +124,16 @@ public abstract class GenericTileMap : NetworkBehaviour {
     }
 
     public void GeneratePathTo(int x, int y) {
-        if (selectedUnit.GetComponent<Unit>().x == x && selectedUnit.GetComponent<Unit>().y == y) {
+        if (selectedUnit.GetComponent<GenericUnit>().x == x && selectedUnit.GetComponent<GenericUnit>().y == y) {
             currentPath = new List<Node>();
-            selectedUnit.GetComponent<Unit>().path = currentPath;
+            selectedUnit.GetComponent<GenericUnit>().path = currentPath;
             return;}
         if (UnitCanEnterTile(x, y) == false){ return; }
-        selectedUnit.GetComponent<Unit>().path = null;
+        selectedUnit.GetComponent<GenericUnit>().path = null;
         currentPath = null;
         Dictionary<Node, float> dist = new Dictionary<Node, float>();
         Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
-        Node source = graph[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y];
+        Node source = graph[selectedUnit.GetComponent<GenericUnit>().x, selectedUnit.GetComponent<GenericUnit>().y];
         Node target = graph[x, y];
         dist[source] = 0;
         prev[source] = null;
@@ -160,7 +160,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
             currentPath.Add(curr);
             curr = prev[curr];}
         currentPath.Reverse();
-        selectedUnit.GetComponent<Unit>().path = currentPath;
+        selectedUnit.GetComponent<GenericUnit>().path = currentPath;
     }
 
     public float CostToEnterTile(int x, int y) {
@@ -172,7 +172,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
 
     public bool UnitCanEnterTile(int x, int y) {
         if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile != null) {
-            if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) { return false; }}
+            if (tilesOnMap[x, y].GetComponent<TileClick>().unitOnTile.GetComponent<GenericUnit>().team != selectedUnit.GetComponent<GenericUnit>().team) { return false; }}
         return tileTypes[tiles[x, y]].isWalkable;
     }
 
@@ -185,27 +185,27 @@ public abstract class GenericTileMap : NetworkBehaviour {
                 if (hit.transform.gameObject.CompareTag("Tile")) {
                     if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
                         tempSelectedUnit = hit.transform.GetComponent<TileClick>().unitOnTile;
-                        if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<Unit>().team == gameManager.currentTeam) {
+                        if (tempSelectedUnit.GetComponent<GenericUnit>().unitMoveState == tempSelectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<GenericUnit>().team == gameManager.currentTeam) {
                             DisableHighlightUnitRange();
                             selectedUnit = tempSelectedUnit;
-                            selectedUnit.GetComponent<Unit>().map = this;
-                            selectedUnit.GetComponent<Unit>().SetMovementState(1);
+                            selectedUnit.GetComponent<GenericUnit>().map = this;
+                            selectedUnit.GetComponent<GenericUnit>().SetMovementState(1);
                             unitSelected = true;
                             HighlightUnitRange();}}}
                 else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {   
                     tempSelectedUnit = hit.transform.parent.gameObject;
-                    if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<Unit>().team == gameManager.currentTeam) {
+                    if (tempSelectedUnit.GetComponent<GenericUnit>().unitMoveState == tempSelectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<GenericUnit>().team == gameManager.currentTeam) {
                         DisableHighlightUnitRange();
                         selectedUnit = tempSelectedUnit;
-                        selectedUnit.GetComponent<Unit>().SetMovementState(1);
-                        selectedUnit.GetComponent<Unit>().map = this;
+                        selectedUnit.GetComponent<GenericUnit>().SetMovementState(1);
+                        selectedUnit.GetComponent<GenericUnit>().map = this;
                         unitSelected = true;
                         HighlightUnitRange();}}}}
     }
 
     public void FinaliseMovementPosition() {
-        tilesOnMap[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y].GetComponent<TileClick>().unitOnTile = selectedUnit;
-        selectedUnit.GetComponent<Unit>().SetMovementState(2);
+        tilesOnMap[selectedUnit.GetComponent<GenericUnit>().x, selectedUnit.GetComponent<GenericUnit>().y].GetComponent<TileClick>().unitOnTile = selectedUnit;
+        selectedUnit.GetComponent<GenericUnit>().SetMovementState(2);
         HighlightUnitAttackOptionsFromPosition();
         HighlightTileUnitIsOccupying();
     }
@@ -214,12 +214,12 @@ public abstract class GenericTileMap : NetworkBehaviour {
         if (unitSelected == false && gameManager.tileBeingDisplayed!=null) {
             if (gameManager.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile != null) {
                 GameObject tempSelectedUnit = gameManager.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile;
-                if (tempSelectedUnit.GetComponent<Unit>().unitMoveState == tempSelectedUnit.GetComponent<Unit>().GetMovementStateEnum(0)
-                    && tempSelectedUnit.GetComponent<Unit>().team == gameManager.currentTeam) {
+                if (tempSelectedUnit.GetComponent<GenericUnit>().unitMoveState == tempSelectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(0)
+                    && tempSelectedUnit.GetComponent<GenericUnit>().team == gameManager.currentTeam) {
                     DisableHighlightUnitRange();
                     selectedUnit = tempSelectedUnit;
-                    selectedUnit.GetComponent<Unit>().map = this;
-                    selectedUnit.GetComponent<Unit>().SetMovementState(1);
+                    selectedUnit.GetComponent<GenericUnit>().map = this;
+                    selectedUnit.GetComponent<GenericUnit>().SetMovementState(1);
                     unitSelected = true;
                     HighlightUnitRange();}}}
     }
@@ -232,41 +232,41 @@ public abstract class GenericTileMap : NetworkBehaviour {
             if (hit.transform.gameObject.CompareTag("Tile")) {
                 if (hit.transform.GetComponent<TileClick>().unitOnTile != null) {
                     GameObject unitOnTile = hit.transform.GetComponent<TileClick>().unitOnTile;
-                    int unitX = unitOnTile.GetComponent<Unit>().x;
-                    int unitY = unitOnTile.GetComponent<Unit>().y;
+                    int unitX = unitOnTile.GetComponent<GenericUnit>().x;
+                    int unitY = unitOnTile.GetComponent<GenericUnit>().y;
                     if (unitOnTile == selectedUnit) {
                         DisableHighlightUnitRange();
-                        selectedUnit.GetComponent<Unit>().Wait();
-                        selectedUnit.GetComponent<Unit>().SetMovementState(3);
+                        selectedUnit.GetComponent<GenericUnit>().Wait();
+                        selectedUnit.GetComponent<GenericUnit>().SetMovementState(3);
                         DeselectUnit();
-                    } else if (unitOnTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team && attackableTiles.Contains(graph[unitX,unitY])) {
-                        if (unitOnTile.GetComponent<Unit>().currentHealth > 0) {
+                    } else if (unitOnTile.GetComponent<GenericUnit>().team != selectedUnit.GetComponent<GenericUnit>().team && attackableTiles.Contains(graph[unitX,unitY])) {
+                        if (unitOnTile.GetComponent<GenericUnit>().currentHealth > 0) {
                             StartCoroutine(battleManager.Attack(selectedUnit, unitOnTile));
                             StartCoroutine(DeselectAfterMovements(selectedUnit, unitOnTile));}}}}
             else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {
                 GameObject unitClicked = hit.transform.parent.gameObject;
-                int unitX = unitClicked.GetComponent<Unit>().x;
-                int unitY = unitClicked.GetComponent<Unit>().y;
+                int unitX = unitClicked.GetComponent<GenericUnit>().x;
+                int unitY = unitClicked.GetComponent<GenericUnit>().y;
                 if (unitClicked == selectedUnit) {
                     DisableHighlightUnitRange();
-                    selectedUnit.GetComponent<Unit>().Wait();
-                    selectedUnit.GetComponent<Unit>().SetMovementState(3);
+                    selectedUnit.GetComponent<GenericUnit>().Wait();
+                    selectedUnit.GetComponent<GenericUnit>().SetMovementState(3);
                     DeselectUnit();
-                } else if (unitClicked.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team && attackableTiles.Contains(graph[unitX, unitY])) {
-                    if (unitClicked.GetComponent<Unit>().currentHealth > 0) {
+                } else if (unitClicked.GetComponent<GenericUnit>().team != selectedUnit.GetComponent<GenericUnit>().team && attackableTiles.Contains(graph[unitX, unitY])) {
+                    if (unitClicked.GetComponent<GenericUnit>().currentHealth > 0) {
                         StartCoroutine(battleManager.Attack(selectedUnit, unitClicked));
                         StartCoroutine(DeselectAfterMovements(selectedUnit, unitClicked));}}}}
     }
 
     public void DeselectUnit() {  
         if (selectedUnit != null) {
-            if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(1)) {
+            if (selectedUnit.GetComponent<GenericUnit>().unitMoveState == selectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(1)) {
             DisableHighlightUnitRange();
             DisableUnitUIRoute();
-            selectedUnit.GetComponent<Unit>().SetMovementState(0);
+            selectedUnit.GetComponent<GenericUnit>().SetMovementState(0);
             selectedUnit = null;
             unitSelected = false;
-            } else if (selectedUnit.GetComponent<Unit>().unitMoveState == selectedUnit.GetComponent<Unit>().GetMovementStateEnum(3) ) {
+            } else if (selectedUnit.GetComponent<GenericUnit>().unitMoveState == selectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(3) ) {
                 DisableHighlightUnitRange();
                 DisableUnitUIRoute();
                 unitSelected = false;
@@ -274,13 +274,13 @@ public abstract class GenericTileMap : NetworkBehaviour {
             } else {
                 DisableHighlightUnitRange();
                 DisableUnitUIRoute();
-                tilesOnMap[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y].GetComponent<TileClick>().unitOnTile = null;
+                tilesOnMap[selectedUnit.GetComponent<GenericUnit>().x, selectedUnit.GetComponent<GenericUnit>().y].GetComponent<TileClick>().unitOnTile = null;
                 tilesOnMap[unitSelectedPreviousX, unitSelectedPreviousY].GetComponent<TileClick>().unitOnTile = selectedUnit;
-                selectedUnit.GetComponent<Unit>().x = unitSelectedPreviousX;
-                selectedUnit.GetComponent<Unit>().y = unitSelectedPreviousY;
-                selectedUnit.GetComponent<Unit>().tileBeingOccupied = previousOccupiedTile;
+                selectedUnit.GetComponent<GenericUnit>().x = unitSelectedPreviousX;
+                selectedUnit.GetComponent<GenericUnit>().y = unitSelectedPreviousY;
+                selectedUnit.GetComponent<GenericUnit>().tileBeingOccupied = previousOccupiedTile;
                 selectedUnit.transform.position = TileCoordToWorldCoord(unitSelectedPreviousX, unitSelectedPreviousY);
-                selectedUnit.GetComponent<Unit>().SetMovementState(0);
+                selectedUnit.GetComponent<GenericUnit>().SetMovementState(0);
                 selectedUnit = null;
                 unitSelected = false;}}
     }
@@ -289,15 +289,15 @@ public abstract class GenericTileMap : NetworkBehaviour {
         HashSet<Node> finalMovementHighlight = new HashSet<Node>();
         HashSet<Node> totalAttackableTiles = new HashSet<Node>();
         HashSet<Node> finalEnemyUnitsInMovementRange = new HashSet<Node>();
-        int attRange = selectedUnit.GetComponent<Unit>().range;
-        int moveSpeed = selectedUnit.GetComponent<Unit>().move;
-        Node unitInitialNode = graph[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y];
+        int attRange = selectedUnit.GetComponent<GenericUnit>().range;
+        int moveSpeed = selectedUnit.GetComponent<GenericUnit>().move;
+        Node unitInitialNode = graph[selectedUnit.GetComponent<GenericUnit>().x, selectedUnit.GetComponent<GenericUnit>().y];
         finalMovementHighlight = GetUnitMovementOptions();
         totalAttackableTiles = GetUnitTotalAttackableTiles(finalMovementHighlight, attRange, unitInitialNode);
         foreach (Node n in totalAttackableTiles) {
             if (tilesOnMap[n.x, n.y].GetComponent<TileClick>().unitOnTile != null) {
                 GameObject unitOnCurrentlySelectedTile = tilesOnMap[n.x, n.y].GetComponent<TileClick>().unitOnTile;
-                if (unitOnCurrentlySelectedTile.GetComponent<Unit>().team != selectedUnit.GetComponent<Unit>().team) { finalEnemyUnitsInMovementRange.Add(n); }}}
+                if (unitOnCurrentlySelectedTile.GetComponent<GenericUnit>().team != selectedUnit.GetComponent<GenericUnit>().team) { finalEnemyUnitsInMovementRange.Add(n); }}}
         HighlightEnemiesInRange(totalAttackableTiles);
         HighlightMovementRange(finalMovementHighlight);
         selectedUnitMoveRange = finalMovementHighlight;
@@ -313,8 +313,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
         HashSet<Node> UIHighlight = new HashSet<Node>();
         HashSet<Node> tempUIHighlight = new HashSet<Node>();
         HashSet<Node> finalMovementHighlight = new HashSet<Node>();      
-        int moveSpeed = selectedUnit.GetComponent<Unit>().move;
-        Node unitInitialNode = graph[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y];
+        int moveSpeed = selectedUnit.GetComponent<GenericUnit>().move;
+        Node unitInitialNode = graph[selectedUnit.GetComponent<GenericUnit>().x, selectedUnit.GetComponent<GenericUnit>().y];
         finalMovementHighlight.Add(unitInitialNode);
         foreach (Node n in unitInitialNode.neighbours) {
             cost[n.x, n.y] = CostToEnterTile(n.x, n.y);
@@ -363,8 +363,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
         HashSet<Node> tempNeighbourHash = new HashSet<Node>();
         HashSet<Node> neighbourHash = new HashSet<Node>();
         HashSet<Node> seenNodes = new HashSet<Node>();
-        Node initialNode = graph[selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y];
-        int attRange = selectedUnit.GetComponent<Unit>().range;
+        Node initialNode = graph[selectedUnit.GetComponent<GenericUnit>().x, selectedUnit.GetComponent<GenericUnit>().y];
+        int attRange = selectedUnit.GetComponent<GenericUnit>().range;
         neighbourHash = new HashSet<Node>();
         neighbourHash.Add(initialNode);
         for (int i = 0; i < attRange; i++) {
@@ -379,8 +379,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
     }
 
     public HashSet<Node> GetTileUnitIsOccupying() {
-        int x = selectedUnit.GetComponent<Unit>().x;
-        int y = selectedUnit.GetComponent<Unit>().y;
+        int x = selectedUnit.GetComponent<GenericUnit>().x;
+        int y = selectedUnit.GetComponent<GenericUnit>().y;
         HashSet<Node> singleTile = new HashSet<Node>();
         singleTile.Add(graph[x, y]);
         return singleTile;
@@ -413,17 +413,17 @@ public abstract class GenericTileMap : NetworkBehaviour {
     public IEnumerator MoveUnitAndFinalise() {
         DisableHighlightUnitRange();
         DisableUnitUIRoute();
-        while (selectedUnit.GetComponent<Unit>().movementQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
+        while (selectedUnit.GetComponent<GenericUnit>().movementQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
         FinaliseMovementPosition();
     }
 
     public IEnumerator DeselectAfterMovements(GameObject unit, GameObject enemy) {
-        selectedUnit.GetComponent<Unit>().SetMovementState(3);
+        selectedUnit.GetComponent<GenericUnit>().SetMovementState(3);
         DisableHighlightUnitRange();
         DisableUnitUIRoute();
         yield return new WaitForSeconds(.25f);
-        while (unit.GetComponent<Unit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
-        while (enemy.GetComponent<Unit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
+        while (unit.GetComponent<GenericUnit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
+        while (enemy.GetComponent<GenericUnit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
         DeselectUnit();
     }
     
@@ -441,7 +441,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
                         return true;}}
             } else if (hit.transform.gameObject.CompareTag("Unit")) {
                 if (hit.transform.parent.gameObject == selectedUnit) {    
-                    GeneratePathTo(selectedUnit.GetComponent<Unit>().x, selectedUnit.GetComponent<Unit>().y);
+                    GeneratePathTo(selectedUnit.GetComponent<GenericUnit>().x, selectedUnit.GetComponent<GenericUnit>().y);
                     return true;}}}
         return false;}
 }
