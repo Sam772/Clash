@@ -10,21 +10,23 @@ public class BattleManager : NetworkBehaviour {
         var receiverUnit = receiver.GetComponent<Unit>();
         int attackerAtk = attackerUnit.damage;
         int receiverAtk = receiverUnit.damage;
+        int attackerDef = attackerUnit.defence;
+        int receiverDef = receiverUnit.defence;
         if (attackerUnit.range == receiverUnit.range) {
-            receiverUnit.CmdDealDamage(attackerAtk);
+            receiverUnit.CmdDealDamage(attackerAtk, receiverDef);
             if (CheckIfDead(receiver)) {
                 receiverUnit.UnitDie();
                 battleStatus = false;
                 gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;}
-            attackerUnit.CmdDealDamage(receiverAtk);
+            attackerUnit.CmdDealDamage(receiverAtk, attackerDef);
             if (CheckIfDead(attacker)) {
                 attackerUnit.UnitDie();
                 battleStatus = false;
                 gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;}
         } else {
-            receiverUnit.CmdDealDamage(attackerAtk);
+            receiverUnit.CmdDealDamage(attackerAtk, receiverDef);
             if (CheckIfDead(receiver)) {
                 receiverUnit.UnitDie();
                 battleStatus = false;

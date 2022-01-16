@@ -177,6 +177,8 @@ MonoBehaviour:
   tileBeingOccupied: {fileID: 0}
   unitName: Knight
   maxHealth: 5
+  strength: 3
+  defence: 0
   damage: 3
   move: 5
   range: 1

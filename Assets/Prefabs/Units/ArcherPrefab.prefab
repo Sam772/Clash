@@ -217,6 +217,8 @@ MonoBehaviour:
   tileBeingOccupied: {fileID: 0}
   unitName: Archer
   maxHealth: 4
+  strength: 2
+  defence: 0
   damage: 2
   move: 4
   range: 2

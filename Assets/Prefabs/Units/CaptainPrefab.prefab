@@ -310,6 +310,8 @@ MonoBehaviour:
   tileBeingOccupied: {fileID: 0}
   unitName: Captain
   maxHealth: 10
+  strength: 5
+  defence: 1
   damage: 5
   move: 2
   range: 1

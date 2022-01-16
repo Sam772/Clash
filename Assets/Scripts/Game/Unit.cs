@@ -17,11 +17,8 @@ public class Unit : NetworkBehaviour {
     public GameObject tileBeingOccupied;
     public string unitName;
     public int maxHealth;
-    // create separate stats instead of just damage for calculation
-    // public int strength;
-    // public int defence;
-    // set our current damage variable using those stats
-    // damage = strength - defence;
+    public int strength;
+    public int defence;
     public int damage;
     public int move;
     public int range;
@@ -49,6 +46,7 @@ public class Unit : NetworkBehaviour {
         y = (int) transform.position.z;
         unitMoveState = MovementStates.Unselected;
         currentHealth = maxHealth;
+        damage = strength;
         hitPointsText.SetText(currentHealth.ToString());
     }
 
@@ -102,9 +100,9 @@ public class Unit : NetworkBehaviour {
     }
 
     [Command(requiresAuthority=false)]
-    public void CmdDealDamage(int damage) {
-        currentHealth = currentHealth - damage;
-        RpcDealDamageClient(damage);
+    public void CmdDealDamage(int battleAtk, int battleDef) {
+        currentHealth = currentHealth - (battleAtk - battleDef);
+        RpcDealDamageClient(battleAtk, battleDef);
         if (currentHealth <= 0)
         UnitDie();
         // send into checkifdead loop
@@ -112,9 +110,9 @@ public class Unit : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcDealDamageClient(int damageToClient) {
-        if (!isServer) { currentHealth = currentHealth - damageToClient; }
-        Debug.Log("damage dealt: " + damageToClient);
+    public void RpcDealDamageClient(int atkToClient, int defToClient) {
+        if (!isServer) { currentHealth = currentHealth - (atkToClient - defToClient); }
+        Debug.Log("damage dealt: " + atkToClient);
         Debug.Log("hp of attacked unit: " + currentHealth);
         UpdateHealthUI();
     }
