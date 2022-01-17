@@ -141,7 +141,7 @@ public class GameManager : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcCheckIfUnitsRemain(GameObject unit, GameObject enemy) {
-        StartCoroutine(CheckIfUnitsRemainCoroutine(unit, enemy));
+        CheckIfUnitsRemainCoroutine(unit, enemy);
     }
 
     [Command(requiresAuthority=false)]
@@ -374,11 +374,9 @@ public class GameManager : NetworkBehaviour {
             quadToUpdate.GetComponent<Renderer>().enabled = true;}
     }
 
-    public IEnumerator CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
+    public void CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
         int team1 = 0;
         int team2 = 0;
-        while (unit.GetComponent<GenericUnit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
-        while (enemy.GetComponent<GenericUnit>().combatQueue.Count != 0) { yield return new WaitForEndOfFrame(); }
         GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
         foreach (GenericUnit units in unitsList) {
             if (units.GetComponent<GenericUnit>().team == 0) { team1++; }
