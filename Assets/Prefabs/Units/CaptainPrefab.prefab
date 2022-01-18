@@ -311,8 +311,7 @@ MonoBehaviour:
   unitName: Captain
   maxHealth: 10
   strength: 5
-  defence: 1
-  damage: 5
+  defence: 0
   move: 2
   range: 1
   currentHealth: 10

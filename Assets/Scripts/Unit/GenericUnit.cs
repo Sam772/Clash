@@ -59,7 +59,7 @@ public class GenericUnit : NetworkBehaviour {
     public void MoveNextTile() {
         if (!hasAuthority) return;
         if (path.Count == 0) { return; }
-        else { StartCoroutine(MoveOverSeconds(transform.gameObject, path[path.Count - 1])); }
+        else { StartCoroutine(UnitMoveSequence(transform.gameObject, path[path.Count - 1])); }
     }
 
     [Command(requiresAuthority=false)]
@@ -144,23 +144,23 @@ public class GenericUnit : NetworkBehaviour {
 
     public void UnitDie() {
         if (holder2D.activeSelf) {
-            StartCoroutine(FadeOut());
-            StartCoroutine(CheckIfRoutinesRunning());     
+            StartCoroutine(CombatEnd());
+            StartCoroutine(UnitDestroy());     
         }
     }
 
-    public IEnumerator CheckIfRoutinesRunning() {
+    public IEnumerator UnitDestroy() {
         while (combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
         NetworkServer.Destroy(gameObject);
     } 
 
-    public IEnumerator FadeOut() {
+    public IEnumerator CombatEnd() {
         combatQueue.Enqueue(1);
-        for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
+        yield return new WaitForEndOfFrame();
         combatQueue.Dequeue();
     }
 
-    public IEnumerator MoveOverSeconds(GameObject objectToMove, Node endNode) {
+    public IEnumerator UnitMoveSequence(GameObject objectToMove, Node endNode) {
         movementQueue.Enqueue(1);
         path.RemoveAt(0);
         while (path.Count != 0) {

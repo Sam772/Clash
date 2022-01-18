@@ -187,8 +187,7 @@ public class GameManager : NetworkBehaviour {
                     cursorY = selectedYTile;
                     TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = true;
                     tileBeingDisplayed = hit.transform.parent.GetComponent<GenericUnit>().tileBeingOccupied;}}
-        } else {
-            TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;}
+        } else { TMS.quadOnMapCursor[selectedXTile, selectedYTile].GetComponent<MeshRenderer>().enabled = false;}
     }
 
     public void UnitUIUpdate() {
@@ -386,7 +385,14 @@ public class GameManager : NetworkBehaviour {
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");}
         if (team2 == 1) {
             displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");}
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+            // issue: need to stop server when game has ended
+            //room.RemoveGamePlayer(gamePlayer);
+            //NetworkServer.Destroy(gamePlayer.gameObject);
+            //room.StopServer();
+            //room.StopHost();
+            //room.StopClient();
+            }
     }
 
     public struct Dependencies {
