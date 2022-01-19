@@ -4,10 +4,12 @@ using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager gameManager;
     private bool battleStatus;
+    // might need a second method for magical units
+    // alternative: create atk calculation to return here instead of str/mag
     public void Battle(GameObject attacker, GameObject receiver) {
         battleStatus = true;
-        var attackerUnit = attacker.GetComponent<GenericUnit>();
-        var receiverUnit = receiver.GetComponent<GenericUnit>();
+        var attackerUnit = attacker.GetComponent<PhysicalUnit>();
+        var receiverUnit = receiver.GetComponent<PhysicalUnit>();
         int attackerStr = attackerUnit.strength;
         int receiverStr = receiverUnit.strength;
         int attackerDef = attackerUnit.defence;

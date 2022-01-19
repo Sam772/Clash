@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 using TMPro;
-public class GenericUnit : NetworkBehaviour {
+public abstract class GenericUnit : NetworkBehaviour {
     // could be turned into GenericUnit abstract class
     // need to define a magicDef stat or call it resistance
     // public int resistance;
@@ -20,7 +20,6 @@ public class GenericUnit : NetworkBehaviour {
     public GameObject tileBeingOccupied;
     public string unitName;
     public int maxHealth;
-    public int strength;
     public int defence;
     public int move;
     public int range;
@@ -100,37 +99,9 @@ public class GenericUnit : NetworkBehaviour {
         hitPointsText.SetText(currentHealth.ToString());
     }
 
-    [Command(requiresAuthority=false)]
-    public void CmdDealDamage(int battleStr, int battleDef) {
-        int battleDamage = 0;
-        if (battleStr - battleDef < 0) { 
-            battleDamage = 0;
-        } else {
-            battleDamage = battleStr - battleDef;
-        }
-        currentHealth = currentHealth - battleDamage;
-        RpcDealDamageClient(battleStr, battleDef);
-        if (currentHealth <= 0)
-        UnitDie();
-        // send into checkifdead loop
-        // check if units remain
-    }
+    public abstract void CmdDealDamage(int damageStat, int defendingStat);
 
-    [ClientRpc]
-    public void RpcDealDamageClient(int battleStrClient, int battleDefClient) {
-        if (!isServer) {
-            int battleDamageClient = 0;
-            if (battleStrClient - battleDefClient < 0) {
-                battleDamageClient = 0;
-            } else {
-                battleDamageClient = battleStrClient - battleDefClient;
-            }
-            currentHealth = currentHealth - battleDamageClient; 
-        }
-        Debug.Log("damage dealt: " + battleStrClient);
-        Debug.Log("hp of attacked unit: " + currentHealth);
-        UpdateHealthUI();
-    }
+    public abstract void RpcDealDamageClient(int damageStat, int defendingStat);
     
     public void Wait() {
         if (!hasAuthority) return;
@@ -156,7 +127,7 @@ public class GenericUnit : NetworkBehaviour {
 
     public IEnumerator CombatEnd() {
         combatQueue.Enqueue(1);
-        yield return new WaitForEndOfFrame();
+        for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
         combatQueue.Dequeue();
     }
 

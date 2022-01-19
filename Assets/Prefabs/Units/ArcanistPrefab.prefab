@@ -84,9 +84,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 882078882849158377}
-  - component: {fileID: 7618116234107851468}
+  - component: {fileID: 6594804470946319849}
   - component: {fileID: 3109831265048464899}
-  - component: {fileID: 882078882849158382}
+  - component: {fileID: 7618116234107851468}
   m_Layer: 0
   m_Name: ArcanistPrefab
   m_TagString: Unit
@@ -109,7 +109,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7618116234107851468
+--- !u!114 &6594804470946319849
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,14 +118,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 882078882849158383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Script: {fileID: 11500000, guid: 88053f69edd102e4f9383e8790c2aeb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 9cc3869694fe5374c8a93f8cfcd9dba8
-  hasSpawned: 0
+  syncMode: 0
+  syncInterval: 0.1
+  team: 0
+  x: 0
+  y: 0
+  visualMovementSpeed: 0.15
+  tileBeingOccupied: {fileID: 0}
+  unitName: Arcanist
+  maxHealth: 3
+  defence: 2
+  move: 5
+  range: 2
+  currentHealth: 3
+  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
+  healthBarCanvas: {fileID: 882078883608837778}
+  hitPointsText: {fileID: 882078884744681195}
+  healthBar: {fileID: 882078882767622093}
+  map: {fileID: 0}
+  holder2D: {fileID: 4031809408907755467}
+  unitMoveState: 0
+  magic: 3
 --- !u!114 &3109831265048464899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +171,7 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &882078882849158382
+--- !u!114 &7618116234107851468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,29 +180,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 882078882849158383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc407008371a9274d9430c91a1d9e392, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  team: 0
-  x: 0
-  y: 0
-  visualMovementSpeed: 0.15
-  tileBeingOccupied: {fileID: 0}
-  unitName: Arcanist
-  maxHealth: 3
-  damage: 3
-  move: 5
-  range: 2
-  currentHealth: 3
-  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
-  healthBarCanvas: {fileID: 882078883608837778}
-  hitPointsText: {fileID: 882078884744681195}
-  healthBar: {fileID: 882078882767622093}
-  map: {fileID: 0}
-  holder2D: {fileID: 4031809408907755467}
-  unitMoveState: 0
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 9cc3869694fe5374c8a93f8cfcd9dba8
+  hasSpawned: 0
 --- !u!1 &882078883257203649
 GameObject:
   m_ObjectHideFlags: 0

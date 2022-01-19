@@ -1,14 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class MagicalUnit : GenericUnit {
-    // define unique methods and attributes for magical units
-    // public int magic;
+    
+    [Header("Magical Stats")]
+    public int magic;
+
+    [Command(requiresAuthority=false)]
+    public override void CmdDealDamage(int battleMag, int battleRes) {
+        int battleDamage = 0;
+        if (battleMag - battleRes < 0) { 
+            battleDamage = 0;
+        } else {
+            battleDamage = battleMag - battleRes;
+        }
+        currentHealth = currentHealth - battleDamage;
+        RpcDealDamageClient(battleMag, battleRes);
+        if (currentHealth <= 0)
+        UnitDie();
+        // send into checkifdead loop
+        // check if units remain
+    }
+
+    [ClientRpc]
+    public override void RpcDealDamageClient(int battleMagClient, int battleResClient) {
+        if (!isServer) {
+            int battleDamageClient = 0;
+            if (battleMagClient - battleResClient < 0) {
+                battleDamageClient = 0;
+            } else {
+                battleDamageClient = battleMagClient - battleResClient;
+            }
+            currentHealth = currentHealth - battleDamageClient; 
+        }
+        Debug.Log("damage dealt: " + battleMagClient);
+        Debug.Log("hp of attacked unit: " + currentHealth);
+        UpdateHealthUI();
+    }
 
     // some kind of if check to see if it is of type magical unit
-
-    // public void CmdDealDamageMagical(int battleMag, int battleRes)
-
-    // public void RpcDealDamageClientMagical(int battleMagClient, int battleResClient) 
 }

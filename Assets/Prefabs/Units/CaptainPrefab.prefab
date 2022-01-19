@@ -218,9 +218,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6392410202167415416}
-  - component: {fileID: 8444969586624743955}
-  - component: {fileID: 3787111004911756464}
   - component: {fileID: 6392410202167415423}
+  - component: {fileID: 3787111004911756464}
+  - component: {fileID: 8444969586624743955}
   m_Layer: 0
   m_Name: CaptainPrefab
   m_TagString: Unit
@@ -243,7 +243,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8444969586624743955
+--- !u!114 &6392410202167415423
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,14 +252,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6392410202167415422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f963794e9a39a4482d6c5241f34dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 36c1e063b769f5b49ad8fa651afc7135
-  hasSpawned: 0
+  syncMode: 0
+  syncInterval: 0.1
+  team: 0
+  x: 0
+  y: 0
+  visualMovementSpeed: 0.15
+  tileBeingOccupied: {fileID: 0}
+  unitName: Captain
+  maxHealth: 10
+  defence: 0
+  move: 2
+  range: 1
+  currentHealth: 10
+  unitSprite: {fileID: 21300000, guid: 5fb5402cbdf09fb4da0cfd2b25bfedc7, type: 3}
+  healthBarCanvas: {fileID: 6392410202385012739}
+  hitPointsText: {fileID: 6392410201379123322}
+  healthBar: {fileID: 6392410202018261340}
+  map: {fileID: 0}
+  holder2D: {fileID: 7167615610641930586}
+  unitMoveState: 0
+  strength: 5
 --- !u!114 &3787111004911756464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +305,7 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &6392410202167415423
+--- !u!114 &8444969586624743955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,30 +314,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6392410202167415422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc407008371a9274d9430c91a1d9e392, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  team: 0
-  x: 0
-  y: 0
-  visualMovementSpeed: 0.15
-  tileBeingOccupied: {fileID: 0}
-  unitName: Captain
-  maxHealth: 10
-  strength: 5
-  defence: 0
-  move: 2
-  range: 1
-  currentHealth: 10
-  unitSprite: {fileID: 21300000, guid: 5fb5402cbdf09fb4da0cfd2b25bfedc7, type: 3}
-  healthBarCanvas: {fileID: 6392410202385012739}
-  hitPointsText: {fileID: 6392410201379123322}
-  healthBar: {fileID: 6392410202018261340}
-  map: {fileID: 0}
-  holder2D: {fileID: 7167615610641930586}
-  unitMoveState: 0
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 36c1e063b769f5b49ad8fa651afc7135
+  hasSpawned: 0
 --- !u!1 &6392410202385012743
 GameObject:
   m_ObjectHideFlags: 0

@@ -196,7 +196,7 @@ public class GameManager : NetworkBehaviour {
                 UIUnitCanvas.enabled = true;
                 displayingUnitInfo = true;
                 unitBeingDisplayed = hit.transform.parent.gameObject;
-                var highlightedUnit = hit.transform.parent.gameObject.GetComponent<GenericUnit>();
+                var highlightedUnit = hit.transform.parent.gameObject.GetComponent<PhysicalUnit>();
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
                 UIStrength.SetText(highlightedUnit.strength.ToString());
                 UIDefence.SetText(highlightedUnit.defence.ToString());
@@ -209,7 +209,7 @@ public class GameManager : NetworkBehaviour {
                     unitBeingDisplayed = hit.transform.GetComponent<TileClick>().unitOnTile;
                     UIUnitCanvas.enabled = true;
                     displayingUnitInfo = true;
-                    var highlightedUnitScript = unitBeingDisplayed.GetComponent<GenericUnit>();
+                    var highlightedUnitScript = unitBeingDisplayed.GetComponent<PhysicalUnit>();
                     UICurrentHealth.SetText(highlightedUnitScript.currentHealth.ToString());
                     UIStrength.SetText(highlightedUnitScript.strength.ToString());
                     UIDefence.SetText(highlightedUnitScript.defence.ToString());

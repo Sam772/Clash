@@ -262,9 +262,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2115644257351956459}
-  - component: {fileID: 8708129300612944334}
+  - component: {fileID: 2170743579021205675}
   - component: {fileID: 4200123574285503745}
-  - component: {fileID: 2115644257351956460}
+  - component: {fileID: 8708129300612944334}
   m_Layer: 0
   m_Name: RangerPrefab
   m_TagString: Unit
@@ -287,7 +287,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8708129300612944334
+--- !u!114 &2170743579021205675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,14 +296,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 2115644257351956461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f963794e9a39a4482d6c5241f34dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 58fe2f45d23c9ab47ba66b36ea52ba75
-  hasSpawned: 0
+  syncMode: 0
+  syncInterval: 0.1
+  team: 0
+  x: 0
+  y: 0
+  visualMovementSpeed: 0.15
+  tileBeingOccupied: {fileID: 0}
+  unitName: Ranger
+  maxHealth: 4
+  defence: 1
+  move: 8
+  range: 1
+  currentHealth: 4
+  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
+  healthBarCanvas: {fileID: 2115644257039990160}
+  hitPointsText: {fileID: 2115644258173212137}
+  healthBar: {fileID: 2115644257202785487}
+  map: {fileID: 0}
+  holder2D: {fileID: 2779385521360616649}
+  unitMoveState: 0
+  strength: 2
 --- !u!114 &4200123574285503745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +349,7 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &2115644257351956460
+--- !u!114 &8708129300612944334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,29 +358,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2115644257351956461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc407008371a9274d9430c91a1d9e392, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  team: 0
-  x: 0
-  y: 0
-  visualMovementSpeed: 0.15
-  tileBeingOccupied: {fileID: 0}
-  unitName: Ranger
-  maxHealth: 4
-  damage: 2
-  move: 8
-  range: 1
-  currentHealth: 4
-  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
-  healthBarCanvas: {fileID: 2115644257039990160}
-  hitPointsText: {fileID: 2115644258173212137}
-  healthBar: {fileID: 2115644257202785487}
-  map: {fileID: 0}
-  holder2D: {fileID: 2779385521360616649}
-  unitMoveState: 0
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 58fe2f45d23c9ab47ba66b36ea52ba75
+  hasSpawned: 0
 --- !u!1 &2115644258173212140
 GameObject:
   m_ObjectHideFlags: 0

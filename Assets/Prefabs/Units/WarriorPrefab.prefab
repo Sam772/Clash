@@ -321,9 +321,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1249201663611945604}
-  - component: {fileID: 8418129317582644385}
+  - component: {fileID: 7595201632799541756}
   - component: {fileID: 3910144095098255470}
-  - component: {fileID: 1249201663611945603}
+  - component: {fileID: 8418129317582644385}
   m_Layer: 0
   m_Name: WarriorPrefab
   m_TagString: Unit
@@ -346,7 +346,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8418129317582644385
+--- !u!114 &7595201632799541756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,14 +355,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1249201663611945602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f963794e9a39a4482d6c5241f34dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 224bfc14c82b8d64d8b822b27f8c0db5
-  hasSpawned: 0
+  syncMode: 0
+  syncInterval: 0.1
+  team: 0
+  x: 0
+  y: 0
+  visualMovementSpeed: 0.15
+  tileBeingOccupied: {fileID: 0}
+  unitName: Warrior
+  maxHealth: 7
+  defence: 0
+  move: 4
+  range: 1
+  currentHealth: 7
+  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
+  healthBarCanvas: {fileID: 1249201663287396607}
+  hitPointsText: {fileID: 1249201662286258310}
+  healthBar: {fileID: 1249201663794674080}
+  map: {fileID: 0}
+  holder2D: {fileID: 3069226315999873446}
+  unitMoveState: 0
+  strength: 4
 --- !u!114 &3910144095098255470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +408,7 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &1249201663611945603
+--- !u!114 &8418129317582644385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,29 +417,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1249201663611945602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc407008371a9274d9430c91a1d9e392, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  team: 0
-  x: 0
-  y: 0
-  visualMovementSpeed: 0.15
-  tileBeingOccupied: {fileID: 0}
-  unitName: Warrior
-  maxHealth: 7
-  damage: 4
-  move: 4
-  range: 1
-  currentHealth: 7
-  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
-  healthBarCanvas: {fileID: 1249201663287396607}
-  hitPointsText: {fileID: 1249201662286258310}
-  healthBar: {fileID: 1249201663794674080}
-  map: {fileID: 0}
-  holder2D: {fileID: 3069226315999873446}
-  unitMoveState: 0
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 224bfc14c82b8d64d8b822b27f8c0db5
+  hasSpawned: 0
 --- !u!1 &1249201663794674111
 GameObject:
   m_ObjectHideFlags: 0
