@@ -13,6 +13,7 @@ public class GameManager : NetworkBehaviour {
     public TMP_Text UICurrentHealth;
     public TMP_Text UIStrength;
     public TMP_Text UIDefence;
+    public TMP_Text UIResistance;
     public TMP_Text UIRange;
     public TMP_Text UIMove;
     public TMP_Text UIUnitName;
@@ -200,6 +201,7 @@ public class GameManager : NetworkBehaviour {
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
                 UIStrength.SetText(highlightedUnit.strength.ToString());
                 UIDefence.SetText(highlightedUnit.defence.ToString());
+                //UIResistance.SetText(highlightedUnit.resistance.ToString());
                 UIRange.SetText(highlightedUnit.range.ToString());
                 UIMove.SetText(highlightedUnit.move.ToString());
                 UIUnitName.SetText(highlightedUnit.unitName);
@@ -209,14 +211,15 @@ public class GameManager : NetworkBehaviour {
                     unitBeingDisplayed = hit.transform.GetComponent<TileClick>().unitOnTile;
                     UIUnitCanvas.enabled = true;
                     displayingUnitInfo = true;
-                    var highlightedUnitScript = unitBeingDisplayed.GetComponent<PhysicalUnit>();
-                    UICurrentHealth.SetText(highlightedUnitScript.currentHealth.ToString());
-                    UIStrength.SetText(highlightedUnitScript.strength.ToString());
-                    UIDefence.SetText(highlightedUnitScript.defence.ToString());
-                    UIRange.SetText(highlightedUnitScript.range.ToString());
-                    UIMove.SetText(highlightedUnitScript.move.ToString());
-                    UIUnitName.SetText(highlightedUnitScript.unitName);
-                    UISprite.sprite = highlightedUnitScript.unitSprite;}}
+                    var highlightedUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
+                    UICurrentHealth.SetText(highlightedUnitText.currentHealth.ToString());
+                    UIStrength.SetText(highlightedUnitText.strength.ToString());
+                    UIDefence.SetText(highlightedUnitText.defence.ToString());
+                    //UIResistance.SetText(highlightedUnitText.resistance.ToString());
+                    UIRange.SetText(highlightedUnitText.range.ToString());
+                    UIMove.SetText(highlightedUnitText.move.ToString());
+                    UIUnitName.SetText(highlightedUnitText.unitName);
+                    UISprite.sprite = highlightedUnitText.unitSprite;}}
         } else if (hit.transform.gameObject.CompareTag("Tile")) {
             if (hit.transform.GetComponent<TileClick>().unitOnTile == null) {
                 UIUnitCanvas.enabled = false;

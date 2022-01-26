@@ -130,7 +130,7 @@ MonoBehaviour:
   tileBeingOccupied: {fileID: 0}
   unitName: Knight
   maxHealth: 5
-  defence: 0
+  defence: 2
   move: 5
   range: 1
   currentHealth: 5
@@ -141,7 +141,7 @@ MonoBehaviour:
   map: {fileID: 0}
   holder2D: {fileID: 4275521981178448823}
   unitMoveState: 0
-  strength: 3
+  strength: 6
 --- !u!114 &-6373087350865773953
 MonoBehaviour:
   m_ObjectHideFlags: 0

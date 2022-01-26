@@ -18,14 +18,15 @@ public class PhysicalUnit : GenericUnit {
         }
         currentHealth = currentHealth - battleDamage;
         RpcDealDamageClient(battleStr, battleDef);
-        if (currentHealth <= 0)
-        UnitDie();
+        //if (currentHealth <= 0)
+        //UnitDie();
         // send into checkifdead loop
         // check if units remain
     }
 
     [ClientRpc]
     public override void RpcDealDamageClient(int battleStrClient, int battleDefClient) {
+        // uncomment this block
         if (!isServer) {
             int battleDamageClient = 0;
             if (battleStrClient - battleDefClient < 0) {

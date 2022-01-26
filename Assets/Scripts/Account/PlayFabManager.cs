@@ -12,6 +12,14 @@ public class PlayFabManager : MonoBehaviour {
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
 
+    void Start() {
+        HideErrorMessage();
+    }
+
+    private void HideErrorMessage() {
+        messageText.text = default;
+    }
+
     public void RegisterButton() {
         if (passwordInput.text.Length < 6) {
             messageText.text = "Password is too short!";

@@ -264,7 +264,7 @@ MonoBehaviour:
   tileBeingOccupied: {fileID: 0}
   unitName: Captain
   maxHealth: 10
-  defence: 0
+  defence: 3
   move: 2
   range: 1
   currentHealth: 10
@@ -275,7 +275,7 @@ MonoBehaviour:
   map: {fileID: 0}
   holder2D: {fileID: 7167615610641930586}
   unitMoveState: 0
-  strength: 5
+  strength: 7
 --- !u!114 &3787111004911756464
 MonoBehaviour:
   m_ObjectHideFlags: 0

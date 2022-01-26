@@ -5,9 +5,6 @@ using UnityEngine.UI;
 using Mirror;
 using TMPro;
 public abstract class GenericUnit : NetworkBehaviour {
-    // could be turned into GenericUnit abstract class
-    // need to define a magicDef stat or call it resistance
-    // public int resistance;
     [SyncVar]
     public int team;
     [SyncVar]
@@ -21,6 +18,7 @@ public abstract class GenericUnit : NetworkBehaviour {
     public string unitName;
     public int maxHealth;
     public int defence;
+    public int resistance;
     public int move;
     public int range;
     [SyncVar]

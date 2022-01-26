@@ -171,7 +171,7 @@ MonoBehaviour:
   tileBeingOccupied: {fileID: 0}
   unitName: Archer
   maxHealth: 4
-  defence: 0
+  defence: 2
   move: 4
   range: 2
   currentHealth: 4
@@ -182,7 +182,7 @@ MonoBehaviour:
   map: {fileID: 0}
   holder2D: {fileID: 3194674972223442061}
   unitMoveState: 0
-  strength: 10
+  strength: 5
 --- !u!114 &3040184471979254226
 MonoBehaviour:
   m_ObjectHideFlags: 0
