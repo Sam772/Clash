@@ -4,7 +4,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 
 ![clash-main-menu](/Assets/Textures/MapPreview/MainMenuPreview.png)
 
-## Changelog v0.1 - v0.2.5
+## Changelog v0.1 - v0.2.6
 - Added a main menu
 - Added a map selection screen
 - Added a settings screen
@@ -15,6 +15,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 - Password Reset functionality
 - New stats
 - New Unit Types
+- Chatbox
 
 ### View the full changelog at <link>
 
@@ -23,6 +24,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
   <tr>
     <td align="center"><a href="https://github.com/Sam772"><img src="https://avatars.githubusercontent.com/u/78389553?v=4" width="100px;" alt=""/><br /><sub><b>Samir</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/m-shah02"><img src="https://avatars.githubusercontent.com/u/54008874?v=4" width="100px;" alt=""/><br /><sub><b>Mansoor</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/QaysShah"><img src="https://avatars.githubusercontent.com/u/98493986?v=4" width="100px;" alt=""/><br /><sub><b>Qays</b></sub></a><br /></td>
   </tr>
 </table>
 

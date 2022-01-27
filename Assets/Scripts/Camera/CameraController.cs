@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
     private Transform cameraTransform;
     private float zoomAmount;
     private float startYPosition;
+    private float startRotation;
     public static string xAxis = "Horizontal";
     public static string yAxis = "Vertical";
         
@@ -15,6 +16,7 @@ public class CameraController : MonoBehaviour {
         zoomAmount = 1f;
         cameraTransform = transform;
         startYPosition = cameraTransform.position.y;
+        startRotation = cameraTransform.eulerAngles.x;
     }
 
     private void Update() { 
@@ -42,10 +44,18 @@ public class CameraController : MonoBehaviour {
         
         const float minimumYPosition = 3f;
         var maximumYPosition = startYPosition;
-        var targetYPos = Mathf.Lerp(minimumYPosition, maximumYPosition, zoomAmount);
+        var targetYPosition = Mathf.Lerp(minimumYPosition, maximumYPosition, zoomAmount);
             
         var cameraPosition = transform.position;
-        cameraPosition.y = Mathf.Lerp(cameraPosition.y, targetYPos, Time.deltaTime * scrollSpeed);
+        cameraPosition.y = Mathf.Lerp(cameraPosition.y, targetYPosition, Time.deltaTime * scrollSpeed);
         transform.position = cameraPosition;
+
+        var cameraRotation = cameraTransform.eulerAngles;
+        var targetRotation = zoomAmount < 0.2f
+            ? Mathf.Lerp(startRotation - 40f, startRotation, zoomAmount / 0.2f)
+            : startRotation;
+
+        cameraRotation.x = Mathf.Lerp(cameraRotation.x, targetRotation, Time.deltaTime * scrollSpeed);
+        transform.eulerAngles = cameraRotation;
     }
 }

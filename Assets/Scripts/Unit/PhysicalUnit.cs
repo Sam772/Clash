@@ -18,8 +18,8 @@ public class PhysicalUnit : GenericUnit {
         }
         currentHealth = currentHealth - battleDamage;
         RpcDealDamageClient(battleStr, battleDef);
-        //if (currentHealth <= 0)
-        //UnitDie();
+        if (currentHealth <= 0)
+        UnitDie();
         // send into checkifdead loop
         // check if units remain
     }

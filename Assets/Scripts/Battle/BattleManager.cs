@@ -4,7 +4,6 @@ using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager gameManager;
     private bool battleStatus;
-    public GenericUnit unit;
     // might need a second method for magical units
     // alternative: create atk calculation to return here instead of str/mag
     public void Battle(GameObject attacker, GameObject receiver) {
@@ -50,15 +49,15 @@ public class BattleManager : NetworkBehaviour {
 
     // dealing 4x the amount of damage for some reason + dealing damage back after checking if dead
     // comment these methods
-    [Command(requiresAuthority=false)]
-    public void CmdBattle(GameObject attacker, GameObject receiver) {
-        RpcBattle(attacker, receiver);
-    }
+    // [Command(requiresAuthority=false)]
+    // public void CmdBattle(GameObject attacker, GameObject receiver) {
+    //     RpcBattle(attacker, receiver);
+    // }
 
-    [ClientRpc]
-    public void RpcBattle(GameObject attacker, GameObject receiver) {
-        Battle(attacker, receiver);
-    }
+    // [ClientRpc]
+    // public void RpcBattle(GameObject attacker, GameObject receiver) {
+    //     Battle(attacker, receiver);
+    // }
 
     public IEnumerator Attack(GameObject unit, GameObject enemy) {
         battleStatus = true;
@@ -70,7 +69,8 @@ public class BattleManager : NetworkBehaviour {
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();}
         while (battleStatus) {
-            CmdBattle(unit, enemy);
+            //CmdBattle(unit, enemy);
+            Battle(unit, enemy);
             yield return new WaitForEndOfFrame();}
         if (unit != null) { StartCoroutine(ReturnAfterAttack(unit, startPos)); }
     }
