@@ -2675,6 +2675,7 @@ GameObject:
   - component: {fileID: 621442720}
   - component: {fileID: 621442719}
   - component: {fileID: 621442718}
+  - component: {fileID: 621442721}
   m_Layer: 5
   m_Name: MapSelectionTwo
   m_TagString: Untagged
@@ -2809,6 +2810,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621442716}
   m_CullTransparentMesh: 1
+--- !u!114 &621442721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621442716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapInfoToShow: The highlands map consists of ground and mountain tiles
 --- !u!1 &627290121
 GameObject:
   m_ObjectHideFlags: 0
@@ -4455,8 +4469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapInfoToShow: The plains map consists of grass and forest tiles which is the recommended
-    starting map to play.
+  mapInfoToShow: The grasslands map consists of grass and forest tiles
 --- !u!1 &1164402001
 GameObject:
   m_ObjectHideFlags: 0
