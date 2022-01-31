@@ -677,7 +677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 437390896}
   m_Layer: 0
-  m_Name: GrassAreaRight
+  m_Name: GrasslandAreaRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3942,7 +3942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1744958474}
   m_Layer: 0
-  m_Name: GrassAreaLeft
+  m_Name: GrasslandAreaLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4334,7 +4334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1959344662}
   m_Layer: 0
-  m_Name: GrassAreaBottom
+  m_Name: GrasslandAreaBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4487,7 +4487,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2058234262}
   m_Layer: 0
-  m_Name: GrassAreaTop
+  m_Name: GrasslandAreaTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

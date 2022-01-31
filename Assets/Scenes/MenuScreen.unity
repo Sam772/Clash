@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 138479683}
   - component: {fileID: 138479682}
   - component: {fileID: 138479681}
+  - component: {fileID: 138479684}
   m_Layer: 5
   m_Name: MapSelectionThree
   m_TagString: Untagged
@@ -604,7 +605,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 138479682}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 118942037}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: MapClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1097246245}
+        m_TargetAssemblyTypeName: NewNetworkManager, Assembly-CSharp
+        m_MethodName: MapThreeClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &138479682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,6 +668,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138479679}
   m_CullTransparentMesh: 1
+--- !u!114 &138479684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138479679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapInfoToShow: The sandlands
 --- !u!1 &142047664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3867,6 +3905,7 @@ MonoBehaviour:
   gameScene: Assets/Scenes/MapOne.unity
   mapOneScene: Assets/Scenes/MapOne.unity
   mapTwoScene: Assets/Scenes/MapTwo.unity
+  mapThreeScene: Assets/Scenes/MapThree.unity
   roomPlayerPrefab: {fileID: 2541264716250324250, guid: cdaa3d798f5fd4b46a68ca4ee75c98fe, type: 3}
   gamePlayerPrefab: {fileID: 1878441529161525201, guid: 58ff51323dda32d43a3378f9196a5c76, type: 3}
   captainPrefab: {fileID: 6392410202167415423, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
@@ -5125,6 +5164,7 @@ GameObject:
   - component: {fileID: 1225066145}
   - component: {fileID: 1225066144}
   - component: {fileID: 1225066143}
+  - component: {fileID: 1225066146}
   m_Layer: 5
   m_Name: MapSelectionFour
   m_TagString: Untagged
@@ -5235,6 +5275,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225066141}
   m_CullTransparentMesh: 1
+--- !u!114 &1225066146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225066141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapInfoToShow: The frostlands
 --- !u!1 &1246348799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6049,7 +6102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v0.2.6
+  m_text: v0.2.7
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
