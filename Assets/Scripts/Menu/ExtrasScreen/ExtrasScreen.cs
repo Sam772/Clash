@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ExtrasScreen : MenuScreen
-{
+public class ExtrasScreen : MenuScreen {
     
 }
