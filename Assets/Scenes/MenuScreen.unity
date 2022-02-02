@@ -3717,7 +3717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &698556234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4685,6 +4685,7 @@ MonoBehaviour:
   mapOneScene: Assets/Scenes/MapOne.unity
   mapTwoScene: Assets/Scenes/MapTwo.unity
   mapThreeScene: Assets/Scenes/MapThree.unity
+  mapFourScene: Assets/Scenes/MapFour.unity
   roomPlayerPrefab: {fileID: 2541264716250324250, guid: cdaa3d798f5fd4b46a68ca4ee75c98fe, type: 3}
   gamePlayerPrefab: {fileID: 1878441529161525201, guid: 58ff51323dda32d43a3378f9196a5c76, type: 3}
   captainPrefab: {fileID: 6392410202167415423, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
@@ -6065,7 +6066,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1225066144}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 118942037}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: MapClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1097246245}
+        m_TargetAssemblyTypeName: NewNetworkManager, Assembly-CSharp
+        m_MethodName: MapFourClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1225066144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7077,7 +7102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v0.3.0
+  m_text: v0.3.1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -10275,7 +10300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2117214480
 RectTransform:
   m_ObjectHideFlags: 0
