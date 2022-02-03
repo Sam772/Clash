@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ChatBehaviour : NetworkBehaviour {
     
+    [SyncVar]
     public string DisplayName;
     [SerializeField] private GameObject chatUI = null;
     [SerializeField] private TMP_Text chatText = null;
@@ -20,6 +21,7 @@ public class ChatBehaviour : NetworkBehaviour {
         CmdSetDisplayName(MenuUtil.GetNameFromPlayerPrefs());
     }
 
+    [Command]
     private void CmdSetDisplayName(string displayName) {
         DisplayName = displayName;
     }
