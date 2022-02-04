@@ -8,6 +8,10 @@ public class BattleManager : NetworkBehaviour {
     // alternative: create atk calculation to return here instead of str/mag
     public void Battle(GameObject attacker, GameObject receiver) {
         battleStatus = true;
+        // if (attackerUnit == physicalunit)
+        // execute physical battle stuff
+        // if (attackerunit == magicalunit)
+        // execute magical battle stuff
         var attackerUnit = attacker.GetComponent<PhysicalUnit>();
         var receiverUnit = receiver.GetComponent<PhysicalUnit>();
         int attackerStr = attackerUnit.strength;

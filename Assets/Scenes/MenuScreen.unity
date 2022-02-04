@@ -4679,6 +4679,7 @@ MonoBehaviour:
   - {fileID: 43821925479923859, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
   - {fileID: 3194674972596997603, guid: fa246a9c481de4843b1ea6d221b90d6b, type: 3}
   - {fileID: 6392410202167415422, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
+  - {fileID: 882078882849158383, guid: 9cc3869694fe5374c8a93f8cfcd9dba8, type: 3}
   minPlayers: 2
   menuScene: Assets/Scenes/MenuScreen.unity
   gameScene: Assets/Scenes/MapOne.unity
@@ -4691,6 +4692,7 @@ MonoBehaviour:
   captainPrefab: {fileID: 6392410202167415423, guid: 36c1e063b769f5b49ad8fa651afc7135, type: 3}
   knightPrefab: {fileID: 43821925479923858, guid: b2c1703d01ee7964992244e0e97d6f2c, type: 3}
   archerPrefab: {fileID: 3194674972596997601, guid: fa246a9c481de4843b1ea6d221b90d6b, type: 3}
+  arcanistPrefab: {fileID: 6594804470946319849, guid: 9cc3869694fe5374c8a93f8cfcd9dba8, type: 3}
   gameDataPrefab: {fileID: 8563972802724201946, guid: ff87f00f3a4239c48b653a59efc2d347, type: 3}
 --- !u!4 &1097246246
 Transform:

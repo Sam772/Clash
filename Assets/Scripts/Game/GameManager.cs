@@ -201,7 +201,7 @@ public class GameManager : NetworkBehaviour {
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
                 UIStrength.SetText(highlightedUnit.strength.ToString());
                 UIDefence.SetText(highlightedUnit.defence.ToString());
-                //UIResistance.SetText(highlightedUnit.resistance.ToString());
+                UIResistance.SetText(highlightedUnit.resistance.ToString());
                 UIRange.SetText(highlightedUnit.range.ToString());
                 UIMove.SetText(highlightedUnit.move.ToString());
                 UIUnitName.SetText(highlightedUnit.unitName);
@@ -215,7 +215,7 @@ public class GameManager : NetworkBehaviour {
                     UICurrentHealth.SetText(highlightedUnitText.currentHealth.ToString());
                     UIStrength.SetText(highlightedUnitText.strength.ToString());
                     UIDefence.SetText(highlightedUnitText.defence.ToString());
-                    //UIResistance.SetText(highlightedUnitText.resistance.ToString());
+                    UIResistance.SetText(highlightedUnitText.resistance.ToString());
                     UIRange.SetText(highlightedUnitText.range.ToString());
                     UIMove.SetText(highlightedUnitText.move.ToString());
                     UIUnitName.SetText(highlightedUnitText.unitName);
