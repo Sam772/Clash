@@ -47,7 +47,6 @@ public class GameManager : NetworkBehaviour {
     private int routeToY;
     public void Start() {
         currentTeam = 0;
-        SetCurrentTeamUI();
         SetTeamHealthbarColour();
         displayingUnitInfo = false;
         playerPhaseAnim = playerPhaseBlock.GetComponent<Animator>();
@@ -55,6 +54,7 @@ public class GameManager : NetworkBehaviour {
         unitPathToCursor = new List<Node>();
         unitPathExists = false;       
         TMS = GetComponent<GenericTileMap>();
+        currentTeamUI.SetText("Player " + (currentTeam + 1).ToString() + " Phase");
     }
 
     public void Update() {
@@ -92,10 +92,6 @@ public class GameManager : NetworkBehaviour {
                         unitPathExists = false;}}}}
     }
 
-    public void SetCurrentTeamUI() {
-        currentTeamUI.SetText("Player " + (currentTeam + 1).ToString() + " Phase");
-    }
-
     [ClientRpc]
     public void RpcResetUnitsActions(int teamToReset) {
         GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
@@ -116,9 +112,11 @@ public class GameManager : NetworkBehaviour {
             if (oldV == 0) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
                 playerPhaseText.SetText("Player 2 Phase");
+                currentTeamUI.SetText("Player " + (2).ToString() + " Phase");
             } else {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
-                playerPhaseText.SetText("Player 1 Phase");}
+                playerPhaseText.SetText("Player 1 Phase");
+                currentTeamUI.SetText("Player " + (1).ToString() + " Phase");}
     }
 
     [Command(requiresAuthority = false)]
@@ -132,7 +130,7 @@ public class GameManager : NetworkBehaviour {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
                 playerPhaseText.SetText("Player 1 Phase");}
             SetTeamHealthbarColour();
-            SetCurrentTeamUI();}
+        }
     }
 
     [Command(requiresAuthority=false)]

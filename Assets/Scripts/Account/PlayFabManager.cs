@@ -11,6 +11,7 @@ public class PlayFabManager : MonoBehaviour {
     public TMP_Text messageText;
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
+    [SerializeField] private MainMenu mainMenu;
 
     void Start() {
         HideErrorMessage();
@@ -49,6 +50,7 @@ public class PlayFabManager : MonoBehaviour {
     public void OnLoginSuccess(LoginResult result) {
         messageText.text = "Logged in!";
         Debug.Log("Successful login/account created!");
+        mainMenu.ReturnToMainScreenClicked();
     }
 
     public void ResetPasswordButton() {
