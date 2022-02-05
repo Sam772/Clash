@@ -1,16 +1,17 @@
 using Mirror;
+using UnityEngine;
 
 public class NewNetworkGamePlayer : NetworkBehaviour {
     public PlayerData PlayerData { get; private set; }
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
-    private string displayName;
+    [SerializeField] private string displayName;
     
     [SyncVar]
     public int ID;
     private NewNetworkManager room;
     private GameManager game;
-
+    public string DisplayName => displayName;
     public override void OnStartClient() {
         DontDestroyOnLoad(gameObject);
 

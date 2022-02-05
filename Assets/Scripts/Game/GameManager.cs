@@ -12,12 +12,15 @@ public class GameManager : NetworkBehaviour {
     public Canvas displayWinnerUI;
     public TMP_Text UICurrentHealth;
     public TMP_Text UIStrength;
+    public TMP_Text UIMagic;
     public TMP_Text UIDefence;
     public TMP_Text UIResistance;
     public TMP_Text UIRange;
     public TMP_Text UIMove;
     public TMP_Text UIUnitName;
     public UnityEngine.UI.Image UISprite;
+    public UnityEngine.UI.Image strengthIcon;
+    public UnityEngine.UI.Image magicIcon;
     public Canvas UIUnitCanvas;
     public GameObject playerPhaseBlock;
     private Animator playerPhaseAnim;
@@ -197,9 +200,23 @@ public class GameManager : NetworkBehaviour {
                 UIUnitCanvas.enabled = true;
                 displayingUnitInfo = true;
                 unitBeingDisplayed = hit.transform.parent.gameObject;
-                var highlightedUnit = hit.transform.parent.gameObject.GetComponent<PhysicalUnit>();
+                var highlightedUnit = hit.transform.parent.gameObject.GetComponent<GenericUnit>();
+                var highlightedPhysicalUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
+                var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
-                UIStrength.SetText(highlightedUnit.strength.ToString());
+
+                if (highlightedPhysicalUnitText) {
+                    strengthIcon.enabled = true;
+                    UIStrength.SetText(highlightedPhysicalUnitText.strength.ToString());
+                    UIMagic.text = default;
+                    magicIcon.enabled = false;
+                } else if (highlightedMagicalUnitText) {
+                    magicIcon.enabled = true;
+                    UIMagic.SetText(highlightedMagicalUnitText.magic.ToString());
+                    UIStrength.text = default;
+                    strengthIcon.enabled = false;
+                }
+
                 UIDefence.SetText(highlightedUnit.defence.ToString());
                 UIResistance.SetText(highlightedUnit.resistance.ToString());
                 UIRange.SetText(highlightedUnit.range.ToString());
@@ -211,9 +228,23 @@ public class GameManager : NetworkBehaviour {
                     unitBeingDisplayed = hit.transform.GetComponent<TileClick>().unitOnTile;
                     UIUnitCanvas.enabled = true;
                     displayingUnitInfo = true;
-                    var highlightedUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
+                    var highlightedUnitText = unitBeingDisplayed.GetComponent<GenericUnit>();
+                    var highlightedPhysicalUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
+                    var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
                     UICurrentHealth.SetText(highlightedUnitText.currentHealth.ToString());
-                    UIStrength.SetText(highlightedUnitText.strength.ToString());
+
+                    if (highlightedPhysicalUnitText) {
+                        strengthIcon.enabled = true;
+                        UIStrength.SetText(highlightedPhysicalUnitText.strength.ToString());
+                        UIMagic.text = default;
+                        magicIcon.enabled = false;
+                    } else if (highlightedMagicalUnitText) {
+                        magicIcon.enabled = true;
+                        UIMagic.SetText(highlightedMagicalUnitText.magic.ToString());
+                        UIStrength.text = default;
+                        strengthIcon.enabled = false;
+                    }
+
                     UIDefence.SetText(highlightedUnitText.defence.ToString());
                     UIResistance.SetText(highlightedUnitText.resistance.ToString());
                     UIRange.SetText(highlightedUnitText.range.ToString());
