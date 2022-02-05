@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour {
     [SerializeField] private MainScreen mainScreen;
     [SerializeField] private MapSelectionScreen mapSelectionScreen;
     [SerializeField] private SettingsScreen settingsScreen; 
+    [SerializeField] private ProfileScreen profileScreen; 
     [SerializeField] private PlayScreen playScreen;
     [SerializeField] private HostScreen hostScreen;
     [SerializeField] private JoinScreen joinScreen;
@@ -30,6 +31,7 @@ public class MainMenu : MonoBehaviour {
         mainScreen.Setup(this);
         playScreen.Setup(this);
         settingsScreen.Setup(this);
+        profileScreen.Setup(this);
         mapSelectionScreen.Setup(this);
         hostScreen.Setup(this);
         joinScreen.Setup(this);
@@ -42,6 +44,7 @@ public class MainMenu : MonoBehaviour {
     public void LoginButtonClicked() => ShowScreen(mainScreen);
     public void PlayGameClicked() => ShowScreen(mapSelectionScreen);
     public void SettingsScreenClicked() => ShowScreen(settingsScreen);
+    public void ProfileScreenClicked() => ShowScreen(profileScreen);
     public void MapClicked() => ShowScreen(playScreen);
     public void HostGameClicked() => ShowScreen(hostScreen);
     public void JoinGameClicked() => ShowScreen(joinScreen);
@@ -77,6 +80,7 @@ public class MainMenu : MonoBehaviour {
         if (screen != accountScreen) accountScreen.Hide();
         if (screen != hostScreen) hostScreen.Hide();
         if (screen != settingsScreen) settingsScreen.Hide();
+        if (screen != profileScreen) profileScreen.Hide();
         if (screen != playScreen) playScreen.Hide();
         if (screen != mapSelectionScreen) mapSelectionScreen.Hide();
         if (screen != mainScreen) mainScreen.Hide();
