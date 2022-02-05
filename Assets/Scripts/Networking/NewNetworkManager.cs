@@ -170,7 +170,10 @@ public class NewNetworkManager : NetworkManager {
                         PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                         knight.GetComponent<PhysicalUnit>().team = 1;
-                    } 
+                    }
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.75f, 7), Quaternion.identity);
+                    NetworkServer.Spawn(arcanist.gameObject, conn);
+                    arcanist.GetComponent<MagicalUnit>().team = 1;
                 }
                 // Map Three
             } else if (gameScene == mapThreeScene) {

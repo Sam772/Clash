@@ -4,40 +4,170 @@ using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager gameManager;
     private bool battleStatus;
-    // might need a second method for magical units
-    // alternative: create atk calculation to return here instead of str/mag
     public void Battle(GameObject attacker, GameObject receiver) {
         battleStatus = true;
-        // if (attackerUnit == physicalunit)
-        // execute physical battle stuff
-        // if (attackerunit == magicalunit)
-        // execute magical battle stuff
-        var attackerUnit = attacker.GetComponent<PhysicalUnit>();
-        var receiverUnit = receiver.GetComponent<PhysicalUnit>();
-        int attackerStr = attackerUnit.strength;
-        int receiverStr = receiverUnit.strength;
-        int attackerDef = attackerUnit.defence;
-        int receiverDef = receiverUnit.defence;
-        if (attackerUnit.range == receiverUnit.range) {
-            receiverUnit.CmdDealDamage(attackerStr, receiverDef);
-            if (CheckIfDead(receiver)) {
-                receiverUnit.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;}
-            attackerUnit.CmdDealDamage(receiverStr, attackerDef);
-            if (CheckIfDead(attacker)) {
-                attackerUnit.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;}
-        } else {
-            receiverUnit.CmdDealDamage(attackerStr, receiverDef);
-            if (CheckIfDead(receiver)) {
-                receiverUnit.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;}}
+        
+        if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // physical initiator defence
+            int attackerPhysicalDef = attackerUnitPhysical.defence;
+            // physical receiver
+            var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
+            // physical receiver strength
+            int receiverStr = receiverUnitPhysical.strength;
+            // physical receiver defence
+            int receiverPhysicalDef = receiverUnitPhysical.defence;
+
+            // if the attacker and receiver are both physical units
+            if (attackerUnitPhysical.range == receiverUnitPhysical.range) {
+                receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+                // counter if survive
+                attackerUnitPhysical.CmdDealDamage(receiverStr, attackerPhysicalDef);
+                if (CheckIfDead(attacker)) {
+                    attackerUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            } else {
+            receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            }
+        } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
+            // magical initiator
+            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+            // magical initiator magic
+            int attackerMag = attackerUnitMagical.magic;
+            // magical initiator defence
+            int attackerMagicalDef = attackerUnitMagical.defence;
+            // physical receiver
+            var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
+            // physical receiver strength
+            int receiverStr = receiverUnitPhysical.strength;
+            // physical receiver resistance
+            int receiverPhysicalRes = receiverUnitPhysical.resistance;
+
+            // if the attacker is magical and the receiver is physical
+            if (attackerUnitMagical.range == receiverUnitPhysical.range) {
+                receiverUnitPhysical.CmdDealDamage(attackerMag, receiverPhysicalRes);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+                // counter if survive
+                attackerUnitMagical.CmdDealDamage(receiverStr, attackerMagicalDef);
+                if (CheckIfDead(attacker)) {
+                    attackerUnitMagical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            } else {
+                receiverUnitPhysical.CmdDealDamage(attackerMag, receiverPhysicalRes);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            }
+        } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<MagicalUnit>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // physical initiator resistance
+            int attackerPhysicalRes = attackerUnitPhysical.resistance;
+            // magical receiver
+            var receiverUnitMagical = receiver.GetComponent<MagicalUnit>();
+            // magical receiver magic
+            int receiverMag = receiverUnitMagical.magic;
+            // magical receiver def
+            int receiverMagicalDef = receiverUnitMagical.defence;
+
+            // if the attacker is physical and the receiver is magical
+            if (attackerUnitPhysical.range == receiverUnitMagical.range) {
+                receiverUnitMagical.CmdDealDamage(attackerStr, receiverMagicalDef);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitMagical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+                // counter if survive
+                attackerUnitPhysical.CmdDealDamage(receiverMag, attackerPhysicalRes);
+                if (CheckIfDead(attacker)) {
+                    attackerUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            } else {
+                receiverUnitMagical.CmdDealDamage(attackerStr, receiverMagicalDef);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitMagical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            }
+        } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<MagicalUnit>()) {
+            // magical initiator
+            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+            // magical initiator magic
+            int attackerMag = attackerUnitMagical.magic;
+            // magical initiator resistance
+            int attackerMagicalRes = attackerUnitMagical.resistance;
+            // magical receiver
+            var receiverUnitMagical = receiver.GetComponent<MagicalUnit>();
+            // magical receiver magic
+            int receiverMag = receiverUnitMagical.magic;
+            // magical receiver resistance
+            int receiverMagicalRes = receiverUnitMagical.resistance;
+
+            // if the attacker and receiver are both physical units
+            if (attackerUnitMagical.range == receiverUnitMagical.range) {
+                receiverUnitMagical.CmdDealDamage(attackerMag, receiverMagicalRes);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitMagical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+                // counter if survive
+                attackerUnitMagical.CmdDealDamage(receiverMag, attackerMagicalRes);
+                if (CheckIfDead(attacker)) {
+                    attackerUnitMagical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            } else {
+                receiverUnitMagical.CmdDealDamage(attackerMag, receiverMagicalRes);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitMagical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            }
+        }
         battleStatus = false;
     }
 
