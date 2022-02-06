@@ -55,6 +55,7 @@ public class GameManager : NetworkBehaviour {
         unitPathExists = false;       
         TMS = GetComponent<GenericTileMap>();
         currentTeamUI.SetText("Player " + (currentTeam + 1).ToString() + " Phase");
+        room = FindObjectOfType<NewNetworkManager>();
     }
 
     public void Update() {

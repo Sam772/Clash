@@ -37,6 +37,7 @@ public class PlayFabManager : MonoBehaviour {
 
     public void OnRegisterSuccess(RegisterPlayFabUserResult result) {
         messageText.text = "Registered and logged in!";
+        mainMenu.ReturnToMainScreenClicked();
     }
 
     public void LoginButton() {
