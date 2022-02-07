@@ -167,6 +167,24 @@ public class BattleManager : NetworkBehaviour {
                     return;
                 }
             }
+        } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // terrain receiver
+            var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
+            // terrain receiver defence
+            int receiverDef = receiverTerrainLog.defence;
+
+            // unit attacking terrain
+            receiverTerrainLog.CmdDealDamage(attackerStr, receiverDef);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainLog.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
         }
         battleStatus = false;
     }

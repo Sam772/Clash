@@ -20,6 +20,7 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private PhysicalUnit knightPrefab;
     [SerializeField] private PhysicalUnit archerPrefab;
     [SerializeField] private MagicalUnit arcanistPrefab;
+    [SerializeField] private LogTerrain logPrefab;
     [SerializeField] private GameData gameDataPrefab;
     #pragma warning restore 649
     public readonly List<NewNetworkRoomPlayer> RoomPlayers = new List<NewNetworkRoomPlayer>();
@@ -152,6 +153,8 @@ public class NewNetworkManager : NetworkManager {
                     NetworkServer.Spawn(captain.gameObject, conn);
                     captain.GetComponent<PhysicalUnit>().team = 1;
                 }
+                LogTerrain log = Instantiate(logPrefab, new Vector3(5, 0.75f, 5), Quaternion.identity);
+                NetworkServer.Spawn(log.gameObject, conn);
                 // Map Two
             } else if (gameScene == mapTwoScene) {
                 // If Host (Player One)

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 using TMPro;
+
 public abstract class GenericUnit : NetworkBehaviour {
     [SyncVar]
     public int team;
@@ -109,6 +110,7 @@ public abstract class GenericUnit : NetworkBehaviour {
     public void ChangeHealthBarColour(int i) {
         if (i == 0) { healthBar.color = Color.blue; }
         else if (i == 1) { healthBar.color = Color.red; }
+        else if (i == 2) { healthBar.color = Color.yellow; }
     }
 
     public void UnitDie() {

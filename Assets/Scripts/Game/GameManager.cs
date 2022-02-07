@@ -104,7 +104,8 @@ public class GameManager : NetworkBehaviour {
         GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
         foreach (GenericUnit unit in unitsList) {
             if (unit.GetComponent<GenericUnit>().team == 0) { unit.GetComponent<GenericUnit>().ChangeHealthBarColour(0);
-            } else if (unit.GetComponent<GenericUnit>().team == 1) { unit.GetComponent<GenericUnit>().ChangeHealthBarColour(1); }}
+            } else if (unit.GetComponent<GenericUnit>().team == 1) { unit.GetComponent<GenericUnit>().ChangeHealthBarColour(1); 
+            } else if (unit.GetComponent<GenericUnit>().team == 2) { unit.GetComponent<GenericUnit>().ChangeHealthBarColour(2);}}
     }
 
     public void OnPlayChange(int oldV, int newV) {

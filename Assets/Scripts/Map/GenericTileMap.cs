@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+
 public abstract class GenericTileMap : NetworkBehaviour {
     public BattleManager battleManager;
     public GameManager gameManager;
