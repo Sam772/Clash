@@ -135,6 +135,11 @@ public class NewNetworkManager : NetworkManager {
                     }
                     PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 1), Quaternion.identity); 
                     NetworkServer.Spawn(captain.gameObject, conn);
+                    int x3 = 1;
+                    for (int k = 0; k < 2; k++) {
+                        LogTerrain log = Instantiate(logPrefab, new Vector3(x3+=2, 0.75f, 5), Quaternion.identity);
+                        NetworkServer.Spawn(log.gameObject, conn);
+                    }
                     // If Client (Player Two)
                 } else if (i == 0) {
                     int x = 1;
@@ -153,8 +158,6 @@ public class NewNetworkManager : NetworkManager {
                     NetworkServer.Spawn(captain.gameObject, conn);
                     captain.GetComponent<PhysicalUnit>().team = 1;
                 }
-                LogTerrain log = Instantiate(logPrefab, new Vector3(5, 0.75f, 5), Quaternion.identity);
-                NetworkServer.Spawn(log.gameObject, conn);
                 // Map Two
             } else if (gameScene == mapTwoScene) {
                 // If Host (Player One)
