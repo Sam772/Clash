@@ -40,5 +40,9 @@ public class MagicalUnit : GenericUnit {
         UpdateHealthUI();
     }
 
-    // some kind of if check to see if it is of type magical unit
+    public override IEnumerator CombatEnd() {
+        combatQueue.Enqueue(1);
+        for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
+        combatQueue.Dequeue();
+    }
 }

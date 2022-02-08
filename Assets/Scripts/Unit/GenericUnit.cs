@@ -125,11 +125,7 @@ public abstract class GenericUnit : NetworkBehaviour {
         NetworkServer.Destroy(gameObject);
     } 
 
-    public IEnumerator CombatEnd() {
-        combatQueue.Enqueue(1);
-        for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
-        combatQueue.Dequeue();
-    }
+    public abstract IEnumerator CombatEnd();
 
     public IEnumerator UnitMoveSequence(GameObject objectToMove, Node endNode) {
         movementQueue.Enqueue(1);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileMapOne : GenericTileMap {
+    
     public override void GenerateMapInfo() {
         tiles = new int[mapSizeX, mapSizeY];
         for (int x = 0; x < mapSizeX; x++) {

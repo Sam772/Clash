@@ -45,6 +45,7 @@ public class GameManager : NetworkBehaviour {
     public Material UICursor;
     private int routeToX;
     private int routeToY;
+    
     public void Start() {
         currentTeam = 0;
         SetTeamHealthbarColour();
@@ -203,6 +204,7 @@ public class GameManager : NetworkBehaviour {
                 var highlightedUnit = hit.transform.parent.gameObject.GetComponent<GenericUnit>();
                 var highlightedPhysicalUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
                 var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
+                var highlightedLogTerrainText = unitBeingDisplayed.GetComponent<LogTerrain>();
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
 
                 if (highlightedPhysicalUnitText) {
@@ -215,6 +217,11 @@ public class GameManager : NetworkBehaviour {
                     UIMagic.SetText(highlightedMagicalUnitText.magic.ToString());
                     UIStrength.text = default;
                     strengthIcon.enabled = false;
+                } else if (highlightedLogTerrainText) {
+                    strengthIcon.enabled = true;
+                    UIStrength.SetText(0.ToString());
+                    UIMagic.text = default;
+                    magicIcon.enabled = false;
                 }
 
                 UIDefence.SetText(highlightedUnit.defence.ToString());
@@ -231,6 +238,7 @@ public class GameManager : NetworkBehaviour {
                     var highlightedUnitText = unitBeingDisplayed.GetComponent<GenericUnit>();
                     var highlightedPhysicalUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
                     var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
+                    var highlightedLogTerrainText = unitBeingDisplayed.GetComponent<LogTerrain>();
                     UICurrentHealth.SetText(highlightedUnitText.currentHealth.ToString());
 
                     if (highlightedPhysicalUnitText) {
@@ -243,6 +251,11 @@ public class GameManager : NetworkBehaviour {
                         UIMagic.SetText(highlightedMagicalUnitText.magic.ToString());
                         UIStrength.text = default;
                         strengthIcon.enabled = false;
+                    } else if (highlightedLogTerrainText) {
+                        strengthIcon.enabled = true;
+                        UIStrength.SetText(0.ToString());
+                        UIMagic.text = default;
+                        magicIcon.enabled = false;
                     }
 
                     UIDefence.SetText(highlightedUnitText.defence.ToString());

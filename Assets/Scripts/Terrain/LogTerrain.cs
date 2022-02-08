@@ -5,10 +5,7 @@ using Mirror;
 
 public class LogTerrain : GenericUnit {
     
-    // for this example we treat this terrain as a barrier
-    // public override IEnumerator TerrainDestroy() {
-    //     yield return new WaitForEndOfFrame();
-    // }
+    // for this example we treat this terrain as a barrier object
 
     [Command(requiresAuthority=false)]
     public override void CmdDealDamage(int battleStr, int battleDef) {
@@ -28,7 +25,6 @@ public class LogTerrain : GenericUnit {
 
     [ClientRpc]
     public override void RpcDealDamageClient(int battleStrClient, int battleDefClient) {
-        // uncomment this block
         if (!isServer) {
             int battleDamageClient = 0;
             if (battleStrClient - battleDefClient < 0) {
@@ -41,5 +37,11 @@ public class LogTerrain : GenericUnit {
         Debug.Log("damage dealt: " + battleStrClient);
         Debug.Log("hp of attacked unit: " + currentHealth);
         UpdateHealthUI();
+    }
+
+    public override IEnumerator CombatEnd() {
+        combatQueue.Enqueue(1);
+        for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
+        combatQueue.Dequeue();
     }
 }

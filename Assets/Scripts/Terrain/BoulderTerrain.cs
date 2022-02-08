@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PhysicalUnit : GenericUnit {
-    
-    [Header("Physical Stats")]
-    public int strength;
+public class BoulderTerrain : GenericUnit {
+
+    // for this example we treat this terrain as an object that can do damage
 
     [Command(requiresAuthority=false)]
     public override void CmdDealDamage(int battleStr, int battleDef) {
@@ -44,5 +43,7 @@ public class PhysicalUnit : GenericUnit {
         combatQueue.Enqueue(1);
         for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
         combatQueue.Dequeue();
+        // here we will do something that does damage back when the object is destroyed
+        // if unitontile currenthealth -= 1?
     }
 }

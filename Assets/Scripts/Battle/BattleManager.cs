@@ -1,12 +1,15 @@
 using System.Collections;
 using UnityEngine;
 using Mirror;
+
 public class BattleManager : NetworkBehaviour {
     public GameManager gameManager;
     private bool battleStatus;
+    
     public void Battle(GameObject attacker, GameObject receiver) {
         battleStatus = true;
         
+        // UNIT BATTLING UNIT
         if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
             // physical initiator
             var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
@@ -167,6 +170,7 @@ public class BattleManager : NetworkBehaviour {
                     return;
                 }
             }
+            // UNIT BATTLING TERRAIN
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
             // physical initiator
             var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
@@ -177,8 +181,26 @@ public class BattleManager : NetworkBehaviour {
             // terrain receiver defence
             int receiverDef = receiverTerrainLog.defence;
 
-            // unit attacking terrain
+            // physical unit attacking log terrain
             receiverTerrainLog.CmdDealDamage(attackerStr, receiverDef);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainLog.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<LogTerrain>()) {
+            // magical initiator
+            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+            // magical initiator magic
+            int attackerMag = attackerUnitMagical.magic;
+            // terrain receiver
+            var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
+            // terrain receiver defence
+            int receiverRes = receiverTerrainLog.resistance;
+
+            // magical unit attacking log terrain
+            receiverTerrainLog.CmdDealDamage(attackerMag, receiverRes);
             if (CheckIfDead(receiver)) {
                 receiverTerrainLog.UnitDie();
                 battleStatus = false;
