@@ -5,9 +5,8 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class ChatBehaviour : NetworkBehaviour {
+public class ChatManager : NetworkBehaviour {
     
-    [SyncVar]
     public string DisplayName;
     [SerializeField] private GameObject chatUI = null;
     [SerializeField] private TMP_Text chatText = null;
