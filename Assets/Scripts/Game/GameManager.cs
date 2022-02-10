@@ -205,6 +205,7 @@ public class GameManager : NetworkBehaviour {
                 var highlightedPhysicalUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
                 var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
                 var highlightedLogTerrainText = unitBeingDisplayed.GetComponent<LogTerrain>();
+                var highlightedBoulderTerrainText = unitBeingDisplayed.GetComponent<BoulderTerrain>();
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
 
                 if (highlightedPhysicalUnitText) {
@@ -218,6 +219,11 @@ public class GameManager : NetworkBehaviour {
                     UIStrength.text = default;
                     strengthIcon.enabled = false;
                 } else if (highlightedLogTerrainText) {
+                    strengthIcon.enabled = true;
+                    UIStrength.SetText(0.ToString());
+                    UIMagic.text = default;
+                    magicIcon.enabled = false;
+                } else if (highlightedBoulderTerrainText) {
                     strengthIcon.enabled = true;
                     UIStrength.SetText(0.ToString());
                     UIMagic.text = default;
@@ -239,6 +245,7 @@ public class GameManager : NetworkBehaviour {
                     var highlightedPhysicalUnitText = unitBeingDisplayed.GetComponent<PhysicalUnit>();
                     var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
                     var highlightedLogTerrainText = unitBeingDisplayed.GetComponent<LogTerrain>();
+                    var highlightedBoulderTerrainText = unitBeingDisplayed.GetComponent<BoulderTerrain>();
                     UICurrentHealth.SetText(highlightedUnitText.currentHealth.ToString());
 
                     if (highlightedPhysicalUnitText) {
@@ -252,6 +259,11 @@ public class GameManager : NetworkBehaviour {
                         UIStrength.text = default;
                         strengthIcon.enabled = false;
                     } else if (highlightedLogTerrainText) {
+                        strengthIcon.enabled = true;
+                        UIStrength.SetText(0.ToString());
+                        UIMagic.text = default;
+                        magicIcon.enabled = false;
+                    } else if (highlightedBoulderTerrainText) {
                         strengthIcon.enabled = true;
                         UIStrength.SetText(0.ToString());
                         UIMagic.text = default;

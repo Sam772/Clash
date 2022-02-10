@@ -176,9 +176,9 @@ public class BattleManager : NetworkBehaviour {
             var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
             // physical initiator strength
             int attackerStr = attackerUnitPhysical.strength;
-            // terrain receiver
+            // log terrain receiver
             var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
-            // terrain receiver defence
+            // log terrain receiver defence
             int receiverDef = receiverTerrainLog.defence;
 
             // physical unit attacking log terrain
@@ -194,15 +194,51 @@ public class BattleManager : NetworkBehaviour {
             var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
             // magical initiator magic
             int attackerMag = attackerUnitMagical.magic;
-            // terrain receiver
+            // log terrain receiver
             var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
-            // terrain receiver defence
+            // log terrain receiver resistance
             int receiverRes = receiverTerrainLog.resistance;
 
             // magical unit attacking log terrain
             receiverTerrainLog.CmdDealDamage(attackerMag, receiverRes);
             if (CheckIfDead(receiver)) {
                 receiverTerrainLog.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<BoulderTerrain>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // boulder terrain receiver
+            var receiverTerrainBoulder = receiver.GetComponent<BoulderTerrain>();
+            // boulder terrain receiver defence
+            int receiverDef = receiverTerrainBoulder.defence;
+
+            // physical unit attacking boulder terrain
+            receiverTerrainBoulder.CmdDealDamage(attackerStr, receiverDef);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainBoulder.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<BoulderTerrain>()) {
+            // magical initiator
+            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+            // magical initiator magic
+            int attackerMag = attackerUnitMagical.magic;
+            // boulder terrain receiver
+            var receiverTerrainBoulder = receiver.GetComponent<BoulderTerrain>();
+            // boulder terrain receiver resistance
+            int receiverRes = receiverTerrainBoulder.resistance;
+
+            // magical unit attacking boulder terrain
+            receiverTerrainBoulder.CmdDealDamage(attackerMag, receiverRes);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainBoulder.UnitDie();
                 battleStatus = false;
                 gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;

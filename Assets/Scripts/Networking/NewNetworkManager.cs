@@ -21,6 +21,7 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private PhysicalUnit archerPrefab;
     [SerializeField] private MagicalUnit arcanistPrefab;
     [SerializeField] private LogTerrain logPrefab;
+    [SerializeField] private BoulderTerrain boulderPrefab;
     [SerializeField] private GameData gameDataPrefab;
     #pragma warning restore 649
     public readonly List<NewNetworkRoomPlayer> RoomPlayers = new List<NewNetworkRoomPlayer>();
@@ -125,36 +126,36 @@ public class NewNetworkManager : NetworkManager {
                 if (i == 1) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
+                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                     }
                     int x2 = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 0), Quaternion.identity);
+                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.88f, 0), Quaternion.identity);
                         NetworkServer.Spawn(archer.gameObject, conn);
                     }
-                    PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 1), Quaternion.identity); 
+                    PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(4, 0.88f, 1), Quaternion.identity); 
                     NetworkServer.Spawn(captain.gameObject, conn);
                     int x3 = 1;
                     for (int k = 0; k < 2; k++) {
-                        LogTerrain log = Instantiate(logPrefab, new Vector3(x3+=2, 0.75f, 5), Quaternion.identity);
+                        LogTerrain log = Instantiate(logPrefab, new Vector3(x3+=2, 0.88f, 5), Quaternion.identity);
                         NetworkServer.Spawn(log.gameObject, conn);
                     }
                     // If Client (Player Two)
                 } else if (i == 0) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
+                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 8), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                         knight.GetComponent<PhysicalUnit>().team = 1;
                     }
                     int x2 = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.75f, 9), Quaternion.identity);
+                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x2+=2, 0.88f, 9), Quaternion.identity);
                         NetworkServer.Spawn(archer.gameObject, conn);
                         archer.GetComponent<PhysicalUnit>().team = 1;
                     }
-                    PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(4, 0.75f, 8), Quaternion.identity); 
+                    PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(4, 0.88f, 8), Quaternion.identity); 
                     NetworkServer.Spawn(captain.gameObject, conn);
                     captain.GetComponent<PhysicalUnit>().team = 1;
                 }
@@ -164,20 +165,22 @@ public class NewNetworkManager : NetworkManager {
                 if (i == 1) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
+                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.75f, 5), Quaternion.identity);
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.88f, 5), Quaternion.identity);
                     NetworkServer.Spawn(arcanist.gameObject, conn);
+                    BoulderTerrain boulder = Instantiate(boulderPrefab, new Vector3(10, 0.85f, 10), Quaternion.identity);
+                    NetworkServer.Spawn(boulder.gameObject, conn);
                     // If Client (Player Two)
                 } else if (i == 0) {
                    int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
+                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 8), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                         knight.GetComponent<PhysicalUnit>().team = 1;
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.75f, 7), Quaternion.identity);
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.88f, 7), Quaternion.identity);
                     NetworkServer.Spawn(arcanist.gameObject, conn);
                     arcanist.GetComponent<MagicalUnit>().team = 1;
                 }
@@ -187,14 +190,14 @@ public class NewNetworkManager : NetworkManager {
                 if (i == 1) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
+                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
                         NetworkServer.Spawn(captain.gameObject, conn);
                     }
                     // If Client (Player Two)
                 } else if (i == 0) {
                    int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
+                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.88f, 8), Quaternion.identity);
                         NetworkServer.Spawn(captain.gameObject, conn);
                         captain.GetComponent<PhysicalUnit>().team = 1;
                     } 
@@ -205,14 +208,14 @@ public class NewNetworkManager : NetworkManager {
                 if (i == 1) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x+=2, 0.75f, 1), Quaternion.identity);
+                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
                         NetworkServer.Spawn(archer.gameObject, conn);
                     }
                     // If Client (Player Two)
                 } else if (i == 0) {
                    int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x+=2, 0.75f, 8), Quaternion.identity);
+                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x+=2, 0.88f, 8), Quaternion.identity);
                         NetworkServer.Spawn(archer.gameObject, conn);
                         archer.GetComponent<PhysicalUnit>().team = 1;
                     } 
