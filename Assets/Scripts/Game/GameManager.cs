@@ -206,6 +206,7 @@ public class GameManager : NetworkBehaviour {
                 var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
                 var highlightedLogTerrainText = unitBeingDisplayed.GetComponent<LogTerrain>();
                 var highlightedBoulderTerrainText = unitBeingDisplayed.GetComponent<BoulderTerrain>();
+                var highlightedHealingPotTerrainText = unitBeingDisplayed.GetComponent<HealingPotTerrain>();
                 UICurrentHealth.SetText(highlightedUnit.currentHealth.ToString());
 
                 if (highlightedPhysicalUnitText) {
@@ -228,6 +229,11 @@ public class GameManager : NetworkBehaviour {
                     UIStrength.SetText(0.ToString());
                     UIMagic.text = default;
                     magicIcon.enabled = false;
+                } else if (highlightedHealingPotTerrainText) {
+                    strengthIcon.enabled = true;
+                    UIStrength.SetText(0.ToString());
+                    UIMagic.text = default;
+                    magicIcon.enabled = false;   
                 }
 
                 UIDefence.SetText(highlightedUnit.defence.ToString());
@@ -246,6 +252,7 @@ public class GameManager : NetworkBehaviour {
                     var highlightedMagicalUnitText = unitBeingDisplayed.GetComponent<MagicalUnit>();
                     var highlightedLogTerrainText = unitBeingDisplayed.GetComponent<LogTerrain>();
                     var highlightedBoulderTerrainText = unitBeingDisplayed.GetComponent<BoulderTerrain>();
+                    var highlightedHealingPotTerrainText = unitBeingDisplayed.GetComponent<HealingPotTerrain>();
                     UICurrentHealth.SetText(highlightedUnitText.currentHealth.ToString());
 
                     if (highlightedPhysicalUnitText) {
@@ -268,6 +275,11 @@ public class GameManager : NetworkBehaviour {
                         UIStrength.SetText(0.ToString());
                         UIMagic.text = default;
                         magicIcon.enabled = false;
+                    } else if (highlightedHealingPotTerrainText) {
+                        strengthIcon.enabled = true;
+                        UIStrength.SetText(0.ToString());
+                        UIMagic.text = default;
+                        magicIcon.enabled = false;   
                     }
 
                     UIDefence.SetText(highlightedUnitText.defence.ToString());

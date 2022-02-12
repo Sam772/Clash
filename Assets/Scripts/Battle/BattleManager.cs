@@ -253,6 +253,65 @@ public class BattleManager : NetworkBehaviour {
                 gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
+        } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<HealingPotTerrain>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // healing pot terrain receiver
+            var receiverTerrainHealingPot = receiver.GetComponent<HealingPotTerrain>();
+            // healing pot terrain receiver defence
+            int receiverDef = receiverTerrainHealingPot.defence;
+
+            // physical unit attacking healing pot terrain
+            receiverTerrainHealingPot.CmdDealDamage(attackerStr, receiverDef);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainHealingPot.UnitDie();
+                battleStatus = false;
+
+                // when the healing pot is destroyed heal the attacker unit by 2
+                attackerUnitPhysical.currentHealth += 2;
+
+                // make sure the health isn't increased beyond the max health
+                if (attackerUnitPhysical.currentHealth >= attackerUnitPhysical.maxHealth) {
+                    attackerUnitPhysical.currentHealth = attackerUnitPhysical.maxHealth;
+                }
+
+                // update the health
+                attackerUnitPhysical.CmdUpdateHealthUI();
+
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<HealingPotTerrain>()) {
+            // magical initiator
+            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+            // magical initiator magic
+            int attackerMag = attackerUnitMagical.magic;
+            // healing pot terrain receiver
+            var receiverTerrainHealingPot = receiver.GetComponent<HealingPotTerrain>();
+            // healing pot terrain receiver resistance
+            int receiverRes = receiverTerrainHealingPot.resistance;
+
+            // magical unit attacking healing pot terrain
+            receiverTerrainHealingPot.CmdDealDamage(attackerMag, receiverRes);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainHealingPot.UnitDie();
+                battleStatus = false;
+
+                // when the healing pot is destroyed heal the attacker unit by 2
+                attackerUnitMagical.currentHealth += 2;
+
+                // make sure the health isn't increased beyond the max health
+                if (attackerUnitMagical.currentHealth >= attackerUnitMagical.maxHealth) {
+                    attackerUnitMagical.currentHealth = attackerUnitMagical.maxHealth;
+                }
+                // update the health
+                attackerUnitMagical.CmdUpdateHealthUI();
+
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
         }
         battleStatus = false;
     }

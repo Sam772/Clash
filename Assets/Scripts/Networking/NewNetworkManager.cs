@@ -200,7 +200,7 @@ public class NewNetworkManager : NetworkManager {
                 } else if (i == 0) {
                    int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.88f, 8), Quaternion.identity);
+                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.88f, 3), Quaternion.identity);
                         NetworkServer.Spawn(captain.gameObject, conn);
                         captain.GetComponent<PhysicalUnit>().team = 1;
                     } 

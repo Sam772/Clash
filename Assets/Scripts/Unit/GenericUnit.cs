@@ -98,6 +98,16 @@ public abstract class GenericUnit : NetworkBehaviour {
         hitPointsText.SetText(currentHealth.ToString());
     }
 
+    [Command(requiresAuthority=false)]
+    public void CmdUpdateHealthUI() {
+        RpcUpdateHealthUI();
+    }
+
+    [ClientRpc]
+    public void RpcUpdateHealthUI() {
+        UpdateHealthUI();
+    }
+
     public abstract void CmdDealDamage(int damageStat, int defendingStat);
 
     public abstract void RpcDealDamageClient(int damageStat, int defendingStat);

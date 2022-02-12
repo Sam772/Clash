@@ -36,7 +36,7 @@ public class LogTerrain : GenericUnit {
         }
         Debug.Log("damage dealt: " + battleStrClient);
         Debug.Log("hp of attacked unit: " + currentHealth);
-        UpdateHealthUI();
+        CmdUpdateHealthUI();
     }
 
     public override IEnumerator CombatEnd() {
