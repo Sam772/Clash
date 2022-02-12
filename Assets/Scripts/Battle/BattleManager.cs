@@ -5,7 +5,7 @@ using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager gameManager;
     private bool battleStatus;
-    
+    public GenericUnit unit;
     public void Battle(GameObject attacker, GameObject receiver) {
         battleStatus = true;
         
@@ -222,6 +222,16 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverTerrainBoulder.UnitDie();
                 battleStatus = false;
+
+                // first we check which side of the boulder it was destroyed from
+                Debug.Log("Boulder was destroyed from tile [" + attackerUnitPhysical.x + ", " + attackerUnitPhysical.y + "]");
+
+                // if there is a unit present on the opposite side of the boulder subtract hp from that unit
+                if (unit.x + unit.y == (attackerUnitPhysical.x) + (attackerUnitPhysical.y + 2)) {
+                    unit.currentHealth -= 2;
+                    // gamemanager.unitbeingdisplayed
+                }
+
                 gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
