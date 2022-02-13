@@ -2280,6 +2280,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   gameManager: {fileID: 853895477}
+  unit: {fileID: 0}
 --- !u!114 &853895479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2306,6 +2307,16 @@ MonoBehaviour:
     tileVisualPrefab: {fileID: 1472663024810030725, guid: 9d1c90ae75911544db6ed1dec12fff99, type: 3}
     unitOnTile: {fileID: 0}
     movementCost: 3
+    isWalkable: 1
+  - name: TileStone
+    tileVisualPrefab: {fileID: 726742590330451660, guid: 597a0f26a917e4e4092bb9ca12bc8758, type: 3}
+    unitOnTile: {fileID: 0}
+    movementCost: 0
+    isWalkable: 0
+  - name: TileStoneFloor
+    tileVisualPrefab: {fileID: 164571440532469085, guid: e0ce047a5ff489b42bdd58f1fa0c50ee, type: 3}
+    unitOnTile: {fileID: 0}
+    movementCost: 1
     isWalkable: 1
   mapUI: {fileID: 3026057191975821090, guid: 41666af9af755b940a08bbf676955815, type: 3}
   mapCursorUI: {fileID: 2809973883653077971, guid: 817e2138e088b2446ac4fe4a4b84be15, type: 3}
@@ -3359,7 +3370,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -155, y: -150}
-  m_SizeDelta: {x: 170, y: 50}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437558337
 MonoBehaviour:
