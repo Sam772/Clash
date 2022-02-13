@@ -27,14 +27,14 @@ public class TileMapFour : GenericTileMap {
         tiles[16, 4] = 2;
         tiles[16, 5] = 2;
         tiles[16, 6] = 2;
-        tiles[16, 7] = 2;
+        //tiles[16, 7] = 2;
         tiles[16, 8] = 2;
         tiles[16, 9] = 2;
         tiles[16, 10] = 2;
         tiles[8, 4] = 2;
         tiles[8, 5] = 2;
         tiles[8, 6] = 2;
-        tiles[8, 7] = 2;
+        //tiles[8, 7] = 2;
         tiles[8, 8] = 2;
         tiles[8, 9] = 2;
         tiles[8, 10] = 2;

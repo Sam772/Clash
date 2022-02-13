@@ -5087,6 +5087,7 @@ MonoBehaviour:
   - {fileID: 3872203790994972536, guid: da26691d95b9a624783c48eaad836635, type: 3}
   - {fileID: 790138037627364615, guid: 8615a93715fca9047b4c3809528486b9, type: 3}
   - {fileID: 2156770737297976718, guid: 659db8515b3f3c94f9fbea54fa641f32, type: 3}
+  - {fileID: 2895218306362176512, guid: 2dde2a93f33c4b44ab3bd5d3e3db2a59, type: 3}
   minPlayers: 2
   menuScene: Assets/Scenes/MenuScreen.unity
   gameScene: Assets/Scenes/MapOne.unity
@@ -5103,6 +5104,7 @@ MonoBehaviour:
   logPrefab: {fileID: 572169347912996421, guid: da26691d95b9a624783c48eaad836635, type: 3}
   boulderPrefab: {fileID: -4330825413108903860, guid: 8615a93715fca9047b4c3809528486b9, type: 3}
   healingPotPrefab: {fileID: 5531750966742943621, guid: 659db8515b3f3c94f9fbea54fa641f32, type: 3}
+  stoneCrackedPrefab: {fileID: 4921981580877601832, guid: 2dde2a93f33c4b44ab3bd5d3e3db2a59, type: 3}
   gameDataPrefab: {fileID: 8563972802724201946, guid: ff87f00f3a4239c48b653a59efc2d347, type: 3}
 --- !u!4 &1097246246
 Transform:
@@ -8033,7 +8035,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v0.4.3
+  m_text: v0.4.4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}

@@ -23,6 +23,7 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private LogTerrain logPrefab;
     [SerializeField] private BoulderTerrain boulderPrefab;
     [SerializeField] private HealingPotTerrain healingPotPrefab;
+    [SerializeField] private StoneCrackedTerrain stoneCrackedPrefab;
     [SerializeField] private GameData gameDataPrefab;
     #pragma warning restore 649
     public readonly List<NewNetworkRoomPlayer> RoomPlayers = new List<NewNetworkRoomPlayer>();
@@ -213,6 +214,11 @@ public class NewNetworkManager : NetworkManager {
                     for (int j = 0; j < 2; j++) {
                         PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
                         NetworkServer.Spawn(archer.gameObject, conn);
+                    }
+                    int x3 = 0;
+                    for (int k = 0; k < 2; k++) {
+                        StoneCrackedTerrain stoneCracked = Instantiate(stoneCrackedPrefab, new Vector3(x3+=8, 1f, 7), Quaternion.identity);
+                        NetworkServer.Spawn(stoneCracked.gameObject);
                     }
                     // If Client (Player Two)
                 } else if (i == 0) {
