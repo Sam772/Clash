@@ -807,7 +807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapInfoToShow: The sandlands
+  mapInfoToShow: The sandlands is a treacherous location with harsh conditions which
+    make traversal a challenge.
 --- !u!1 &142047664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,7 +3617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapInfoToShow: The highlands map consists of ground and mountain tiles
+  mapInfoToShow: The highlands is a unique location for battle as its landscapes
+    are not well known.
 --- !u!1 &627290121
 GameObject:
   m_ObjectHideFlags: 0
@@ -5702,7 +5704,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapInfoToShow: The grasslands map consists of grass and forest tiles
+  mapInfoToShow: The grasslands is a common location for armies to test their mettle
+    against each other.
 --- !u!1 &1164402001
 GameObject:
   m_ObjectHideFlags: 0
@@ -6603,7 +6606,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14bad36d61c8794eac025a8a901df46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapInfoToShow: The frostlands
+  mapInfoToShow: The frostlands are a main location for battle as it holds a sturdy
+    fortress as an advantage point.
 --- !u!1 &1232905172
 GameObject:
   m_ObjectHideFlags: 0
@@ -8035,7 +8039,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v0.4.4
+  m_text: v0.4.5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
