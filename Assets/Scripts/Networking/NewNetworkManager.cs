@@ -210,21 +210,21 @@ public class NewNetworkManager : NetworkManager {
             } else if (gameScene == mapFourScene) {
                 // If Host (Player One)
                 if (i == 1) {
-                    int x = 1;
+                    int z = 2;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
+                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(4, 0.88f, z+=3), Quaternion.identity);
                         NetworkServer.Spawn(archer.gameObject, conn);
                     }
-                    int x3 = 0;
+                    float x3 = 0f;
                     for (int k = 0; k < 2; k++) {
-                        StoneCrackedTerrain stoneCracked = Instantiate(stoneCrackedPrefab, new Vector3(x3+=8, 1f, 7), Quaternion.identity);
+                        StoneCrackedTerrain stoneCracked = Instantiate(stoneCrackedPrefab, new Vector3(x3+=8f, 1f, 7), Quaternion.identity);
                         NetworkServer.Spawn(stoneCracked.gameObject);
                     }
                     // If Client (Player Two)
                 } else if (i == 0) {
-                   int x = 1;
+                   int z2 = 2;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(x+=2, 0.88f, 8), Quaternion.identity);
+                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(20, 0.88f, z2+=3), Quaternion.identity);
                         NetworkServer.Spawn(archer.gameObject, conn);
                         archer.GetComponent<PhysicalUnit>().team = 1;
                     } 

@@ -312,6 +312,42 @@ public class BattleManager : NetworkBehaviour {
                 gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
+        } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<StoneCrackedTerrain>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // stone cracked terrain receiver
+            var receiverTerrainStoneCracked = receiver.GetComponent<StoneCrackedTerrain>();
+            // stone cracked terrain receiver defence
+            int receiverDef = receiverTerrainStoneCracked.defence;
+
+            // physical unit attacking stone cracked terrain
+            receiverTerrainStoneCracked.CmdDealDamage(attackerStr, receiverDef);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainStoneCracked.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<StoneCrackedTerrain>()) {
+            // magical initiator
+            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+            // magical initiator magic
+            int attackerMag = attackerUnitMagical.magic;
+            // stone cracked terrain receiver
+            var receiverTerrainStoneCracked = receiver.GetComponent<StoneCrackedTerrain>();
+            // stone cracked terrain receiver resistance
+            int receiverRes = receiverTerrainStoneCracked.resistance;
+
+            // magical unit attacking log terrain
+            receiverTerrainStoneCracked.CmdDealDamage(attackerMag, receiverRes);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainStoneCracked.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
         }
         battleStatus = false;
     }
