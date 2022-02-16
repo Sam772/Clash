@@ -167,22 +167,22 @@ public class NewNetworkManager : NetworkManager {
                 if (i == 1) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
+                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 3), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.88f, 5), Quaternion.identity);
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.88f, 4), Quaternion.identity);
                     NetworkServer.Spawn(arcanist.gameObject, conn);
-                    BoulderTerrain boulder = Instantiate(boulderPrefab, new Vector3(10, 0.85f, 10), Quaternion.identity);
+                    BoulderTerrain boulder = Instantiate(boulderPrefab, new Vector3(12, 0.85f, 5), Quaternion.identity);
                     NetworkServer.Spawn(boulder.gameObject, conn);
                     // If Client (Player Two)
                 } else if (i == 0) {
-                   int x = 1;
+                   int x = 7;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 8), Quaternion.identity);
+                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 6), Quaternion.identity);
                         NetworkServer.Spawn(knight.gameObject, conn);
                         knight.GetComponent<PhysicalUnit>().team = 1;
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.88f, 7), Quaternion.identity);
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(8, 0.88f, 3), Quaternion.identity);
                     NetworkServer.Spawn(arcanist.gameObject, conn);
                     arcanist.GetComponent<MagicalUnit>().team = 1;
                 }
