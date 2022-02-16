@@ -20,6 +20,8 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private PhysicalUnit knightPrefab;
     [SerializeField] private PhysicalUnit archerPrefab;
     [SerializeField] private MagicalUnit arcanistPrefab;
+    [SerializeField] private PhysicalUnit rangerPrefab;
+    [SerializeField] private PhysicalUnit warriorPrefab;
     [SerializeField] private LogTerrain logPrefab;
     [SerializeField] private BoulderTerrain boulderPrefab;
     [SerializeField] private HealingPotTerrain healingPotPrefab;
@@ -165,26 +167,31 @@ public class NewNetworkManager : NetworkManager {
             } else if (gameScene == mapTwoScene) {
                 // If Host (Player One)
                 if (i == 1) {
-                    int x = 1;
+                    int x = 5;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 3), Quaternion.identity);
-                        NetworkServer.Spawn(knight.gameObject, conn);
+                        PhysicalUnit ranger = Instantiate(rangerPrefab, new Vector3(x+=2, 0.88f, 9), Quaternion.identity);
+                        NetworkServer.Spawn(ranger.gameObject, conn);
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(5, 0.88f, 4), Quaternion.identity);
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(8, 0.88f, 8), Quaternion.identity);
                     NetworkServer.Spawn(arcanist.gameObject, conn);
-                    BoulderTerrain boulder = Instantiate(boulderPrefab, new Vector3(12, 0.85f, 5), Quaternion.identity);
+                    PhysicalUnit warrior = Instantiate(warriorPrefab, new Vector3(8, 0.88f, 10), Quaternion.identity);
+                    NetworkServer.Spawn(warrior.gameObject, conn);
+                    BoulderTerrain boulder = Instantiate(boulderPrefab, new Vector3(9, 0.85f, 17), Quaternion.identity);
                     NetworkServer.Spawn(boulder.gameObject, conn);
                     // If Client (Player Two)
                 } else if (i == 0) {
-                   int x = 7;
+                   int x = 8;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit knight = Instantiate(knightPrefab, new Vector3(x+=2, 0.88f, 6), Quaternion.identity);
-                        NetworkServer.Spawn(knight.gameObject, conn);
-                        knight.GetComponent<PhysicalUnit>().team = 1;
+                        PhysicalUnit ranger = Instantiate(rangerPrefab, new Vector3(x+=2, 0.88f, 24), Quaternion.identity);
+                        NetworkServer.Spawn(ranger.gameObject, conn);
+                        ranger.GetComponent<PhysicalUnit>().team = 1;
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(8, 0.88f, 3), Quaternion.identity);
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(11, 0.88f, 25), Quaternion.identity);
                     NetworkServer.Spawn(arcanist.gameObject, conn);
                     arcanist.GetComponent<MagicalUnit>().team = 1;
+                    PhysicalUnit warrior = Instantiate(warriorPrefab, new Vector3(11, 0.88f, 23), Quaternion.identity);
+                    NetworkServer.Spawn(warrior.gameObject, conn);
+                    warrior.GetComponent<PhysicalUnit>().team = 1;
                 }
                 // Map Three
             } else if (gameScene == mapThreeScene) {
