@@ -22,6 +22,9 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private MagicalUnit arcanistPrefab;
     [SerializeField] private PhysicalUnit rangerPrefab;
     [SerializeField] private PhysicalUnit warriorPrefab;
+    [SerializeField] private PhysicalUnit paladinPrefab;
+    [SerializeField] private PhysicalUnit dragoonPrefab;
+    [SerializeField] private MagicalUnit sorcererPrefab;
     [SerializeField] private LogTerrain logPrefab;
     [SerializeField] private BoulderTerrain boulderPrefab;
     [SerializeField] private HealingPotTerrain healingPotPrefab;
@@ -172,7 +175,7 @@ public class NewNetworkManager : NetworkManager {
                         PhysicalUnit ranger = Instantiate(rangerPrefab, new Vector3(x+=2, 0.88f, 9), Quaternion.identity);
                         NetworkServer.Spawn(ranger.gameObject, conn);
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(8, 0.88f, 8), Quaternion.identity);
+                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(8, 0.90f, 8), Quaternion.identity);
                     NetworkServer.Spawn(arcanist.gameObject, conn);
                     PhysicalUnit warrior = Instantiate(warriorPrefab, new Vector3(8, 0.88f, 10), Quaternion.identity);
                     NetworkServer.Spawn(warrior.gameObject, conn);

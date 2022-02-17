@@ -5107,6 +5107,9 @@ MonoBehaviour:
   arcanistPrefab: {fileID: 6594804470946319849, guid: 9cc3869694fe5374c8a93f8cfcd9dba8, type: 3}
   rangerPrefab: {fileID: 2170743579021205675, guid: 58fe2f45d23c9ab47ba66b36ea52ba75, type: 3}
   warriorPrefab: {fileID: 7595201632799541756, guid: 224bfc14c82b8d64d8b822b27f8c0db5, type: 3}
+  paladinPrefab: {fileID: 3642962518258318835, guid: 120d91d7bb4a5a94f9887a4a41837d71, type: 3}
+  dragoonPrefab: {fileID: 1882756203482467921, guid: 001654aa6b7e4524faa5bea8095422d4, type: 3}
+  sorcererPrefab: {fileID: 6404135493002433075, guid: 259f95253d8a653439dccf6729301ef0, type: 3}
   logPrefab: {fileID: 572169347912996421, guid: da26691d95b9a624783c48eaad836635, type: 3}
   boulderPrefab: {fileID: -4330825413108903860, guid: 8615a93715fca9047b4c3809528486b9, type: 3}
   healingPotPrefab: {fileID: 5531750966742943621, guid: 659db8515b3f3c94f9fbea54fa641f32, type: 3}
