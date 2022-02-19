@@ -231,13 +231,13 @@ MonoBehaviour:
   y: 0
   visualMovementSpeed: 0.15
   tileBeingOccupied: {fileID: 0}
-  unitName: Captain
-  maxHealth: 10
+  unitName: Dragoon
+  maxHealth: 6
   defence: 3
   resistance: 0
-  move: 2
-  range: 1
-  currentHealth: 10
+  move: 4
+  range: 3
+  currentHealth: 6
   unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
   healthBarCanvas: {fileID: 1882756202727998509}
   hitPointsText: {fileID: 1882756203733380180}
@@ -245,7 +245,7 @@ MonoBehaviour:
   map: {fileID: 0}
   holder2D: {fileID: 2445172656599893364}
   unitMoveState: 0
-  strength: 7
+  strength: 4
 --- !u!114 &8509558761680353438
 MonoBehaviour:
   m_ObjectHideFlags: 0

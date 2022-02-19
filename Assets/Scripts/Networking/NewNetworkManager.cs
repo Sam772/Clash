@@ -25,6 +25,9 @@ public class NewNetworkManager : NetworkManager {
     [SerializeField] private PhysicalUnit paladinPrefab;
     [SerializeField] private PhysicalUnit dragoonPrefab;
     [SerializeField] private MagicalUnit sorcererPrefab;
+    [SerializeField] private PhysicalUnit championPrefab;
+    [SerializeField] private MagicalUnit elderPrefab;
+    [SerializeField] private PhysicalUnit clasherPrefab;
     [SerializeField] private LogTerrain logPrefab;
     [SerializeField] private BoulderTerrain boulderPrefab;
     [SerializeField] private HealingPotTerrain healingPotPrefab;
@@ -202,8 +205,8 @@ public class NewNetworkManager : NetworkManager {
                 if (i == 1) {
                     int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
-                        NetworkServer.Spawn(captain.gameObject, conn);
+                        PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
+                        NetworkServer.Spawn(paladin.gameObject, conn);
                     }
                     HealingPotTerrain healingPot = Instantiate(healingPotPrefab, new Vector3(4, 0.88f, 2), Quaternion.identity);
                     NetworkServer.Spawn(healingPot.gameObject, conn);
@@ -211,9 +214,9 @@ public class NewNetworkManager : NetworkManager {
                 } else if (i == 0) {
                    int x = 1;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit captain = Instantiate(captainPrefab, new Vector3(x+=2, 0.88f, 3), Quaternion.identity);
-                        NetworkServer.Spawn(captain.gameObject, conn);
-                        captain.GetComponent<PhysicalUnit>().team = 1;
+                        PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=2, 0.88f, 3), Quaternion.identity);
+                        NetworkServer.Spawn(paladin.gameObject, conn);
+                        paladin.GetComponent<PhysicalUnit>().team = 1;
                     } 
                 }
                 // Map Four
