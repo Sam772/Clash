@@ -49,7 +49,7 @@ public class GameManager : NetworkBehaviour {
     public Material UICursor;
     private int routeToX;
     private int routeToY;
-    
+    public LeaderboardManager leaderboard;
     public void Start() {
         currentTeam = 0;
         SetTeamHealthbarColour();
@@ -485,17 +485,37 @@ public class GameManager : NetworkBehaviour {
             else if (units.GetComponent<GenericUnit>().team == 1) { team2++; }}
         if (team1 == 1) {
             displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player1.playerName.text + " has won!");}
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player1.playerName.text + " has won!");
+            player1.isWinner = true;
+
+            // need check for which player is which
+            if (player1.isWinner == true && player1) {
+                Debug.Log("Youre a winner");
+            } else {
+                Debug.Log("Youre a loser");
+            }
+            leaderboard.SendLeaderboard(1);
+        }
         if (team2 == 1) {
             displayWinnerUI.enabled = true;
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player2.playerName.text + " has won!");
+
+            player2.isWinner = true;
+
+            if (player2.isWinner == true && player2) {
+                Debug.Log("Youre a winner");
+            } else {
+                Debug.Log("Youre a loser");
+            }
+
+            leaderboard.SendLeaderboard(1);
             // issue: need to stop server when game has ended
             //room.RemoveGamePlayer(gamePlayer);
             //NetworkServer.Destroy(gamePlayer.gameObject);
             //room.StopServer();
             //room.StopHost();
             //room.StopClient();
-            }
+        }
     }
 
     public struct Dependencies {
