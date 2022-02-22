@@ -39,5 +39,6 @@ public class NewNetworkGamePlayer : NetworkBehaviour {
 
     private void HandleDisplayNameChanged(string oldName, string newName) {
         if (game == null) return;
+            game.UpdatePlayerInfo(room.GamePlayers);
     }
 }

@@ -570,7 +570,7 @@ MonoBehaviour:
   map: {fileID: 0}
   holder2D: {fileID: 666669368411141846}
   unitMoveState: 0
-  strength: 3
+  strength: 5
 --- !u!114 &6824788842170551100
 MonoBehaviour:
   m_ObjectHideFlags: 0

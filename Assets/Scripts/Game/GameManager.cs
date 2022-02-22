@@ -5,6 +5,10 @@ using TMPro;
 using Mirror;
 
 public class GameManager : NetworkBehaviour {
+
+    [Header("Player")]
+    [SerializeField] private PlayerInfo player1;
+    [SerializeField] private PlayerInfo player2;
     public GameData Data {get; private set;}
     private NewNetworkManager room;
     private NewNetworkGamePlayer gamePlayer;
@@ -55,8 +59,10 @@ public class GameManager : NetworkBehaviour {
         unitPathToCursor = new List<Node>();
         unitPathExists = false;       
         TMS = GetComponent<GenericTileMap>();
-        currentTeamUI.SetText("Player " + (currentTeam + 1).ToString() + " Phase");
         room = FindObjectOfType<NewNetworkManager>();
+        UpdatePlayerInfo(room.GamePlayers);
+        currentTeamUI.SetText(player2.playerName.text + "'s Phase");
+        playerPhaseText.SetText(player2.playerName.text + "'s Phase");
     }
 
     public void Update() {
@@ -94,6 +100,20 @@ public class GameManager : NetworkBehaviour {
                         unitPathExists = false;}}}}
     }
 
+    public void UpdatePlayerInfo(List<NewNetworkGamePlayer> players) {
+        for (var i = 0; i < players.Count; i++) {
+            SetPlayerInfo(players[i], i);
+        }   
+    }
+
+    private void SetPlayerInfo(NewNetworkGamePlayer player, int playerNumber) {
+        if (playerNumber == 0) {
+            player1.SetupPlayerInfo(player);
+        } else {
+            player2.SetupPlayerInfo(player);
+        }
+    }
+
     [ClientRpc]
     public void RpcResetUnitsActions(int teamToReset) {
         GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
@@ -114,12 +134,12 @@ public class GameManager : NetworkBehaviour {
         if (TMS.selectedUnit == null)
             if (oldV == 0) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
-                playerPhaseText.SetText("Player 2 Phase");
-                currentTeamUI.SetText("Player " + (2).ToString() + " Phase");
+                playerPhaseText.SetText(player1.playerName.text + "'s Phase");
+                currentTeamUI.SetText(player1.playerName.text + "'s Phase");
             } else {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
-                playerPhaseText.SetText("Player 1 Phase");
-                currentTeamUI.SetText("Player " + (1).ToString() + " Phase");}
+                playerPhaseText.SetText(player2.playerName.text + "'s Phase");
+                currentTeamUI.SetText(player2.playerName.text + "'s Phase");}
     }
 
     [Command(requiresAuthority = false)]
@@ -128,10 +148,10 @@ public class GameManager : NetworkBehaviour {
             CmdSwitchCurrentPlayer();
             if (currentTeam == 1) {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
-                playerPhaseText.SetText("Player 2 Phase");
+                playerPhaseText.SetText(player1.playerName.text + "'s Phase");
             } else if (currentTeam == 0) {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
-                playerPhaseText.SetText("Player 1 Phase");}
+                playerPhaseText.SetText(player2.playerName.text + "'s Phase");}
             SetTeamHealthbarColour();
         }
     }
@@ -465,10 +485,10 @@ public class GameManager : NetworkBehaviour {
             else if (units.GetComponent<GenericUnit>().team == 1) { team2++; }}
         if (team1 == 1) {
             displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 2 has won!");}
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player1.playerName.text + " has won!");}
         if (team2 == 1) {
             displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText("Player 1 has won!");
+            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player2.playerName.text + " has won!");
             // issue: need to stop server when game has ended
             //room.RemoveGamePlayer(gamePlayer);
             //NetworkServer.Destroy(gamePlayer.gameObject);

@@ -442,7 +442,7 @@ MonoBehaviour:
   tileBeingOccupied: {fileID: 0}
   unitName: Healing Pot
   maxHealth: 5
-  defence: 2
+  defence: 0
   resistance: 2
   move: 0
   range: 0
