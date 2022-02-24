@@ -4,7 +4,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 
 ![clash-main-menu](/Assets/Textures/MapPreview/MainMenuPreview.png)
 
-## Changelog v0.1.0 - v0.5.3
+## Changelog v0.1.0 - v0.6.0
 
 ### User Interface
 - Added a main menu
@@ -29,7 +29,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 ### Other
 - Added a login system with login / register functionality
 - Added password reset functionality
-- Added foundation for leaderboard
+- Added leaderboard functionality which displays rank and wins
 
 ### <a href="https://clash-game.wixsite.com/changelog">View the full changelog here</a>
 
