@@ -178,23 +178,29 @@ public class NewNetworkManager : NetworkManager {
                         PhysicalUnit ranger = Instantiate(rangerPrefab, new Vector3(x+=2, 0.88f, 9), Quaternion.identity);
                         NetworkServer.Spawn(ranger.gameObject, conn);
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(8, 0.90f, 8), Quaternion.identity);
-                    NetworkServer.Spawn(arcanist.gameObject, conn);
+                    int x2 = 4;
+                    for (int k = 0; k < 3; k++) {
+                        MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(x2+=2, 0.90f, 8), Quaternion.identity);
+                        NetworkServer.Spawn(arcanist.gameObject, conn);
+                    }
                     PhysicalUnit warrior = Instantiate(warriorPrefab, new Vector3(8, 0.88f, 10), Quaternion.identity);
                     NetworkServer.Spawn(warrior.gameObject, conn);
                     BoulderTerrain boulder = Instantiate(boulderPrefab, new Vector3(9, 0.85f, 17), Quaternion.identity);
                     NetworkServer.Spawn(boulder.gameObject, conn);
                     // If Client (Player Two)
                 } else if (i == 0) {
-                   int x = 8;
+                    int x = 8;
                     for (int j = 0; j < 2; j++) {
                         PhysicalUnit ranger = Instantiate(rangerPrefab, new Vector3(x+=2, 0.88f, 24), Quaternion.identity);
                         NetworkServer.Spawn(ranger.gameObject, conn);
                         ranger.GetComponent<PhysicalUnit>().team = 1;
                     }
-                    MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(11, 0.88f, 25), Quaternion.identity);
-                    NetworkServer.Spawn(arcanist.gameObject, conn);
-                    arcanist.GetComponent<MagicalUnit>().team = 1;
+                    int x2 = 9;
+                    for (int k = 0; k < 3; k++) {
+                        MagicalUnit arcanist = Instantiate(arcanistPrefab, new Vector3(x2+=1, 0.88f, 25), Quaternion.identity);
+                        NetworkServer.Spawn(arcanist.gameObject, conn);
+                        arcanist.GetComponent<MagicalUnit>().team = 1;
+                    }
                     PhysicalUnit warrior = Instantiate(warriorPrefab, new Vector3(11, 0.88f, 23), Quaternion.identity);
                     NetworkServer.Spawn(warrior.gameObject, conn);
                     warrior.GetComponent<PhysicalUnit>().team = 1;
