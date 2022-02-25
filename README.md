@@ -30,6 +30,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 - Added a login system with login / register functionality
 - Added password reset functionality
 - Added leaderboard functionality which displays rank and wins
+- Added settings functionality
 
 ### <a href="https://clash-game.wixsite.com/changelog">View the full changelog here</a>
 
@@ -40,6 +41,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
     <td align="center"><a href="https://github.com/m-shah02"><img src="https://avatars.githubusercontent.com/u/54008874?v=4" width="100px;" alt=""/><br /><sub><b>Mansoor</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/QaysShah"><img src="https://avatars.githubusercontent.com/u/98493986?v=4" width="100px;" alt=""/><br /><sub><b>Qays</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/Theroombapie"><img src="https://avatars.githubusercontent.com/u/71985337?v=4" width="100px;" alt=""/><br /><sub><b>Luke</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Pavandeep7"><img src="https://avatars.githubusercontent.com/u/98479338?v=4" width="100px;" alt=""/><br /><sub><b>Pavandeep</b></sub></a><br /></td>
   </tr>
 </table>
 
