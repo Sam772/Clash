@@ -4,17 +4,16 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 
 ![clash-main-menu](/Assets/Textures/MapPreview/MainMenuPreview.png)
 
-## Changelog v0.1.0 - v0.7.1
+## Changelog v0.1.0 - v0.7.2
 
 ### User Interface
 - Added a main menu
 - Added a map selection screen
-- Added a profile screen
-- Added a settings screen
+- Added a profile screen with player wins
+- Added a settings screen and settings functionality
 - Added an extras screen
 - Added a tactician tips screen
 - Updated unit user interface
-- Added settings user interface and functionality
 
 ### Gameplay
 - Added three more playable maps

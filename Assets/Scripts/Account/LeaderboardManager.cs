@@ -11,7 +11,9 @@ public class LeaderboardManager : MonoBehaviour {
     [Header("Leaderboard Interface")]
     [SerializeField] private TMP_Text messageText;
     public GameObject rowPrefab;
+    public GameObject winsEntry;
     public Transform rowsParent;
+    public Transform winsParent;
 
     void Start() {
         HideErrorMessage();
@@ -50,6 +52,23 @@ public class LeaderboardManager : MonoBehaviour {
             MaxResultsCount = 10
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderBoardGet, OnError);
+    }
+
+    public void GetWins() {
+        PlayFabClientAPI.GetPlayerStatistics(new GetPlayerStatisticsRequest(), OnGetWins, error => Debug.LogError(error.GenerateErrorReport()));
+    }
+
+    void OnGetWins(GetPlayerStatisticsResult result) {
+
+        foreach (Transform item in winsParent) {
+            Destroy(item.gameObject);
+        }
+
+        foreach (var stat in result.Statistics) {
+            GameObject wins = Instantiate(winsEntry, winsParent);
+            TMP_Text winText = wins.GetComponentInChildren<TMP_Text>();
+            winText.text = stat.Value.ToString();
+        }
     }
 
     void OnLeaderBoardGet(GetLeaderboardResult result) {
