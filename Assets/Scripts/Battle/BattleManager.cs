@@ -362,14 +362,12 @@ public class BattleManager : NetworkBehaviour {
         return false;
     }
 
-    // dealing 4x the amount of damage for some reason + dealing damage back after checking if dead
-    // comment these methods
     // [Command(requiresAuthority=false)]
     // public void CmdBattle(GameObject attacker, GameObject receiver) {
     //     RpcBattle(attacker, receiver);
     // }
 
-    // [ClientRpc]
+    // [Client]
     // public void RpcBattle(GameObject attacker, GameObject receiver) {
     //     Battle(attacker, receiver);
     // }

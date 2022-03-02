@@ -494,7 +494,8 @@ public class GameManager : NetworkBehaviour {
             } else {
                 Debug.Log("Youre a loser");
             }
-            leaderboard.SendLeaderboard(1);
+            //leaderboard.SendLeaderboard(1);
+            leaderboard.SendLossesLeaderboard(1);
         }
         if (team2 == 1) {
             displayWinnerUI.enabled = true;
@@ -507,8 +508,8 @@ public class GameManager : NetworkBehaviour {
             } else {
                 Debug.Log("Youre a loser");
             }
-
-            leaderboard.SendLeaderboard(1);
+            leaderboard.SendLossesLeaderboard(1);
+            //leaderboard.SendLeaderboard(1);
             // issue: need to stop server when game has ended
             //room.RemoveGamePlayer(gamePlayer);
             //NetworkServer.Destroy(gamePlayer.gameObject);

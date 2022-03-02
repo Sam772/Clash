@@ -7,13 +7,19 @@ using PlayFab.ClientModels;
 using TMPro;
 
 public class LeaderboardManager : MonoBehaviour {
+
     
     [Header("Leaderboard Interface")]
     [SerializeField] private TMP_Text messageText;
     public GameObject rowPrefab;
-    public GameObject winsEntry;
     public Transform rowsParent;
+
+
+    [Header("Player Stats")]
+    public GameObject winsEntry;
+    public GameObject lossesEntry;
     public Transform winsParent;
+    public Transform lossesParent;
 
     void Start() {
         HideErrorMessage();
@@ -54,23 +60,6 @@ public class LeaderboardManager : MonoBehaviour {
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderBoardGet, OnError);
     }
 
-    public void GetWins() {
-        PlayFabClientAPI.GetPlayerStatistics(new GetPlayerStatisticsRequest(), OnGetWins, error => Debug.LogError(error.GenerateErrorReport()));
-    }
-
-    void OnGetWins(GetPlayerStatisticsResult result) {
-
-        foreach (Transform item in winsParent) {
-            Destroy(item.gameObject);
-        }
-
-        foreach (var stat in result.Statistics) {
-            GameObject wins = Instantiate(winsEntry, winsParent);
-            TMP_Text winText = wins.GetComponentInChildren<TMP_Text>();
-            winText.text = stat.Value.ToString();
-        }
-    }
-
     void OnLeaderBoardGet(GetLeaderboardResult result) {
 
         foreach (Transform item in rowsParent) {
@@ -85,6 +74,34 @@ public class LeaderboardManager : MonoBehaviour {
             texts[1].text = item.StatValue.ToString();
 
             Debug.Log("Leaderboard Position: " + item.Position + " ID: " + item.PlayFabId + " Score: " + item.StatValue);
+        }
+    }
+
+    public void SendLossesLeaderboard(int loseScore) {
+        var request = new UpdatePlayerStatisticsRequest {
+            Statistics = new List<StatisticUpdate> {
+                new StatisticUpdate {
+                    StatisticName = "LoseScore",
+                    Value = loseScore
+                }
+            }
+        };
+        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderBoardUpdate, OnError);
+    }
+
+    public void GetStats() {
+        PlayFabClientAPI.GetPlayerStatistics(new GetPlayerStatisticsRequest(), OnGetStats, error => Debug.LogError(error.GenerateErrorReport()));
+    }
+
+    void OnGetStats(GetPlayerStatisticsResult result) {
+        foreach (Transform item in winsParent) {
+            Destroy(item.gameObject);
+        }
+
+        foreach (var stat in result.Statistics) {
+            GameObject wins = Instantiate(winsEntry, winsParent);
+            TMP_Text winText = wins.GetComponentInChildren<TMP_Text>();
+            winText.text = stat.Value.ToString();
         }
     }
 }
