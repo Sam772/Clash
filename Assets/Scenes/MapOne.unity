@@ -2309,7 +2309,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: GameCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2617,8 +2617,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ec0ec8c89a9bc4fa6122f95dc8b51e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messageText: {fileID: 0}
   rowPrefab: {fileID: 0}
   rowsParent: {fileID: 0}
+  winsEntry: {fileID: 0}
+  lossesEntry: {fileID: 0}
+  winsParent: {fileID: 0}
+  lossesParent: {fileID: 0}
 --- !u!1 &1068612066
 GameObject:
   m_ObjectHideFlags: 0
@@ -5134,6 +5139,7 @@ MonoBehaviour:
   movementSpeed: 5
   scrollSpeed: 3
   scrollMultiplier: 0.1
+  gameCamera: {fileID: 963194227}
 --- !u!4 &1982857145
 Transform:
   m_ObjectHideFlags: 0

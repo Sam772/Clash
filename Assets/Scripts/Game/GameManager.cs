@@ -61,6 +61,7 @@ public class GameManager : NetworkBehaviour {
         TMS = GetComponent<GenericTileMap>();
         room = FindObjectOfType<NewNetworkManager>();
         UpdatePlayerInfo(room.GamePlayers);
+        // start position for players
         currentTeamUI.SetText(player2.playerName.text + "'s Phase");
         playerPhaseText.SetText(player2.playerName.text + "'s Phase");
     }

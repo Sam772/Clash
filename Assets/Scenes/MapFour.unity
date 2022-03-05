@@ -3483,6 +3483,7 @@ MonoBehaviour:
   movementSpeed: 7
   scrollSpeed: 3
   scrollMultiplier: 0.1
+  gameCamera: {fileID: 0}
 --- !u!4 &960331768
 Transform:
   m_ObjectHideFlags: 0
@@ -6521,7 +6522,7 @@ GameObject:
   - component: {fileID: 2075831292}
   - component: {fileID: 2075831291}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: GameCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

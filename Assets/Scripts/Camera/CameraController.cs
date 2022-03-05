@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float movementSpeed = 6f;
     [SerializeField] private float scrollSpeed = 3f;
     [SerializeField] private float scrollMultiplier = 0.1f;
+    [SerializeField] private Camera gameCamera;
     private Transform cameraTransform;
     private float zoomAmount;
     private float startYPosition;
@@ -21,7 +22,7 @@ public class CameraController : MonoBehaviour {
 
     private void Update() { 
         HandleMovementInput();
-        CameraZoomInput();
+        HandleZoomInput();
     }
 
     private void HandleMovementInput() {
@@ -40,10 +41,10 @@ public class CameraController : MonoBehaviour {
         zoomAmount = Mathf.Clamp01(zoomAmount - scrollDelta.y * scrollMultiplier);
     }
 
-    private void CameraZoomInput() {
+    private void HandleZoomInput() {
         
         const float minimumYPosition = 3f;
-        var maximumYPosition = startYPosition;
+        var maximumYPosition = startYPosition * 1.3f;
         var targetYPosition = Mathf.Lerp(minimumYPosition, maximumYPosition, zoomAmount);
             
         var cameraPosition = transform.position;

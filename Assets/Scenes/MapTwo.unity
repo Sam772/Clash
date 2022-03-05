@@ -1312,6 +1312,7 @@ MonoBehaviour:
   UIUnitRouteCurve: {fileID: 2100000, guid: 3518f2de476b72b4d854a3ae7f4f3358, type: 2}
   UIUnitRouteArrow: {fileID: 2100000, guid: 2d48d5549aa9aed45832d86bd2abec0d, type: 2}
   UICursor: {fileID: 2100000, guid: c542c757c06788944aee44904bc81716, type: 2}
+  leaderboard: {fileID: 0}
 --- !u!114 &393026324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2572,7 +2573,7 @@ GameObject:
   - component: {fileID: 952820437}
   - component: {fileID: 952820436}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: GameCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2975,6 +2976,7 @@ MonoBehaviour:
   movementSpeed: 8
   scrollSpeed: 3
   scrollMultiplier: 0.1
+  gameCamera: {fileID: 0}
 --- !u!4 &1147200440
 Transform:
   m_ObjectHideFlags: 0
