@@ -8,29 +8,29 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 
 ### User Interface
 - Added a main menu
-- Added button animation
 - Added a map selection screen
-- Added a profile screen with player wins
-- Added a settings screen and settings functionality
+- Added a profile screen
+- Added a settings screen
 - Added an extras screen
 - Added a tactician tips screen
-- Updated unit user interface
+- Updated game interface
 
 ### Gameplay
 - Added three more playable maps
 - Added new unit stats
 - Added new unit types
 - Added a terrain interaction feature
-- Added a chatbox with chat toggle and scrolling features
+- Added a chatbox
 - Added terrain backgrounds to each map
-- Bug fixes with gameplay
-- Updated the camera controller
-- Added a basic skeleton of the skills feature
+- Updated the camera
+- Currently adding skills feature
 
 ### Other
-- Added a login system with login / register functionality
+- Bug fixes with gameplay
+- Added a login system
 - Added password reset functionality
 - Added leaderboard functionality which displays rank and wins
+- Added main menu button animations and sound effects
 
 ### <a href="https://clash-game.wixsite.com/changelog">View the full changelog here</a>
 

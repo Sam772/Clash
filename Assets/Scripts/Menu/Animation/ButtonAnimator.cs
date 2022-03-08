@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Animations;
 
-public class ButtonAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler {
+public class ButtonAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     
     [SerializeField] private Animator animator;
+    private AudioSource audioSource;
+    private bool disable;
+
+    void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void OnPointerEnter(PointerEventData eventData) {
        animator.SetBool("selected", true);
@@ -13,10 +20,14 @@ public class ButtonAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerExit(PointerEventData pointerEventData) {
         animator.SetBool("selected", false);
-        //animator.SetBool("pressed", false);
     }
-    public void OnSelect(BaseEventData eventData) {
-        //animator.SetBool("pressed", true);
-    }
+
+	void PlaySound(AudioClip whichSound) {
+		if (!disable) {
+			audioSource.PlayOneShot(whichSound);
+		} else {
+			disable = false;
+		}
+	}
 }
 
