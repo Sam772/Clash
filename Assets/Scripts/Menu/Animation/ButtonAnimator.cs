@@ -22,9 +22,9 @@ public class ButtonAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         animator.SetBool("selected", false);
     }
 
-	void PlaySound(AudioClip whichSound) {
+	void PlaySound(AudioClip audio) {
 		if (!disable) {
-			audioSource.PlayOneShot(whichSound);
+			audioSource.PlayOneShot(audio);
 		} else {
 			disable = false;
 		}

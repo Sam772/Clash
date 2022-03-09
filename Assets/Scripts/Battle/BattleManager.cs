@@ -6,50 +6,14 @@ public class BattleManager : NetworkBehaviour {
     public GameManager gameManager;
     private bool battleStatus;
     public GenericUnit unit;
-    public void Battle(GameObject attacker, GameObject receiver) {
+
+    [Command(requiresAuthority=false)]
+    public void CmdBattle(GameObject attacker, GameObject receiver) {
         battleStatus = true;
         
         // UNIT BATTLING UNIT
         if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // physical initiator defence
-            int attackerPhysicalDef = attackerUnitPhysical.defence;
-            // physical receiver
-            var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
-            // physical receiver strength
-            int receiverStr = receiverUnitPhysical.strength;
-            // physical receiver defence
-            int receiverPhysicalDef = receiverUnitPhysical.defence;
-
-            // if the attacker and receiver are both physical units
-            if (attackerUnitPhysical.range == receiverUnitPhysical.range) {
-                receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-                // counter if survive
-                attackerUnitPhysical.CmdDealDamage(receiverStr, attackerPhysicalDef);
-                if (CheckIfDead(attacker)) {
-                    attackerUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            } else {
-            receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            }
+            RpcBattle(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
             // magical initiator
             var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
@@ -172,23 +136,8 @@ public class BattleManager : NetworkBehaviour {
             }
             // UNIT BATTLING TERRAIN
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // log terrain receiver
-            var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
-            // log terrain receiver defence
-            int receiverDef = receiverTerrainLog.defence;
-
-            // physical unit attacking log terrain
-            receiverTerrainLog.CmdDealDamage(attackerStr, receiverDef);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainLog.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            RpcBattle(attacker, receiver);
+            battleStatus = false;
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<LogTerrain>()) {
             // magical initiator
             var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
@@ -362,15 +311,69 @@ public class BattleManager : NetworkBehaviour {
         return false;
     }
 
-    // [Command(requiresAuthority=false)]
-    // public void CmdBattle(GameObject attacker, GameObject receiver) {
-    //     RpcBattle(attacker, receiver);
-    // }
+    [ClientRpc]
+    public void RpcBattle(GameObject attacker, GameObject receiver) {
+        if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // physical initiator defence
+            int attackerPhysicalDef = attackerUnitPhysical.defence;
+            // physical receiver
+            var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
+            // physical receiver strength
+            int receiverStr = receiverUnitPhysical.strength;
+            // physical receiver defence
+            int receiverPhysicalDef = receiverUnitPhysical.defence;
 
-    // [Client]
-    // public void RpcBattle(GameObject attacker, GameObject receiver) {
-    //     Battle(attacker, receiver);
-    // }
+            // if the attacker and receiver are both physical units
+            if (attackerUnitPhysical.range == receiverUnitPhysical.range) {
+                receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+                // counter if survive
+                attackerUnitPhysical.CmdDealDamage(receiverStr, attackerPhysicalDef);
+                if (CheckIfDead(attacker)) {
+                    attackerUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            } else {
+            receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
+                if (CheckIfDead(receiver)) {
+                    receiverUnitPhysical.UnitDie();
+                    battleStatus = false;
+                    gameManager.CmdUnitsRemainClient(attacker, receiver);
+                    return;
+                }
+            }
+        }
+        else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
+            // physical initiator
+            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+            // physical initiator strength
+            int attackerStr = attackerUnitPhysical.strength;
+            // log terrain receiver
+            var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
+            // log terrain receiver defence
+            int receiverDef = receiverTerrainLog.defence;
+
+            // physical unit attacking log terrain
+            receiverTerrainLog.CmdDealDamage(attackerStr, receiverDef);
+            if (CheckIfDead(receiver)) {
+                receiverTerrainLog.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        }
+    }
 
     public IEnumerator Attack(GameObject unit, GameObject enemy) {
         battleStatus = true;
@@ -382,9 +385,10 @@ public class BattleManager : NetworkBehaviour {
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();}
         while (battleStatus) {
-            //CmdBattle(unit, enemy);
-            Battle(unit, enemy);
-            yield return new WaitForEndOfFrame();}
+            CmdBattle(unit, enemy);
+            battleStatus = false;
+            //Battle(unit, enemy);
+            yield return new WaitForSeconds(0.05f);}
         if (unit != null) { StartCoroutine(ReturnAfterAttack(unit, startPos)); }
     }
 

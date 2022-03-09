@@ -5,8 +5,6 @@ using Mirror;
 
 public class StoneCrackedTerrain : GenericUnit {
 
-    // for this example we treat this terrain as a breakable wall
-
     [Command(requiresAuthority=false)]
     public override void CmdDealDamage(int battleStr, int battleDef) {
         int battleDamage = 0;

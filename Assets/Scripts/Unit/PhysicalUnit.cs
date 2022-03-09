@@ -8,7 +8,6 @@ public class PhysicalUnit : GenericUnit {
     [Header("Physical Stats")]
     public int strength;
 
-    [Command(requiresAuthority=false)]
     public override void CmdDealDamage(int battleStr, int battleDef) {
         int battleDamage = 0;
         if (battleStr - battleDef < 0) { 
@@ -17,14 +16,14 @@ public class PhysicalUnit : GenericUnit {
             battleDamage = battleStr - battleDef;
         }
         currentHealth = currentHealth - battleDamage;
-        RpcDealDamageClient(battleStr, battleDef);
-        if (currentHealth <= 0)
-        UnitDie();
-        // send into checkifdead loop
-        // check if units remain
+        UpdateHealthUI();
+        Debug.Log("Hi");
+        // RpcDealDamageClient(battleStr, battleDef);
+        // if (currentHealth <= 0)
+        // UnitDie();
     }
 
-    [ClientRpc]
+    
     public override void RpcDealDamageClient(int battleStrClient, int battleDefClient) {
         if (!isServer) {
             int battleDamageClient = 0;

@@ -5,8 +5,6 @@ using Mirror;
 
 public class BoulderTerrain : GenericUnit {
 
-    // for this example we treat this terrain as an object that can do damage
-
     [Command(requiresAuthority=false)]
     public override void CmdDealDamage(int battleStr, int battleDef) {
         int battleDamage = 0;
@@ -19,8 +17,6 @@ public class BoulderTerrain : GenericUnit {
         RpcDealDamageClient(battleStr, battleDef);
         if (currentHealth <= 0)
         UnitDie();
-        // send into checkifdead loop
-        // check if units remain
     }
 
     [ClientRpc]
@@ -43,7 +39,5 @@ public class BoulderTerrain : GenericUnit {
         combatQueue.Enqueue(1);
         for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
         combatQueue.Dequeue();
-        // here we will do something that does damage back when the object is destroyed
-        // if unitontile currenthealth -= 1?
     }
 }

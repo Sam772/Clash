@@ -240,7 +240,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
                         selectedUnit.GetComponent<GenericUnit>().Wait();
                         selectedUnit.GetComponent<GenericUnit>().SetMovementState(3);
                         DeselectUnit();
-                    } else if (unitOnTile.GetComponent<GenericUnit>().team != selectedUnit.GetComponent<GenericUnit>().team && attackableTiles.Contains(graph[unitX,unitY])) {
+                    } else if (unitOnTile.GetComponent<GenericUnit>().team != selectedUnit.GetComponent<GenericUnit>().team && attackableTiles.Contains(graph[unitX, unitY])) {
                         if (unitOnTile.GetComponent<GenericUnit>().currentHealth > 0) {
                             StartCoroutine(battleManager.Attack(selectedUnit, unitOnTile));
                             StartCoroutine(DeselectAfterMovements(selectedUnit, unitOnTile));}}}}
