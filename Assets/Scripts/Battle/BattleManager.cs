@@ -5,7 +5,6 @@ using Mirror;
 public class BattleManager : NetworkBehaviour {
     public GameManager gameManager;
     private bool battleStatus;
-    public GenericUnit unit;
 
     [Command(requiresAuthority=false)]
     public void CmdBattle(GameObject attacker, GameObject receiver) {
@@ -278,13 +277,35 @@ public class BattleManager : NetworkBehaviour {
             receiverTerrainBoulder.UnitDie();
             battleStatus = false;
 
-            // first we check which side of the boulder it was destroyed from
-            Debug.Log("Boulder was destroyed from tile [" + attackerUnitPhysical.x + ", " + attackerUnitPhysical.y + "]");
+            GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
 
-            // if there is a unit present on the opposite side of the boulder subtract hp from that unit
-            if (unit.x + unit.y == (attackerUnitPhysical.x) + (attackerUnitPhysical.y + 2)) {
-                unit.currentHealth -= 2;
-                // gamemanager.unitbeingdisplayed
+            foreach (GenericUnit unitPresent in unitsList) {
+                // if there is a unit present in a radius around the boulder deal damage to it as long as it is not the unit that destroyed the boulder
+                if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == receiverTerrainBoulder.y - 1) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && ( unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitPhysical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                }
             }
 
             gameManager.CmdUnitsRemainClient(attacker, receiver);
@@ -307,6 +328,38 @@ public class BattleManager : NetworkBehaviour {
         if (CheckIfDead(receiver)) {
             receiverTerrainBoulder.UnitDie();
             battleStatus = false;
+
+            GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
+
+            foreach (GenericUnit unitPresent in unitsList) {
+                // if there is a unit present in a radius around the boulder deal damage to it as long as it is not the unit that destroyed the boulder
+                if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == receiverTerrainBoulder.y - 1) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && ( unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitMagical) {
+                    unitPresent.currentHealth -= 2;
+                    unitPresent.UpdateHealthUI();
+                }
+            }
+
             gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
@@ -428,9 +481,8 @@ public class BattleManager : NetworkBehaviour {
         }
         while (battleStatus) {
             CmdBattle(unit, enemy);
+            yield return new WaitForSeconds(0.05f);
             battleStatus = false;
-            // gameobject being destroyed too early sometimes
-            // yield return new WaitForSeconds(0.05f);
         }
         if (unit != null) { 
             StartCoroutine(ReturnAfterAttack(unit, startPos)); 
