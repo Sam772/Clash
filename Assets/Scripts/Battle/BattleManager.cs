@@ -284,27 +284,51 @@ public class BattleManager : NetworkBehaviour {
                 if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == receiverTerrainBoulder.y - 1) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && ( unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitPhysical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 }
             }
 
@@ -336,27 +360,51 @@ public class BattleManager : NetworkBehaviour {
                 if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == receiverTerrainBoulder.x) && (unitPresent.y == receiverTerrainBoulder.y - 1) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == receiverTerrainBoulder.y) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x + 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && ( unitPresent.y == (receiverTerrainBoulder.y - 1)) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 } else if ((unitPresent.x == (receiverTerrainBoulder.x - 1)) && (unitPresent.y == (receiverTerrainBoulder.y + 1)) && unitPresent != attackerUnitMagical) {
                     unitPresent.currentHealth -= 2;
                     unitPresent.UpdateHealthUI();
+                    if (CheckIfDead(unitPresent.gameObject)) {
+                        unitPresent.UnitDie();
+                    }
                 }
             }
 

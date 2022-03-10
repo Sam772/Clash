@@ -23,5 +23,6 @@ public class MagicalUnit : GenericUnit {
         combatQueue.Enqueue(1);
         for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
         combatQueue.Dequeue();
+        for (float f = 1f; f >= .05; f -= 0.01f) { yield return new WaitForEndOfFrame(); }
     }
 }
