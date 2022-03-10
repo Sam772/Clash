@@ -17,26 +17,6 @@ public class PhysicalUnit : GenericUnit {
         }
         currentHealth = currentHealth - battleDamage;
         UpdateHealthUI();
-        Debug.Log("Hi");
-        // RpcDealDamageClient(battleStr, battleDef);
-        // if (currentHealth <= 0)
-        // UnitDie();
-    }
-
-    
-    public override void RpcDealDamageClient(int battleStrClient, int battleDefClient) {
-        if (!isServer) {
-            int battleDamageClient = 0;
-            if (battleStrClient - battleDefClient < 0) {
-                battleDamageClient = 0;
-            } else {
-                battleDamageClient = battleStrClient - battleDefClient;
-            }
-            currentHealth = currentHealth - battleDamageClient; 
-        }
-        Debug.Log("damage dealt: " + battleStrClient);
-        Debug.Log("hp of attacked unit: " + currentHealth);
-        CmdUpdateHealthUI();
     }
 
     public override IEnumerator CombatEnd() {

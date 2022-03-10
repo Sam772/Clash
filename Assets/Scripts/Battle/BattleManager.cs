@@ -13,365 +13,406 @@ public class BattleManager : NetworkBehaviour {
         
         // UNIT BATTLING UNIT
         if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
-            RpcBattle(attacker, receiver);
+            // Physical vs Physical
+            RpcBattlePhyVsPhy(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
-            // magical initiator
-            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
-            // magical initiator magic
-            int attackerMag = attackerUnitMagical.magic;
-            // magical initiator defence
-            int attackerMagicalDef = attackerUnitMagical.defence;
-            // physical receiver
-            var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
-            // physical receiver strength
-            int receiverStr = receiverUnitPhysical.strength;
-            // physical receiver resistance
-            int receiverPhysicalRes = receiverUnitPhysical.resistance;
-
-            // if the attacker is magical and the receiver is physical
-            if (attackerUnitMagical.range == receiverUnitPhysical.range) {
-                receiverUnitPhysical.CmdDealDamage(attackerMag, receiverPhysicalRes);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-                // counter if survive
-                attackerUnitMagical.CmdDealDamage(receiverStr, attackerMagicalDef);
-                if (CheckIfDead(attacker)) {
-                    attackerUnitMagical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            } else {
-                receiverUnitPhysical.CmdDealDamage(attackerMag, receiverPhysicalRes);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            }
+            // Magical vs Physical
+            RpcBattleMagVsPhy(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<MagicalUnit>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // physical initiator resistance
-            int attackerPhysicalRes = attackerUnitPhysical.resistance;
-            // magical receiver
-            var receiverUnitMagical = receiver.GetComponent<MagicalUnit>();
-            // magical receiver magic
-            int receiverMag = receiverUnitMagical.magic;
-            // magical receiver def
-            int receiverMagicalDef = receiverUnitMagical.defence;
-
-            // if the attacker is physical and the receiver is magical
-            if (attackerUnitPhysical.range == receiverUnitMagical.range) {
-                receiverUnitMagical.CmdDealDamage(attackerStr, receiverMagicalDef);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitMagical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-                // counter if survive
-                attackerUnitPhysical.CmdDealDamage(receiverMag, attackerPhysicalRes);
-                if (CheckIfDead(attacker)) {
-                    attackerUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            } else {
-                receiverUnitMagical.CmdDealDamage(attackerStr, receiverMagicalDef);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitMagical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            }
+            // Physical vs Magical
+            RpcBattlePhyVsMag(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<MagicalUnit>()) {
-            // magical initiator
-            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
-            // magical initiator magic
-            int attackerMag = attackerUnitMagical.magic;
-            // magical initiator resistance
-            int attackerMagicalRes = attackerUnitMagical.resistance;
-            // magical receiver
-            var receiverUnitMagical = receiver.GetComponent<MagicalUnit>();
-            // magical receiver magic
-            int receiverMag = receiverUnitMagical.magic;
-            // magical receiver resistance
-            int receiverMagicalRes = receiverUnitMagical.resistance;
+            // Magical vs Magical
+            RpcBattleMagVsMag(attacker, receiver);
+        }
 
-            // if the attacker and receiver are both physical units
-            if (attackerUnitMagical.range == receiverUnitMagical.range) {
-                receiverUnitMagical.CmdDealDamage(attackerMag, receiverMagicalRes);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitMagical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-                // counter if survive
-                attackerUnitMagical.CmdDealDamage(receiverMag, attackerMagicalRes);
-                if (CheckIfDead(attacker)) {
-                    attackerUnitMagical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            } else {
-                receiverUnitMagical.CmdDealDamage(attackerMag, receiverMagicalRes);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitMagical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            }
-            // UNIT BATTLING TERRAIN
-        } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
-            RpcBattle(attacker, receiver);
-            battleStatus = false;
+        // UNIT BATTLING TERRAIN
+        else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
+            // Physical vs Log
+            RpcBattlePhyVsLog(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<LogTerrain>()) {
-            // magical initiator
-            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
-            // magical initiator magic
-            int attackerMag = attackerUnitMagical.magic;
-            // log terrain receiver
-            var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
-            // log terrain receiver resistance
-            int receiverRes = receiverTerrainLog.resistance;
-
-            // magical unit attacking log terrain
-            receiverTerrainLog.CmdDealDamage(attackerMag, receiverRes);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainLog.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            // Magical vs Log
+            RpcBattleMagVsLog(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<BoulderTerrain>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // boulder terrain receiver
-            var receiverTerrainBoulder = receiver.GetComponent<BoulderTerrain>();
-            // boulder terrain receiver defence
-            int receiverDef = receiverTerrainBoulder.defence;
-
-            // physical unit attacking boulder terrain
-            receiverTerrainBoulder.CmdDealDamage(attackerStr, receiverDef);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainBoulder.UnitDie();
-                battleStatus = false;
-
-                // first we check which side of the boulder it was destroyed from
-                Debug.Log("Boulder was destroyed from tile [" + attackerUnitPhysical.x + ", " + attackerUnitPhysical.y + "]");
-
-                // if there is a unit present on the opposite side of the boulder subtract hp from that unit
-                if (unit.x + unit.y == (attackerUnitPhysical.x) + (attackerUnitPhysical.y + 2)) {
-                    unit.currentHealth -= 2;
-                    // gamemanager.unitbeingdisplayed
-                }
-
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            // Physical vs Boulder
+            RpcBattlePhyVsBoulder(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<BoulderTerrain>()) {
-            // magical initiator
-            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
-            // magical initiator magic
-            int attackerMag = attackerUnitMagical.magic;
-            // boulder terrain receiver
-            var receiverTerrainBoulder = receiver.GetComponent<BoulderTerrain>();
-            // boulder terrain receiver resistance
-            int receiverRes = receiverTerrainBoulder.resistance;
-
-            // magical unit attacking boulder terrain
-            receiverTerrainBoulder.CmdDealDamage(attackerMag, receiverRes);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainBoulder.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            // Magical vs Boulder
+            RpcBattleMagVsBoulder(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<HealingPotTerrain>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // healing pot terrain receiver
-            var receiverTerrainHealingPot = receiver.GetComponent<HealingPotTerrain>();
-            // healing pot terrain receiver defence
-            int receiverDef = receiverTerrainHealingPot.defence;
-
-            // physical unit attacking healing pot terrain
-            receiverTerrainHealingPot.CmdDealDamage(attackerStr, receiverDef);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainHealingPot.UnitDie();
-                battleStatus = false;
-
-                // when the healing pot is destroyed heal the attacker unit by 2
-                attackerUnitPhysical.currentHealth += 2;
-
-                // make sure the health isn't increased beyond the max health
-                if (attackerUnitPhysical.currentHealth >= attackerUnitPhysical.maxHealth) {
-                    attackerUnitPhysical.currentHealth = attackerUnitPhysical.maxHealth;
-                }
-
-                // update the health
-                attackerUnitPhysical.CmdUpdateHealthUI();
-
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            // Physical vs Healing Pot
+            RpcBattlePhyVsPot(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<HealingPotTerrain>()) {
-            // magical initiator
-            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
-            // magical initiator magic
-            int attackerMag = attackerUnitMagical.magic;
-            // healing pot terrain receiver
-            var receiverTerrainHealingPot = receiver.GetComponent<HealingPotTerrain>();
-            // healing pot terrain receiver resistance
-            int receiverRes = receiverTerrainHealingPot.resistance;
-
-            // magical unit attacking healing pot terrain
-            receiverTerrainHealingPot.CmdDealDamage(attackerMag, receiverRes);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainHealingPot.UnitDie();
-                battleStatus = false;
-
-                // when the healing pot is destroyed heal the attacker unit by 2
-                attackerUnitMagical.currentHealth += 2;
-
-                // make sure the health isn't increased beyond the max health
-                if (attackerUnitMagical.currentHealth >= attackerUnitMagical.maxHealth) {
-                    attackerUnitMagical.currentHealth = attackerUnitMagical.maxHealth;
-                }
-                // update the health
-                attackerUnitMagical.CmdUpdateHealthUI();
-
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            // Magical vs Healing Pot
+            RpcBattleMagVsPot(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<StoneCrackedTerrain>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // stone cracked terrain receiver
-            var receiverTerrainStoneCracked = receiver.GetComponent<StoneCrackedTerrain>();
-            // stone cracked terrain receiver defence
-            int receiverDef = receiverTerrainStoneCracked.defence;
-
-            // physical unit attacking stone cracked terrain
-            receiverTerrainStoneCracked.CmdDealDamage(attackerStr, receiverDef);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainStoneCracked.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            // Physical vs Stone Cracked Wall
+            RpcBattlePhyVsStone(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<StoneCrackedTerrain>()) {
-            // magical initiator
-            var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
-            // magical initiator magic
-            int attackerMag = attackerUnitMagical.magic;
-            // stone cracked terrain receiver
-            var receiverTerrainStoneCracked = receiver.GetComponent<StoneCrackedTerrain>();
-            // stone cracked terrain receiver resistance
-            int receiverRes = receiverTerrainStoneCracked.resistance;
-
-            // magical unit attacking log terrain
-            receiverTerrainStoneCracked.CmdDealDamage(attackerMag, receiverRes);
-            if (CheckIfDead(receiver)) {
-                receiverTerrainStoneCracked.UnitDie();
-                battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
-                return;
-            }
+            // Magical vs Stone Cracked Wall
+            RpcBattleMagVsStone(attacker, receiver);
         }
         battleStatus = false;
     }
 
     public bool CheckIfDead(GameObject unitToCheck) {
         if (unitToCheck.GetComponent<GenericUnit>().currentHealth <= 0) {
-            Debug.Log("enemy dead");
-            return true;}
-        // current health of enemy not being updated from client here
-        Debug.Log("current health of enemy: " + unitToCheck.GetComponent<GenericUnit>().currentHealth);
-        Debug.Log("enemy still alive");
+            return true;
+        }
         return false;
     }
 
     [ClientRpc]
-    public void RpcBattle(GameObject attacker, GameObject receiver) {
-        if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // physical initiator defence
-            int attackerPhysicalDef = attackerUnitPhysical.defence;
-            // physical receiver
-            var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
-            // physical receiver strength
-            int receiverStr = receiverUnitPhysical.strength;
-            // physical receiver defence
-            int receiverPhysicalDef = receiverUnitPhysical.defence;
+    public void RpcBattlePhyVsPhy(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+        int attackerStr = attackerUnitPhysical.strength;
+        int attackerPhysicalDef = attackerUnitPhysical.defence;
 
-            // if the attacker and receiver are both physical units
-            if (attackerUnitPhysical.range == receiverUnitPhysical.range) {
-                receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-                // counter if survive
-                attackerUnitPhysical.CmdDealDamage(receiverStr, attackerPhysicalDef);
-                if (CheckIfDead(attacker)) {
-                    attackerUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            } else {
+        // get relevant object and stats for receiver
+        var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
+        int receiverStr = receiverUnitPhysical.strength;
+        int receiverPhysicalDef = receiverUnitPhysical.defence;
+
+        // check range then calculate damage
+        if (attackerUnitPhysical.range == receiverUnitPhysical.range) {
             receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
-                if (CheckIfDead(receiver)) {
-                    receiverUnitPhysical.UnitDie();
-                    battleStatus = false;
-                    gameManager.CmdUnitsRemainClient(attacker, receiver);
-                    return;
-                }
-            }
-        }
-        else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
-            // physical initiator
-            var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
-            // physical initiator strength
-            int attackerStr = attackerUnitPhysical.strength;
-            // log terrain receiver
-            var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
-            // log terrain receiver defence
-            int receiverDef = receiverTerrainLog.defence;
-
-            // physical unit attacking log terrain
-            receiverTerrainLog.CmdDealDamage(attackerStr, receiverDef);
             if (CheckIfDead(receiver)) {
-                receiverTerrainLog.UnitDie();
+                receiverUnitPhysical.UnitDie();
                 battleStatus = false;
                 gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
+            // counter if receiver survived
+            attackerUnitPhysical.CmdDealDamage(receiverStr, attackerPhysicalDef);
+            if (CheckIfDead(attacker)) {
+                attackerUnitPhysical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else {
+            receiverUnitPhysical.CmdDealDamage(attackerStr, receiverPhysicalDef);
+            if (CheckIfDead(receiver)) {
+                receiverUnitPhysical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattleMagVsPhy(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+        int attackerMag = attackerUnitMagical.magic;
+        int attackerMagicalDef = attackerUnitMagical.defence;
+
+        // get relevant object and stats for receiver
+        var receiverUnitPhysical = receiver.GetComponent<PhysicalUnit>();
+        int receiverStr = receiverUnitPhysical.strength;
+        int receiverPhysicalRes = receiverUnitPhysical.resistance;
+
+        // check range then calculate damage
+        if (attackerUnitMagical.range == receiverUnitPhysical.range) {
+            receiverUnitPhysical.CmdDealDamage(attackerMag, receiverPhysicalRes);
+            if (CheckIfDead(receiver)) {
+                receiverUnitPhysical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+            // counter if survive
+            attackerUnitMagical.CmdDealDamage(receiverStr, attackerMagicalDef);
+            if (CheckIfDead(attacker)) {
+                attackerUnitMagical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else {
+            receiverUnitPhysical.CmdDealDamage(attackerMag, receiverPhysicalRes);
+            if (CheckIfDead(receiver)) {
+                receiverUnitPhysical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattlePhyVsMag(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+        int attackerStr = attackerUnitPhysical.strength;
+        int attackerPhysicalRes = attackerUnitPhysical.resistance;
+
+        // get relevant object and stats for receiver
+        var receiverUnitMagical = receiver.GetComponent<MagicalUnit>();
+        int receiverMag = receiverUnitMagical.magic;
+        int receiverMagicalDef = receiverUnitMagical.defence;
+
+        // check range then calculate damage
+        if (attackerUnitPhysical.range == receiverUnitMagical.range) {
+            receiverUnitMagical.CmdDealDamage(attackerStr, receiverMagicalDef);
+            if (CheckIfDead(receiver)) {
+                receiverUnitMagical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+            // counter if survive
+            attackerUnitPhysical.CmdDealDamage(receiverMag, attackerPhysicalRes);
+            if (CheckIfDead(attacker)) {
+                attackerUnitPhysical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else {
+            receiverUnitMagical.CmdDealDamage(attackerStr, receiverMagicalDef);
+            if (CheckIfDead(receiver)) {
+                receiverUnitMagical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattleMagVsMag(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+        int attackerMag = attackerUnitMagical.magic;
+        int attackerMagicalRes = attackerUnitMagical.resistance;
+
+        // get relevant object and stats for receiver
+        var receiverUnitMagical = receiver.GetComponent<MagicalUnit>();
+        int receiverMag = receiverUnitMagical.magic;
+        int receiverMagicalRes = receiverUnitMagical.resistance;
+
+        // check range then calculate damage
+        if (attackerUnitMagical.range == receiverUnitMagical.range) {
+            receiverUnitMagical.CmdDealDamage(attackerMag, receiverMagicalRes);
+            if (CheckIfDead(receiver)) {
+                receiverUnitMagical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+            // counter if survive
+            attackerUnitMagical.CmdDealDamage(receiverMag, attackerMagicalRes);
+            if (CheckIfDead(attacker)) {
+                attackerUnitMagical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        } else {
+            receiverUnitMagical.CmdDealDamage(attackerMag, receiverMagicalRes);
+            if (CheckIfDead(receiver)) {
+                receiverUnitMagical.UnitDie();
+                battleStatus = false;
+                gameManager.CmdUnitsRemainClient(attacker, receiver);
+                return;
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattlePhyVsLog(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+        int attackerStr = attackerUnitPhysical.strength;
+        
+        // get relevant object and stats for receiver
+        var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
+        int receiverDef = receiverTerrainLog.defence;
+
+        // calculate damage
+        receiverTerrainLog.CmdDealDamage(attackerStr, receiverDef);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainLog.UnitDie();
+            battleStatus = false;
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattleMagVsLog(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+        int attackerMag = attackerUnitMagical.magic;
+
+        // get relevant object and stats for receiver
+        var receiverTerrainLog = receiver.GetComponent<LogTerrain>();
+        int receiverRes = receiverTerrainLog.resistance;
+
+        // calculate damage
+        receiverTerrainLog.CmdDealDamage(attackerMag, receiverRes);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainLog.UnitDie();
+            battleStatus = false;
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattlePhyVsBoulder(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+        int attackerStr = attackerUnitPhysical.strength;
+
+        // get relevant object and stats for receiver
+        var receiverTerrainBoulder = receiver.GetComponent<BoulderTerrain>();
+        int receiverDef = receiverTerrainBoulder.defence;
+
+        // calculate damage
+        receiverTerrainBoulder.CmdDealDamage(attackerStr, receiverDef);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainBoulder.UnitDie();
+            battleStatus = false;
+
+            // first we check which side of the boulder it was destroyed from
+            Debug.Log("Boulder was destroyed from tile [" + attackerUnitPhysical.x + ", " + attackerUnitPhysical.y + "]");
+
+            // if there is a unit present on the opposite side of the boulder subtract hp from that unit
+            if (unit.x + unit.y == (attackerUnitPhysical.x) + (attackerUnitPhysical.y + 2)) {
+                unit.currentHealth -= 2;
+                // gamemanager.unitbeingdisplayed
+            }
+
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattleMagVsBoulder(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+        int attackerMag = attackerUnitMagical.magic;
+
+        // get relevant object and stats for receiver
+        var receiverTerrainBoulder = receiver.GetComponent<BoulderTerrain>();
+        int receiverRes = receiverTerrainBoulder.resistance;
+
+        // calculate damage
+        receiverTerrainBoulder.CmdDealDamage(attackerMag, receiverRes);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainBoulder.UnitDie();
+            battleStatus = false;
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattlePhyVsPot(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+        int attackerStr = attackerUnitPhysical.strength;
+
+        // get relevant object and stats for receiver
+        var receiverTerrainHealingPot = receiver.GetComponent<HealingPotTerrain>();
+        int receiverDef = receiverTerrainHealingPot.defence;
+
+        // calculate damage
+        receiverTerrainHealingPot.CmdDealDamage(attackerStr, receiverDef);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainHealingPot.UnitDie();
+            battleStatus = false;
+
+            // when the healing pot is destroyed heal the attacker unit by 2
+            attackerUnitPhysical.currentHealth += 2;
+
+            // make sure the health isn't increased beyond the max health of the attacker
+            if (attackerUnitPhysical.currentHealth >= attackerUnitPhysical.maxHealth) {
+                attackerUnitPhysical.currentHealth = attackerUnitPhysical.maxHealth;
+            }
+
+            // update the health
+            attackerUnitPhysical.UpdateHealthUI();
+
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattleMagVsPot(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+        int attackerMag = attackerUnitMagical.magic;
+
+        // get relevant object and stats for receiver
+        var receiverTerrainHealingPot = receiver.GetComponent<HealingPotTerrain>();
+        int receiverRes = receiverTerrainHealingPot.resistance;
+
+        // calculate damage
+        receiverTerrainHealingPot.CmdDealDamage(attackerMag, receiverRes);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainHealingPot.UnitDie();
+            battleStatus = false;
+
+            // when the healing pot is destroyed heal the attacker unit by 2
+            attackerUnitMagical.currentHealth += 2;
+
+            // make sure the health isn't increased beyond the max health of the attacker
+            if (attackerUnitMagical.currentHealth >= attackerUnitMagical.maxHealth) {
+                attackerUnitMagical.currentHealth = attackerUnitMagical.maxHealth;
+            }
+
+            // update the health
+            attackerUnitMagical.UpdateHealthUI();
+
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattlePhyVsStone(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitPhysical = attacker.GetComponent<PhysicalUnit>();
+        int attackerStr = attackerUnitPhysical.strength;
+
+        // get relevant object and stats for receiver
+        var receiverTerrainStoneCracked = receiver.GetComponent<StoneCrackedTerrain>();
+        int receiverDef = receiverTerrainStoneCracked.defence;
+
+        // calculate damage
+        receiverTerrainStoneCracked.CmdDealDamage(attackerStr, receiverDef);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainStoneCracked.UnitDie();
+            battleStatus = false;
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBattleMagVsStone(GameObject attacker, GameObject receiver) {
+        // get relevant object and stats for attacker
+        var attackerUnitMagical = attacker.GetComponent<MagicalUnit>();
+        int attackerMag = attackerUnitMagical.magic;
+
+        // get relevant object and stats for receiver
+        var receiverTerrainStoneCracked = receiver.GetComponent<StoneCrackedTerrain>();
+        int receiverRes = receiverTerrainStoneCracked.resistance;
+
+        // calculate damage
+        receiverTerrainStoneCracked.CmdDealDamage(attackerMag, receiverRes);
+        if (CheckIfDead(receiver)) {
+            receiverTerrainStoneCracked.UnitDie();
+            battleStatus = false;
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
+            return;
         }
     }
 
@@ -383,13 +424,17 @@ public class BattleManager : NetworkBehaviour {
         while (elapsedTime < .25f) {
             unit.transform.position = Vector3.Lerp(startPos, startPos + ((((finishPos - startPos) / (finishPos - startPos).magnitude)).normalized*.5f), (elapsedTime / .25f));
             elapsedTime += Time.deltaTime;
-            yield return new WaitForEndOfFrame();}
+            yield return new WaitForEndOfFrame();
+        }
         while (battleStatus) {
             CmdBattle(unit, enemy);
             battleStatus = false;
-            //Battle(unit, enemy);
-            yield return new WaitForSeconds(0.05f);}
-        if (unit != null) { StartCoroutine(ReturnAfterAttack(unit, startPos)); }
+            // gameobject being destroyed too early sometimes
+            // yield return new WaitForSeconds(0.05f);
+        }
+        if (unit != null) { 
+            StartCoroutine(ReturnAfterAttack(unit, startPos)); 
+        }
     }
 
     public IEnumerator ReturnAfterAttack(GameObject unit, Vector3 endPoint) {
@@ -397,7 +442,8 @@ public class BattleManager : NetworkBehaviour {
         while (elapsedTime < .30f) {
             unit.transform.position = Vector3.Lerp(unit.transform.position, endPoint, (elapsedTime / .25f));
             elapsedTime += Time.deltaTime;
-            yield return new WaitForEndOfFrame();}
+            yield return new WaitForEndOfFrame();
+        }
         unit.GetComponent<GenericUnit>().Wait();
     }
 }

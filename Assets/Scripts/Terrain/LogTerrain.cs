@@ -5,7 +5,6 @@ using Mirror;
 
 public class LogTerrain : GenericUnit {
 
-
     public override void CmdDealDamage(int battleStr, int battleDef) {
         int battleDamage = 0;
         if (battleStr - battleDef < 0) { 
@@ -15,26 +14,6 @@ public class LogTerrain : GenericUnit {
         }
         currentHealth = currentHealth - battleDamage;
         UpdateHealthUI();
-        Debug.Log("Hi");
-        // RpcDealDamageClient(battleStr, battleDef);
-        // if (currentHealth <= 0)
-        // UnitDie();
-    }
-
-    
-    public override void RpcDealDamageClient(int battleStrClient, int battleDefClient) {
-        if (!isServer) {
-            int battleDamageClient = 0;
-            if (battleStrClient - battleDefClient < 0) {
-                battleDamageClient = 0;
-            } else {
-                battleDamageClient = battleStrClient - battleDefClient;
-            }
-            currentHealth = currentHealth - battleDamageClient; 
-        }
-        Debug.Log("damage dealt: " + battleStrClient);
-        Debug.Log("hp of attacked unit: " + currentHealth);
-        CmdUpdateHealthUI();
     }
 
     public override IEnumerator CombatEnd() {
