@@ -485,7 +485,7 @@ public class GameManager : NetworkBehaviour {
         int team1 = 0;
         int team2 = 0;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
 
