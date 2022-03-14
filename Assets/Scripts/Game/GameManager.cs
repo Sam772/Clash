@@ -166,7 +166,7 @@ public class GameManager : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcCheckIfUnitsRemain(GameObject unit, GameObject enemy) {
-        CheckIfUnitsRemainCoroutine(unit, enemy);
+        StartCoroutine(CheckIfUnitsRemainCoroutine(unit, enemy));
     }
 
     [Command(requiresAuthority=false)]
@@ -476,31 +476,46 @@ public class GameManager : NetworkBehaviour {
             quadToUpdate.GetComponent<Renderer>().enabled = true;}
     }
 
-    public void CheckIfUnitsRemainCoroutine(GameObject unit, GameObject enemy) {
+    public IEnumerator CheckIfUnitsRemainCoroutine(GameObject attacker, GameObject receiver) {
+
+        while (attacker.GetComponent<GenericUnit>().combatQueue.Count != 0 && receiver.GetComponent<GenericUnit>().combatQueue.Count != 0) {
+            yield return new WaitForEndOfFrame();
+        }
+
         int team1 = 0;
         int team2 = 0;
+
+        yield return new WaitForSeconds(1f);
+
         GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
+
         foreach (GenericUnit units in unitsList) {
-            if (units.GetComponent<GenericUnit>().team == 0) { team1++; }
-            else if (units.GetComponent<GenericUnit>().team == 1) { team2++; }}
-        if (team1 == 1) {
+
+            if (units.GetComponent<GenericUnit>().team == 0) {
+                team1++;
+            } else if (units.GetComponent<GenericUnit>().team == 1) {
+                team2++;
+            }
+        }
+
+        if (team1 == 0) {
             displayWinnerUI.enabled = true;
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player1.playerName.text + " has won!");
             player1.isWinner = true;
 
-            // need check for which player is which
             if (player1.isWinner == true && player1) {
                 Debug.Log("Youre a winner");
             } else {
                 Debug.Log("Youre a loser");
             }
+
             //leaderboard.SendLeaderboard(1);
             leaderboard.SendLossesLeaderboard(1);
         }
-        if (team2 == 1) {
+        
+        if (team2 == 0) {
             displayWinnerUI.enabled = true;
             displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player2.playerName.text + " has won!");
-
             player2.isWinner = true;
 
             if (player2.isWinner == true && player2) {
@@ -508,6 +523,7 @@ public class GameManager : NetworkBehaviour {
             } else {
                 Debug.Log("Youre a loser");
             }
+
             leaderboard.SendLossesLeaderboard(1);
             //leaderboard.SendLeaderboard(1);
             // issue: need to stop server when game has ended
