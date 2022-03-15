@@ -14,42 +14,54 @@ public class BattleManager : NetworkBehaviour {
         if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
             // Physical vs Physical
             RpcBattlePhyVsPhy(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<PhysicalUnit>()) {
             // Magical vs Physical
             RpcBattleMagVsPhy(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<MagicalUnit>()) {
             // Physical vs Magical
             RpcBattlePhyVsMag(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<MagicalUnit>()) {
             // Magical vs Magical
             RpcBattleMagVsMag(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         }
 
         // UNIT BATTLING TERRAIN
         else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<LogTerrain>()) {
             // Physical vs Log
             RpcBattlePhyVsLog(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<LogTerrain>()) {
             // Magical vs Log
             RpcBattleMagVsLog(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<BoulderTerrain>()) {
             // Physical vs Boulder
             RpcBattlePhyVsBoulder(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<BoulderTerrain>()) {
             // Magical vs Boulder
             RpcBattleMagVsBoulder(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<HealingPotTerrain>()) {
             // Physical vs Healing Pot
             RpcBattlePhyVsPot(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<HealingPotTerrain>()) {
             // Magical vs Healing Pot
             RpcBattleMagVsPot(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<PhysicalUnit>() && receiver.GetComponent<StoneCrackedTerrain>()) {
             // Physical vs Stone Cracked Wall
             RpcBattlePhyVsStone(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         } else if (attacker.GetComponent<MagicalUnit>() && receiver.GetComponent<StoneCrackedTerrain>()) {
             // Magical vs Stone Cracked Wall
             RpcBattleMagVsStone(attacker, receiver);
+            gameManager.CmdUnitsRemainClient(attacker, receiver);
         }
         battleStatus = false;
     }
@@ -79,7 +91,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitPhysical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
             // counter if receiver survived
@@ -87,7 +98,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(attacker)) {
                 attackerUnitPhysical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         } else {
@@ -95,7 +105,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitPhysical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         }
@@ -119,7 +128,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitPhysical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
             // counter if survive
@@ -127,7 +135,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(attacker)) {
                 attackerUnitMagical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         } else {
@@ -135,7 +142,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitPhysical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         }
@@ -159,7 +165,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitMagical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
             // counter if survive
@@ -167,7 +172,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(attacker)) {
                 attackerUnitPhysical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         } else {
@@ -175,7 +179,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitMagical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         }
@@ -199,7 +202,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitMagical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
             // counter if survive
@@ -207,7 +209,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(attacker)) {
                 attackerUnitMagical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         } else {
@@ -215,7 +216,6 @@ public class BattleManager : NetworkBehaviour {
             if (CheckIfDead(receiver)) {
                 receiverUnitMagical.UnitDie();
                 battleStatus = false;
-                gameManager.CmdUnitsRemainClient(attacker, receiver);
                 return;
             }
         }
@@ -236,7 +236,6 @@ public class BattleManager : NetworkBehaviour {
         if (CheckIfDead(receiver)) {
             receiverTerrainLog.UnitDie();
             battleStatus = false;
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }
@@ -256,7 +255,6 @@ public class BattleManager : NetworkBehaviour {
         if (CheckIfDead(receiver)) {
             receiverTerrainLog.UnitDie();
             battleStatus = false;
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }
@@ -331,8 +329,6 @@ public class BattleManager : NetworkBehaviour {
                     }
                 }
             }
-
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }
@@ -407,8 +403,6 @@ public class BattleManager : NetworkBehaviour {
                     }
                 }
             }
-
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }
@@ -439,8 +433,6 @@ public class BattleManager : NetworkBehaviour {
 
             // update the health
             attackerUnitPhysical.UpdateHealthUI();
-
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }
@@ -471,8 +463,6 @@ public class BattleManager : NetworkBehaviour {
 
             // update the health
             attackerUnitMagical.UpdateHealthUI();
-
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }
@@ -492,7 +482,6 @@ public class BattleManager : NetworkBehaviour {
         if (CheckIfDead(receiver)) {
             receiverTerrainStoneCracked.UnitDie();
             battleStatus = false;
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }
@@ -512,7 +501,6 @@ public class BattleManager : NetworkBehaviour {
         if (CheckIfDead(receiver)) {
             receiverTerrainStoneCracked.UnitDie();
             battleStatus = false;
-            gameManager.CmdUnitsRemainClient(attacker, receiver);
             return;
         }
     }

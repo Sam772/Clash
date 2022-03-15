@@ -163,16 +163,6 @@ public class GameManager : NetworkBehaviour {
         if (currentTeam == 2) {
             currentTeam = 0;}
     }
-
-    [ClientRpc]
-    public void RpcCheckIfUnitsRemain(GameObject unit, GameObject enemy) {
-        StartCoroutine(CheckIfUnitsRemainCoroutine(unit, enemy));
-    }
-
-    [Command(requiresAuthority=false)]
-    public void CmdUnitsRemainClient(GameObject unit, GameObject enemy) {
-        RpcCheckIfUnitsRemain(unit, enemy);
-    }
     
     public void CursorUIUpdate() {
         if (hit.transform.CompareTag("Tile")) {
@@ -476,12 +466,48 @@ public class GameManager : NetworkBehaviour {
             quadToUpdate.GetComponent<Renderer>().enabled = true;}
     }
 
-    public IEnumerator CheckIfUnitsRemainCoroutine(GameObject attacker, GameObject receiver) {
+    [ClientRpc]
+    public void RpcSetWinScreenOne() {
+        displayWinnerUI.enabled = true;
+        displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player2.playerName.text + " has won!");
+    }
 
+    [ClientRpc]
+    public void RpcSetWinScreenTwo() {
+        displayWinnerUI.enabled = true;
+        displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player1.playerName.text + " has won!");
+    }
+
+    [Command(requiresAuthority=false)]
+    public void CmdUnitsRemainClient(GameObject attacker, GameObject receiver) {
+        StartCoroutine(CombatQueueCoroutine(attacker, receiver));
+        StartCoroutine(WaitForDeathsCoroutine());
+    }
+
+    [ClientRpc]
+    public void RpcPlayerWinConditionOne() {
+        if (!isServer) {
+            Debug.Log(player1.playerName.text + " has lost!");
+            leaderboard.SendLossesLeaderboard(1);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcPlayerWinConditionTwo() {
+        if (!isServer) {
+            Debug.Log(player1.playerName.text + " has won!");
+            leaderboard.SendLeaderboard(1);
+        }
+    }
+
+    public IEnumerator CombatQueueCoroutine(GameObject attacker, GameObject receiver) {
         while (attacker.GetComponent<GenericUnit>().combatQueue.Count != 0 && receiver.GetComponent<GenericUnit>().combatQueue.Count != 0) {
             yield return new WaitForEndOfFrame();
         }
+    }
 
+    public IEnumerator WaitForDeathsCoroutine() {
+        
         int team1 = 0;
         int team2 = 0;
 
@@ -499,33 +525,18 @@ public class GameManager : NetworkBehaviour {
         }
 
         if (team1 == 0) {
-            displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player1.playerName.text + " has won!");
-            player1.isWinner = true;
-
-            if (player1.isWinner == true && player1) {
-                Debug.Log("Youre a winner");
-            } else {
-                Debug.Log("Youre a loser");
-            }
-
-            //leaderboard.SendLeaderboard(1);
+            RpcSetWinScreenTwo();
+            Debug.Log(player2.playerName.text + " has lost!");
             leaderboard.SendLossesLeaderboard(1);
+            RpcPlayerWinConditionTwo();
         }
         
         if (team2 == 0) {
-            displayWinnerUI.enabled = true;
-            displayWinnerUI.GetComponentInChildren<TextMeshProUGUI>().SetText(player2.playerName.text + " has won!");
-            player2.isWinner = true;
+            RpcSetWinScreenOne();
+            Debug.Log(player2.playerName.text + " has won!");
+            leaderboard.SendLeaderboard(1);
+            RpcPlayerWinConditionOne();
 
-            if (player2.isWinner == true && player2) {
-                Debug.Log("Youre a winner");
-            } else {
-                Debug.Log("Youre a loser");
-            }
-
-            leaderboard.SendLossesLeaderboard(1);
-            //leaderboard.SendLeaderboard(1);
             // issue: need to stop server when game has ended
             //room.RemoveGamePlayer(gamePlayer);
             //NetworkServer.Destroy(gamePlayer.gameObject);
