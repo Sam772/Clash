@@ -6848,6 +6848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstInput: {fileID: 233525004}
   submitButton: {fileID: 159434681}
+  settingsScreen: {fileID: 1592308668}
 --- !u!222 &698556236
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8775,7 +8776,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: Assets/Scenes/MenuScreen.unity
   transport: {fileID: 1097246244}
-  networkAddress: localhost
+  networkAddress: 0.0.0.0
   maxConnections: 4
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 7692211417626964973, guid: 3e5777b1e0f00f74d82a796a0b05e3c0, type: 3}
@@ -10244,8 +10245,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1592308668}
         m_TargetAssemblyTypeName: SettingsScreen, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
+        m_MethodName: ChangeVolume
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13949,6 +13950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: eb99565cd9cd48845bd394dd0fd8fc17, type: 2}
+  volumeSlider: {fileID: 1181733968}
 --- !u!224 &1592308669
 RectTransform:
   m_ObjectHideFlags: 0

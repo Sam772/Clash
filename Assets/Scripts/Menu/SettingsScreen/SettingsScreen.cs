@@ -2,20 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-
-public class SettingsScreen : MenuScreen
-{
+using UnityEngine.UI;
+public class SettingsScreen : MenuScreen {
     public AudioMixer audioMixer;
-    public void SetVolume (float volume)
-    {
-        audioMixer.SetFloat("volume", volume); 
+    [SerializeField] public Slider volumeSlider;
+
+    public void ChangeVolume() {
+        AudioListener.volume = volumeSlider.value;
+        SaveVolume();
     }
-    public void SetQuality(int qualityIndex)
-    {
+
+    public void LoadVolume() {
+        volumeSlider.value = PlayerPrefs.GetFloat("volume");
+    }
+
+    private void SaveVolume() {
+        PlayerPrefs.SetFloat("volume", volumeSlider.value);
+    }
+
+    public void SetQuality(int qualityIndex) {
         QualitySettings.SetQualityLevel(qualityIndex);
     }  
-    public void SetFullScreen (bool isFullScreen)
-    {
+
+    public void SetFullScreen(bool isFullScreen) {
         Screen.fullScreen = isFullScreen;
     }
 }

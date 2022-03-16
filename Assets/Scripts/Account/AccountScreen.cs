@@ -7,10 +7,18 @@ public class AccountScreen : MenuScreen {
     EventSystem system;
     public Selectable firstInput;
     public Button submitButton;
+    [SerializeField] private SettingsScreen settingsScreen;
 
     public void Start() {
         system = EventSystem.current;
         firstInput.Select();
+
+        if (!PlayerPrefs.HasKey("volume")) {
+            PlayerPrefs.SetFloat("volume", 0.5f);
+            settingsScreen.LoadVolume();
+        } else {
+            settingsScreen.LoadVolume();
+        }
     }
 
     public void Update() {

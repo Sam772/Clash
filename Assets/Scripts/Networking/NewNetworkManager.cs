@@ -217,69 +217,69 @@ public class NewNetworkManager : NetworkManager {
                 if (i == 1) {
 
                     // FOR TESTING PURPOSES
-                    int x = 1;
-                    for (int j = 0; j < 2; j++) {
-                        PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
-                        NetworkServer.Spawn(paladin.gameObject, conn);
-                    }
-                    HealingPotTerrain healingPot = Instantiate(healingPotPrefab, new Vector3(4, 0.88f, 2), Quaternion.identity);
-                    NetworkServer.Spawn(healingPot.gameObject, conn);
-
-                    // unit locations
-                    // int x = 0;
-                    // for (int j = 0; j < 3; j++) {
-                    //     PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=1, 0.88f, 7), Quaternion.identity);
+                    // int x = 1;
+                    // for (int j = 0; j < 2; j++) {
+                    //     PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=2, 0.88f, 1), Quaternion.identity);
                     //     NetworkServer.Spawn(paladin.gameObject, conn);
                     // }
-                    // PhysicalUnit dragoon = Instantiate(dragoonPrefab, new Vector3(2, 0.88f, 6), Quaternion.identity);
-                    // NetworkServer.Spawn(dragoon.gameObject, conn);
-                    // int x2 = -1;
-                    // for (int k = 0; k < 2; k++) {
-                    //     MagicalUnit sorcerer = Instantiate(sorcererPrefab, new Vector3(x2+=2, 0.8f, 5), Quaternion.identity);
-                    //     NetworkServer.Spawn(sorcerer.gameObject, conn);
-                    // }
-
-                    // // healing pot locations
-                    // HealingPotTerrain healingPot = Instantiate(healingPotPrefab, new Vector3(3, 0.88f, 1), Quaternion.identity);
+                    // HealingPotTerrain healingPot = Instantiate(healingPotPrefab, new Vector3(4, 0.88f, 2), Quaternion.identity);
                     // NetworkServer.Spawn(healingPot.gameObject, conn);
-                    // HealingPotTerrain healingPot2 = Instantiate(healingPotPrefab, new Vector3(10, 0.88f, 4), Quaternion.identity);
-                    // NetworkServer.Spawn(healingPot2.gameObject, conn);
-                    // HealingPotTerrain healingPot3 = Instantiate(healingPotPrefab, new Vector3(7, 0.88f, 8), Quaternion.identity);
-                    // NetworkServer.Spawn(healingPot3.gameObject, conn);
-                    // HealingPotTerrain healingPot4 = Instantiate(healingPotPrefab, new Vector3(1, 0.88f, 13), Quaternion.identity);
-                    // NetworkServer.Spawn(healingPot4.gameObject, conn);
-                    // HealingPotTerrain healingPot5 = Instantiate(healingPotPrefab, new Vector3(3, 0.88f, 18), Quaternion.identity);
-                    // NetworkServer.Spawn(healingPot5.gameObject, conn);
-                    // HealingPotTerrain healingPot6 = Instantiate(healingPotPrefab, new Vector3(10, 0.88f, 19), Quaternion.identity);
-                    // NetworkServer.Spawn(healingPot6.gameObject, conn);
+
+                    // unit locations
+                    int x = 0;
+                    for (int j = 0; j < 3; j++) {
+                        PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=1, 0.88f, 7), Quaternion.identity);
+                        NetworkServer.Spawn(paladin.gameObject, conn);
+                    }
+                    PhysicalUnit dragoon = Instantiate(dragoonPrefab, new Vector3(2, 0.88f, 6), Quaternion.identity);
+                    NetworkServer.Spawn(dragoon.gameObject, conn);
+                    int x2 = -1;
+                    for (int k = 0; k < 2; k++) {
+                        MagicalUnit sorcerer = Instantiate(sorcererPrefab, new Vector3(x2+=2, 0.8f, 5), Quaternion.identity);
+                        NetworkServer.Spawn(sorcerer.gameObject, conn);
+                    }
+
+                    // healing pot locations
+                    HealingPotTerrain healingPot = Instantiate(healingPotPrefab, new Vector3(3, 0.88f, 1), Quaternion.identity);
+                    NetworkServer.Spawn(healingPot.gameObject, conn);
+                    HealingPotTerrain healingPot2 = Instantiate(healingPotPrefab, new Vector3(10, 0.88f, 4), Quaternion.identity);
+                    NetworkServer.Spawn(healingPot2.gameObject, conn);
+                    HealingPotTerrain healingPot3 = Instantiate(healingPotPrefab, new Vector3(7, 0.88f, 8), Quaternion.identity);
+                    NetworkServer.Spawn(healingPot3.gameObject, conn);
+                    HealingPotTerrain healingPot4 = Instantiate(healingPotPrefab, new Vector3(1, 0.88f, 13), Quaternion.identity);
+                    NetworkServer.Spawn(healingPot4.gameObject, conn);
+                    HealingPotTerrain healingPot5 = Instantiate(healingPotPrefab, new Vector3(3, 0.88f, 18), Quaternion.identity);
+                    NetworkServer.Spawn(healingPot5.gameObject, conn);
+                    HealingPotTerrain healingPot6 = Instantiate(healingPotPrefab, new Vector3(10, 0.88f, 19), Quaternion.identity);
+                    NetworkServer.Spawn(healingPot6.gameObject, conn);
 
                     // If Client (Player Two)
                 } else if (i == 0) {
 
                     // FOR TESTING PURPOSES
-                    int x = 1;
-                    for (int j = 0; j < 2; j++) {
-                        PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=2, 0.88f, 3), Quaternion.identity);
-                        NetworkServer.Spawn(paladin.gameObject, conn);
-                        paladin.GetComponent<PhysicalUnit>().team = 1;
-                    }
-
-                    // unit locations
-                    // int x = 6;
-                    // for (int j = 0; j < 3; j++) {
-                    //     PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=1, 0.88f, 15), Quaternion.identity);
+                    // int x = 1;
+                    // for (int j = 0; j < 2; j++) {
+                    //     PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=2, 0.88f, 3), Quaternion.identity);
                     //     NetworkServer.Spawn(paladin.gameObject, conn);
                     //     paladin.GetComponent<PhysicalUnit>().team = 1;
                     // }
-                    // PhysicalUnit dragoon = Instantiate(dragoonPrefab, new Vector3(8, 0.88f, 16), Quaternion.identity);
-                    // NetworkServer.Spawn(dragoon.gameObject, conn);
-                    // dragoon.GetComponent<PhysicalUnit>().team = 1;
-                    // int x2 = 5;
-                    // for (int k = 0; k < 2; k++) {
-                    //     MagicalUnit sorcerer = Instantiate(sorcererPrefab, new Vector3(x2+=2, 0.8f, 17), Quaternion.identity);
-                    //     NetworkServer.Spawn(sorcerer.gameObject, conn);
-                    //     sorcerer.GetComponent<MagicalUnit>().team = 1;
-                    // }
+
+                    // unit locations
+                    int x = 6;
+                    for (int j = 0; j < 3; j++) {
+                        PhysicalUnit paladin = Instantiate(paladinPrefab, new Vector3(x+=1, 0.88f, 15), Quaternion.identity);
+                        NetworkServer.Spawn(paladin.gameObject, conn);
+                        paladin.GetComponent<PhysicalUnit>().team = 1;
+                    }
+                    PhysicalUnit dragoon = Instantiate(dragoonPrefab, new Vector3(8, 0.88f, 16), Quaternion.identity);
+                    NetworkServer.Spawn(dragoon.gameObject, conn);
+                    dragoon.GetComponent<PhysicalUnit>().team = 1;
+                    int x2 = 5;
+                    for (int k = 0; k < 2; k++) {
+                        MagicalUnit sorcerer = Instantiate(sorcererPrefab, new Vector3(x2+=2, 0.8f, 17), Quaternion.identity);
+                        NetworkServer.Spawn(sorcerer.gameObject, conn);
+                        sorcerer.GetComponent<MagicalUnit>().team = 1;
+                    }
                 }
                 // Map Four
             } else if (gameScene == mapFourScene) {
