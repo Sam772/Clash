@@ -128,13 +128,13 @@ MonoBehaviour:
   y: 0
   visualMovementSpeed: 0.15
   tileBeingOccupied: {fileID: 0}
-  unitName: Captain
-  maxHealth: 10
-  defence: 3
+  unitName: Champion
+  maxHealth: 11
+  defence: 4
   resistance: 0
-  move: 2
+  move: 4
   range: 1
-  currentHealth: 10
+  currentHealth: 11
   unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
   healthBarCanvas: {fileID: 6154564404331435930}
   hitPointsText: {fileID: 6154564405465235427}
@@ -142,7 +142,7 @@ MonoBehaviour:
   map: {fileID: 0}
   holder2D: {fileID: 7973479028371150531}
   unitMoveState: 0
-  strength: 7
+  strength: 5
 --- !u!114 &4130229558789106473
 MonoBehaviour:
   m_ObjectHideFlags: 0

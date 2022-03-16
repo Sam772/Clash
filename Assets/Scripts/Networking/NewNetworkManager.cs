@@ -285,24 +285,44 @@ public class NewNetworkManager : NetworkManager {
             } else if (gameScene == mapFourScene) {
                 // If Host (Player One)
                 if (i == 1) {
-                    int z = 2;
+                    // unit locations
+                    int z = -3;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(4, 0.88f, z+=3), Quaternion.identity);
-                        NetworkServer.Spawn(archer.gameObject, conn);
+                        MagicalUnit elder = Instantiate(elderPrefab, new Vector3(2, 0.88f, z+=4), Quaternion.identity);
+                        NetworkServer.Spawn(elder.gameObject, conn);
                     }
-                    float x3 = 0f;
+                    int z2 = 0;
                     for (int k = 0; k < 2; k++) {
-                        StoneCrackedTerrain stoneCracked = Instantiate(stoneCrackedPrefab, new Vector3(x3+=8f, 1f, 7), Quaternion.identity);
+                        PhysicalUnit champion = Instantiate(championPrefab, new Vector3(3, 0.88f, z2+=2), Quaternion.identity);
+                        NetworkServer.Spawn(champion.gameObject, conn);
+                    }
+                    PhysicalUnit clasher = Instantiate(clasherPrefab, new Vector3(3, 0.88f, 3), Quaternion.identity);
+                    NetworkServer.Spawn(clasher.gameObject, conn);
+
+                    // stone cracked wall locations
+                    float x = 0f;
+                    for (int k = 0; k < 2; k++) {
+                        StoneCrackedTerrain stoneCracked = Instantiate(stoneCrackedPrefab, new Vector3(x+=8f, 1f, 7), Quaternion.identity);
                         NetworkServer.Spawn(stoneCracked.gameObject);
                     }
                     // If Client (Player Two)
                 } else if (i == 0) {
-                   int z2 = 2;
+                    // unit locations
+                    int z = 5;
                     for (int j = 0; j < 2; j++) {
-                        PhysicalUnit archer = Instantiate(archerPrefab, new Vector3(20, 0.88f, z2+=3), Quaternion.identity);
-                        NetworkServer.Spawn(archer.gameObject, conn);
-                        archer.GetComponent<PhysicalUnit>().team = 1;
-                    } 
+                        MagicalUnit elder = Instantiate(elderPrefab, new Vector3(22, 0.88f, z+=4), Quaternion.identity);
+                        NetworkServer.Spawn(elder.gameObject, conn);
+                        elder.GetComponent<MagicalUnit>().team = 1;
+                    }
+                    int z2 = 8;
+                    for (int k = 0; k < 2; k++) {
+                        PhysicalUnit champion = Instantiate(championPrefab, new Vector3(21, 0.88f, z2+=2), Quaternion.identity);
+                        NetworkServer.Spawn(champion.gameObject, conn);
+                        champion.GetComponent<PhysicalUnit>().team = 1;
+                    }
+                    PhysicalUnit clasher = Instantiate(clasherPrefab, new Vector3(21, 0.88f, 11), Quaternion.identity);
+                    NetworkServer.Spawn(clasher.gameObject, conn);
+                    clasher.GetComponent<PhysicalUnit>().team = 1;
                 }
             }
         }

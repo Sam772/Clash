@@ -556,13 +556,13 @@ MonoBehaviour:
   y: 0
   visualMovementSpeed: 0.15
   tileBeingOccupied: {fileID: 0}
-  unitName: Captain
-  maxHealth: 10
-  defence: 3
-  resistance: 0
-  move: 2
+  unitName: Clasher
+  maxHealth: 12
+  defence: 2
+  resistance: 2
+  move: 5
   range: 1
-  currentHealth: 10
+  currentHealth: 12
   unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
   healthBarCanvas: {fileID: 8089643851482002271}
   hitPointsText: {fileID: 8089643850348698406}

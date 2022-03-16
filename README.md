@@ -4,7 +4,7 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 
 ![clash-main-menu](/Assets/Textures/MapPreview/MainMenuPreview.png)
 
-## Changelog v0.1.0 - v0.8.1
+## Changelog v0.1.0 - v0.8.2
 
 ### User Interface
 - Added a main menu
@@ -33,6 +33,12 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 - Added main menu button animations and sound effects
 
 ### <a href="https://clash-game.wixsite.com/changelog">View the full changelog here</a>
+
+## Online Setup
+- Forward a port on your router with UDP protocol setting.
+- The one forwarding a port must host a game as they will act as the server.
+- Get your friend to connect to you by joining a game with your public ip address.
+- Have fun!
 
 ## Contributors
 <table>

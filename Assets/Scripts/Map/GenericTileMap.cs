@@ -423,8 +423,10 @@ public abstract class GenericTileMap : NetworkBehaviour {
         DisableHighlightUnitRange();
         DisableUnitUIRoute();
         yield return new WaitForSeconds(.25f);
-        while (unit.GetComponent<GenericUnit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
-        while (enemy.GetComponent<GenericUnit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
+        if (unit && enemy != null) {
+            while (unit.GetComponent<GenericUnit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
+            while (enemy.GetComponent<GenericUnit>().combatQueue.Count > 0) { yield return new WaitForEndOfFrame(); }
+        }
         DeselectUnit();
     }
     
