@@ -14,6 +14,9 @@ public class MainMenu : MonoBehaviour {
     [SerializeField] private Lobby lobby;
     [SerializeField] private ExtrasScreen extrasScreen;
     [SerializeField] private TacticianTipsScreen tacticianTips;
+    [SerializeField] private UnitInfoScreen unitInfoScreen;
+    [SerializeField] private MapInfoScreen mapInfoScreen;
+    [SerializeField] private GameCreditsScreen gameCreditsScreen;
     #pragma warning restore 649
 
     private NewNetworkManager networkManager;
@@ -54,6 +57,10 @@ public class MainMenu : MonoBehaviour {
     public void ShowLobby() => ShowScreen(lobby);
     public void ExtrasScreenClicked() => ShowScreen(extrasScreen);
     public void HowToPlayScreenClicked() => ShowScreen(tacticianTips);
+    public void UnitInfoScreenClicked() => ShowScreen(unitInfoScreen);
+    public void MapInfoScreenClicked() => ShowScreen(mapInfoScreen);
+    public void GameCreditsScreenClicked() => ShowScreen(gameCreditsScreen);
+
             
     public void ExitGameClicked() {
         Application.Quit();
@@ -87,6 +94,9 @@ public class MainMenu : MonoBehaviour {
         if (screen != joinScreen) joinScreen.Hide();
         if (screen != extrasScreen) extrasScreen.Hide();   
         if (screen != tacticianTips) tacticianTips.Hide();
+        if (screen != unitInfoScreen) unitInfoScreen.Hide();
+        if (screen != mapInfoScreen) mapInfoScreen.Hide();
+        if (screen != gameCreditsScreen) gameCreditsScreen.Hide();
 
         screen.Show();
         currentScreen = screen;
