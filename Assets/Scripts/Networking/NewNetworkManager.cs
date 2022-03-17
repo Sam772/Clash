@@ -8,7 +8,7 @@ public class NewNetworkManager : NetworkManager {
 
     #pragma warning disable 649
     [SerializeField] private int minPlayers = 2;
-    [Scene] [SerializeField] private string menuScene;
+    [Scene] [SerializeField] public string menuScene;
     [Scene] [SerializeField] private string gameScene;
     [Scene] [SerializeField] private string mapOneScene;
     [Scene] [SerializeField] private string mapTwoScene;

@@ -3951,8 +3951,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1457027285}
-        m_TargetAssemblyTypeName: SceneManagerGame, Assembly-CSharp
+      - m_Target: {fileID: 393026323}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadTitleScreen
         m_Mode: 1
         m_Arguments:

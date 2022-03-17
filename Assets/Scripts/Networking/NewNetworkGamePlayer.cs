@@ -25,7 +25,23 @@ public class NewNetworkGamePlayer : NetworkBehaviour {
             game.SetGamePlayer(this);
         }
     }
+
     public void SetPlayerData(PlayerData playerData) => PlayerData = playerData;
+
+    public override void OnStopClient() {
+        room.RemoveGamePlayer(this);
+    }
+
+    public void OnEndClicked() {
+        //room.RemoveGamePlayer(this);
+        if (isServer) {
+            room.StopHost();
+            Debug.Log("stopping1");
+        } else {
+            room.StopClient();
+            Debug.Log("stopping2");
+        }
+    }
 
     [Server]
     public void SetPlayerId(int id) {

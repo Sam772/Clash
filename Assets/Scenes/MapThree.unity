@@ -2690,8 +2690,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1563641730}
-        m_TargetAssemblyTypeName: SceneManagerGame, Assembly-CSharp
+      - m_Target: {fileID: 531843455}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadTitleScreen
         m_Mode: 1
         m_Arguments:
@@ -3982,7 +3982,6 @@ GameObject:
   - component: {fileID: 1563641733}
   - component: {fileID: 1563641732}
   - component: {fileID: 1563641731}
-  - component: {fileID: 1563641730}
   m_Layer: 5
   m_Name: PlayerHasWonCanvas
   m_TagString: Untagged
@@ -4012,18 +4011,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1563641730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563641728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45a10a266daae44ba29adcf20bd5db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1563641731
 MonoBehaviour:
   m_ObjectHideFlags: 0

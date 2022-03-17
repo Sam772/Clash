@@ -1611,7 +1611,6 @@ GameObject:
   - component: {fileID: 766626149}
   - component: {fileID: 766626148}
   - component: {fileID: 766626147}
-  - component: {fileID: 766626150}
   m_Layer: 5
   m_Name: PlayerHasWonCanvas
   m_TagString: Untagged
@@ -1702,18 +1701,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &766626150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 766626145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45a10a266daae44ba29adcf20bd5db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &805846017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,8 +2250,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 766626150}
-        m_TargetAssemblyTypeName: SceneManagerGame, Assembly-CSharp
+      - m_Target: {fileID: 1042821803}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadTitleScreen
         m_Mode: 1
         m_Arguments:

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 using Mirror;
@@ -488,7 +489,7 @@ public class GameManager : NetworkBehaviour {
     public void RpcPlayerWinConditionOne() {
         if (!isServer) {
             Debug.Log(player1.playerName.text + " has lost!");
-            leaderboard.SendLossesLeaderboard(1);
+            //leaderboard.SendLossesLeaderboard(1);
         }
     }
 
@@ -496,7 +497,7 @@ public class GameManager : NetworkBehaviour {
     public void RpcPlayerWinConditionTwo() {
         if (!isServer) {
             Debug.Log(player1.playerName.text + " has won!");
-            leaderboard.SendLeaderboard(1);
+            //leaderboard.SendLeaderboard(1);
         }
     }
 
@@ -527,22 +528,15 @@ public class GameManager : NetworkBehaviour {
         if (team1 == 0) {
             RpcSetWinScreenTwo();
             Debug.Log(player2.playerName.text + " has lost!");
-            leaderboard.SendLossesLeaderboard(1);
+            //leaderboard.SendLossesLeaderboard(1);
             RpcPlayerWinConditionTwo();
         }
         
         if (team2 == 0) {
             RpcSetWinScreenOne();
             Debug.Log(player2.playerName.text + " has won!");
-            leaderboard.SendLeaderboard(1);
+            //leaderboard.SendLeaderboard(1);
             RpcPlayerWinConditionOne();
-
-            // issue: need to stop server when game has ended
-            //room.RemoveGamePlayer(gamePlayer);
-            //NetworkServer.Destroy(gamePlayer.gameObject);
-            //room.StopServer();
-            //room.StopHost();
-            //room.StopClient();
         }
     }
 
@@ -563,5 +557,14 @@ public class GameManager : NetworkBehaviour {
 
     public void SetGamePlayer (NewNetworkGamePlayer player) {
         gamePlayer = player;
+    }
+
+    public void LoadTitleScreen() {
+        //NetworkManager.singleton.ServerChangeScene(room.menuScene);
+        //SceneManager.LoadScene(0, LoadSceneMode.Single);
+        foreach (var gameplayer in room.GamePlayers) {
+            gameplayer.OnEndClicked();
+        }
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 }
