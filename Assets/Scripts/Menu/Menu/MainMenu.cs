@@ -29,6 +29,11 @@ public class MainMenu : MonoBehaviour {
     [SerializeField] private ChampionInfoScreen championInfoScreen;
     [SerializeField] private ElderInfoScreen elderInfoScreen;
     [SerializeField] private ClasherInfoScreen clasherInfoScreen;
+    [SerializeField] private LogInfoScreen logInfoScreen;
+    [SerializeField] private BoulderInfoScreen boulderInfoScreen;
+    [SerializeField] private HealingPotInfoScreen healingPotInfoScreen;
+    [SerializeField] private StoneCrackedWallInfoScreen stoneCrackedWallInfoScreen;
+
 
 
     #pragma warning restore 649
@@ -86,7 +91,10 @@ public class MainMenu : MonoBehaviour {
     public void ChampionInfoScreenClicked() => ShowScreen(championInfoScreen);
     public void ElderInfoScreenClicked() => ShowScreen(elderInfoScreen);
     public void ClasherInfoScreenClicked() => ShowScreen(clasherInfoScreen);
-    
+    public void LogInfoScreenClicked() => ShowScreen(logInfoScreen);
+    public void BoulderInfoScreenClicked() => ShowScreen(boulderInfoScreen);
+    public void HealingPotInfoScreenClicked() => ShowScreen(healingPotInfoScreen);
+    public void StoneCrackedWallInfoScreenClicked() => ShowScreen(stoneCrackedWallInfoScreen);
             
     public void ExitGameClicked() {
         Application.Quit();
@@ -135,6 +143,10 @@ public class MainMenu : MonoBehaviour {
         if (screen != championInfoScreen) championInfoScreen.Hide();
         if (screen != elderInfoScreen) elderInfoScreen.Hide();
         if (screen != clasherInfoScreen) clasherInfoScreen.Hide();
+        if (screen != logInfoScreen) logInfoScreen.Hide();
+        if (screen != boulderInfoScreen) boulderInfoScreen.Hide();
+        if (screen != healingPotInfoScreen) healingPotInfoScreen.Hide();
+        if (screen != stoneCrackedWallInfoScreen) stoneCrackedWallInfoScreen.Hide();
 
         screen.Show();
         currentScreen = screen;
