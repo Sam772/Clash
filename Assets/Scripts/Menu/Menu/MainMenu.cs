@@ -17,6 +17,20 @@ public class MainMenu : MonoBehaviour {
     [SerializeField] private UnitInfoScreen unitInfoScreen;
     [SerializeField] private MapInfoScreen mapInfoScreen;
     [SerializeField] private GameCreditsScreen gameCreditsScreen;
+    [SerializeField] private CaptainInfoScreen captainInfoScreen;
+    [SerializeField] private KnightInfoScreen knightInfoScreen;
+    [SerializeField] private ArcherInfoScreen archerInfoScreen;
+    [SerializeField] private ArcanistInfoScreen arcanistInfoScreen;
+    [SerializeField] private RangerInfoScreen rangerInfoScreen;
+    [SerializeField] private WarriorInfoScreen warriorInfoScreen;
+    [SerializeField] private PaladinInfoScreen paladinInfoScreen;
+    [SerializeField] private DragoonInfoScreen dragoonInfoScreen;
+    [SerializeField] private SorcerorInfoScreen sorcerorInfoScreen;
+    [SerializeField] private ChampionInfoScreen championInfoScreen;
+    [SerializeField] private ElderInfoScreen elderInfoScreen;
+    [SerializeField] private ClasherInfoScreen clasherInfoScreen;
+
+
     #pragma warning restore 649
 
     private NewNetworkManager networkManager;
@@ -60,7 +74,19 @@ public class MainMenu : MonoBehaviour {
     public void UnitInfoScreenClicked() => ShowScreen(unitInfoScreen);
     public void MapInfoScreenClicked() => ShowScreen(mapInfoScreen);
     public void GameCreditsScreenClicked() => ShowScreen(gameCreditsScreen);
-
+    public void CaptainInfoScreenClicked() => ShowScreen(captainInfoScreen);
+    public void KnightInfoScreenClicked() => ShowScreen(knightInfoScreen);
+    public void ArcherInfoScreenClicked() => ShowScreen(archerInfoScreen);
+    public void ArcanistInfoScreenClicked() => ShowScreen(arcanistInfoScreen);
+    public void RangerInfoScreenClicked() => ShowScreen(rangerInfoScreen);
+    public void WarriorInfoScreenClicked() => ShowScreen(warriorInfoScreen);
+    public void PaladinInfoScreenClicked() => ShowScreen(paladinInfoScreen);
+    public void DragoonInfoScreenClicked() => ShowScreen(dragoonInfoScreen);
+    public void SorcerorInfoScreenClicked() => ShowScreen(sorcerorInfoScreen);
+    public void ChampionInfoScreenClicked() => ShowScreen(championInfoScreen);
+    public void ElderInfoScreenClicked() => ShowScreen(elderInfoScreen);
+    public void ClasherInfoScreenClicked() => ShowScreen(clasherInfoScreen);
+    
             
     public void ExitGameClicked() {
         Application.Quit();
@@ -97,6 +123,18 @@ public class MainMenu : MonoBehaviour {
         if (screen != unitInfoScreen) unitInfoScreen.Hide();
         if (screen != mapInfoScreen) mapInfoScreen.Hide();
         if (screen != gameCreditsScreen) gameCreditsScreen.Hide();
+        if (screen != captainInfoScreen) captainInfoScreen.Hide();
+        if (screen != knightInfoScreen) knightInfoScreen.Hide();
+        if (screen != archerInfoScreen) archerInfoScreen.Hide();
+        if (screen != arcanistInfoScreen) arcanistInfoScreen.Hide();
+        if (screen != rangerInfoScreen) rangerInfoScreen.Hide();
+        if (screen != warriorInfoScreen) warriorInfoScreen.Hide();
+        if (screen != paladinInfoScreen) paladinInfoScreen.Hide();
+        if (screen != dragoonInfoScreen) dragoonInfoScreen.Hide();
+        if (screen != sorcerorInfoScreen) sorcerorInfoScreen.Hide();
+        if (screen != championInfoScreen) championInfoScreen.Hide();
+        if (screen != elderInfoScreen) elderInfoScreen.Hide();
+        if (screen != clasherInfoScreen) clasherInfoScreen.Hide();
 
         screen.Show();
         currentScreen = screen;
