@@ -49,6 +49,7 @@ public class MainMenu : MonoBehaviour {
 
     private void Start() {
         networkManager.RegisterMainMenu(this);
+        lobby.Setup(this);
         accountScreen.Setup(this);
         mainScreen.Setup(this);
         playScreen.Setup(this);
@@ -57,7 +58,6 @@ public class MainMenu : MonoBehaviour {
         mapSelectionScreen.Setup(this);
         hostScreen.Setup(this);
         joinScreen.Setup(this);
-        lobby.Setup(this);
         extrasScreen.Setup(this);
         tacticianTips.Setup(this);
     }
@@ -117,8 +117,8 @@ public class MainMenu : MonoBehaviour {
     private void ShowScreen(MenuScreen screen) {
         if (currentScreen == screen) return;
             
-        if (screen != lobby) lobby.Hide();
         if (screen != accountScreen) accountScreen.Hide();
+        if (screen != lobby) lobby.Hide();
         if (screen != hostScreen) hostScreen.Hide();
         if (screen != settingsScreen) settingsScreen.Hide();
         if (screen != profileScreen) profileScreen.Hide();
