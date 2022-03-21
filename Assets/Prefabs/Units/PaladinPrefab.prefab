@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 420d85d0ce740ed41870e6d2de6246f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2923fa4bdd37e3e4782c51949f437c14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -563,7 +563,7 @@ MonoBehaviour:
   move: 5
   range: 1
   currentHealth: 5
-  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
+  unitSprite: {fileID: 21300000, guid: b080690e68b6a81449a1a0a9fd130142, type: 3}
   healthBarCanvas: {fileID: 3642962517935863695}
   hitPointsText: {fileID: 3642962516932681718}
   healthBar: {fileID: 3642962518109669072}

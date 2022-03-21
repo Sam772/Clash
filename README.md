@@ -1,10 +1,10 @@
 # <a href="https://clash-game.wixsite.com/">Clash</a>
 
-Clash is a 3D networked multiplayer turn-based rpg game currently in development using Mirror and Unity. It is inspired by strategy and tactical turn-based rpg games. The target audience of this game are players of age 15+ and turn-based rpg fans.
+Clash is a 3D online networked multiplayer turn-based rpg game currently in development using Mirror and Unity. It is inspired by strategy and tactical turn-based rpg games. The target audience of this game are players of age 15+ and turn-based rpg fans.
 
 ![clash-main-menu](/Assets/Textures/MapPreview/MainMenuPreview.png)
 
-## Changelog v0.1.0 - v0.9.0
+## Changelog v0.1.0 - v0.9.1
 
 ### User Interface
 - Added a main menu
@@ -24,10 +24,10 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 - Added new unit stats
 - Added new unit types
 - Added a terrain interaction feature
+- Added a skills feature
 - Added a chatbox
 - Added terrain backgrounds to each map
 - Updated the camera
-- Currently adding skills feature
 
 ### Other
 - Gameplay bug fixes
@@ -36,12 +36,15 @@ Clash is a 3D networked multiplayer turn-based rpg game currently in development
 - Added leaderboard functionality which displays rank and wins
 - Added main menu button animations and sound effects
 
-### <a href="https://clash-game.wixsite.com/changelog">View the full changelog here</a>
-
 ## Online Setup
 - Forward a port on your router with UDP protocol setting.
 - The one forwarding a port must host a game as they will act as the server.
 - Get your friend to connect to you by joining a game with your public ip address.
+- Have fun!
+
+## Local Setup
+- Open up two instances of the game.
+- Host a game on one instance and join a game on the other instance with ip address localhost.
 - Have fun!
 
 ## Contributors

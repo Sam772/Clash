@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 513886624087418905}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0.5}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalScale: {x: 0.6, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 4390915562203720722}
   m_RootOrder: 2
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fe594588550c80147a892723c2d8e4f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b1a0e1efafc0a0b46978387dc581344b, type: 3}
   m_Color: {r: 1, g: 0.9386792, b: 0.9386792, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -429,7 +429,7 @@ MonoBehaviour:
   move: 4
   range: 2
   currentHealth: 3
-  unitSprite: {fileID: 21300000, guid: c6d447253bf4a644b8e75296f0905671, type: 3}
+  unitSprite: {fileID: 21300000, guid: b1a0e1efafc0a0b46978387dc581344b, type: 3}
   healthBarCanvas: {fileID: 4390915562120194368}
   hitPointsText: {fileID: 4390915563121819961}
   healthBar: {fileID: 4390915562687223839}
