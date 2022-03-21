@@ -32,7 +32,12 @@ public abstract class GenericTileMap : NetworkBehaviour {
     private GameObject previousOccupiedTile;
     public Material enemyRangeUIMat;
     public Material movementTileUIMat;
-    
+    [SyncVar]
+    public int actionChoice;
+    public bool skillUsed = false;
+    public SkillManager skillManager;
+
+
     private void Start() {
         GenerateMapInfo();
         GenerateMapVisuals();
@@ -188,15 +193,21 @@ public abstract class GenericTileMap : NetworkBehaviour {
                         tempSelectedUnit = hit.transform.GetComponent<TileClick>().unitOnTile;
                         if (tempSelectedUnit.GetComponent<GenericUnit>().unitMoveState == tempSelectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<GenericUnit>().team == gameManager.currentTeam) {
                             DisableHighlightUnitRange();
+                            showActionMenu();
                             selectedUnit = tempSelectedUnit;
                             selectedUnit.GetComponent<GenericUnit>().map = this;
                             selectedUnit.GetComponent<GenericUnit>().SetMovementState(1);
                             unitSelected = true;
-                            HighlightUnitRange();}}}
+                            HighlightUnitRange();
+                        }
+                    }
+                }
                 else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) {   
                     tempSelectedUnit = hit.transform.parent.gameObject;
                     if (tempSelectedUnit.GetComponent<GenericUnit>().unitMoveState == tempSelectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(0) && tempSelectedUnit.GetComponent<GenericUnit>().team == gameManager.currentTeam) {
                         DisableHighlightUnitRange();
+                        showActionMenu();
+
                         selectedUnit = tempSelectedUnit;
                         selectedUnit.GetComponent<GenericUnit>().SetMovementState(1);
                         selectedUnit.GetComponent<GenericUnit>().map = this;
@@ -210,7 +221,15 @@ public abstract class GenericTileMap : NetworkBehaviour {
         HighlightUnitAttackOptionsFromPosition();
         HighlightTileUnitIsOccupying();
     }
-    
+    public void showActionMenu()
+    {
+        actionChoice = 0;
+        gameManager.ActionCanvas.enabled = true;
+    }
+    public void hideActionMenu()
+    {
+        gameManager.ActionCanvas.enabled = false;
+    }
     public void MouseClickToSelectUnitV2() {
         if (unitSelected == false && gameManager.tileBeingDisplayed!=null) {
             if (gameManager.tileBeingDisplayed.GetComponent<TileClick>().unitOnTile != null) {
@@ -218,6 +237,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
                 if (tempSelectedUnit.GetComponent<GenericUnit>().unitMoveState == tempSelectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(0)
                     && tempSelectedUnit.GetComponent<GenericUnit>().team == gameManager.currentTeam) {
                     DisableHighlightUnitRange();
+                    showActionMenu();
+
                     selectedUnit = tempSelectedUnit;
                     selectedUnit.GetComponent<GenericUnit>().map = this;
                     selectedUnit.GetComponent<GenericUnit>().SetMovementState(1);
@@ -261,6 +282,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
 
     public void DeselectUnit() {  
         if (selectedUnit != null) {
+            skillManager.SkillDeactivation();
+
             if (selectedUnit.GetComponent<GenericUnit>().unitMoveState == selectedUnit.GetComponent<GenericUnit>().GetMovementStateEnum(1)) {
             DisableHighlightUnitRange();
             DisableUnitUIRoute();
@@ -284,6 +307,8 @@ public abstract class GenericTileMap : NetworkBehaviour {
                 selectedUnit.GetComponent<GenericUnit>().SetMovementState(0);
                 selectedUnit = null;
                 unitSelected = false;}}
+        hideActionMenu();
+
     }
 
     public void HighlightUnitRange() {

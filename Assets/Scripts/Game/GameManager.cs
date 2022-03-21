@@ -51,6 +51,9 @@ public class GameManager : NetworkBehaviour {
     private int routeToX;
     private int routeToY;
     public LeaderboardManager leaderboard;
+    public Canvas ActionCanvas;
+    public SkillManager skillManager;
+
     public void Start() {
         currentTeam = 0;
         SetTeamHealthbarColour();
@@ -164,7 +167,26 @@ public class GameManager : NetworkBehaviour {
         if (currentTeam == 2) {
             currentTeam = 0;}
     }
-    
+
+    [Command(requiresAuthority = false)]
+    public void CmdAttack()
+    {
+        print("AttackCommand");
+        TMS.actionChoice = 1;
+    }
+    //[Command(requiresAuthority = false)]
+    public void CmdSkill()
+    {
+        print("SkillCommand");
+        TMS.actionChoice = 2;
+        skillManager.SkillActivation();
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdWait()
+    {
+        TMS.actionChoice = 3;
+    }
     public void CursorUIUpdate() {
         if (hit.transform.CompareTag("Tile")) {
             if (tileBeingDisplayed == null) {
