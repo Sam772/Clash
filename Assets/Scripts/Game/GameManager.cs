@@ -53,7 +53,7 @@ public class GameManager : NetworkBehaviour {
     public LeaderboardManager leaderboard;
     public Canvas ActionCanvas;
     public SkillManager skillManager;
-
+    [SerializeField] private GameObject endTurnButton;
     public void Start() {
         currentTeam = 0;
         SetTeamHealthbarColour();
@@ -67,6 +67,8 @@ public class GameManager : NetworkBehaviour {
         UpdatePlayerInfo(room.GamePlayers);
         currentTeamUI.SetText(player2.playerName.text + "'s Phase");
         playerPhaseText.SetText(player2.playerName.text + "'s Phase");
+        endTurnButton.SetActive(false);
+        CmdSetEndTurnButton();
     }
 
     public void Update() {
@@ -118,6 +120,34 @@ public class GameManager : NetworkBehaviour {
         }
     }
 
+    // sets the end turn button for player one
+    [Command(requiresAuthority=false)]
+    public void CmdSetEndTurnButton() {
+        endTurnButton.SetActive(true);
+        RpcSetOffEndTurnButton();
+    }
+
+    // sets the end turn button for player two
+    [ClientRpc]
+    public void RpcSetEndTurnButton() {
+        if (!isServer) {
+            endTurnButton.SetActive(true);
+        }
+        CmdSetOffEndTurnButton();
+    }
+
+    [Command(requiresAuthority=false)]
+    public void CmdSetOffEndTurnButton() {
+        endTurnButton.SetActive(false);
+    }
+
+    [ClientRpc]
+    public void RpcSetOffEndTurnButton() {
+        if (!isServer) {
+            endTurnButton.SetActive(false);
+        }
+    }
+
     [ClientRpc]
     public void RpcResetUnitsActions(int teamToReset) {
         GenericUnit[] unitsList = FindObjectsOfType<GenericUnit>();
@@ -140,10 +170,12 @@ public class GameManager : NetworkBehaviour {
                 playerPhaseAnim.SetTrigger("slideLeftTrigger");
                 playerPhaseText.SetText(player1.playerName.text + "'s Phase");
                 currentTeamUI.SetText(player1.playerName.text + "'s Phase");
+                RpcSetEndTurnButton();
             } else {
                 playerPhaseAnim.SetTrigger("slideRightTrigger");
                 playerPhaseText.SetText(player2.playerName.text + "'s Phase");
-                currentTeamUI.SetText(player2.playerName.text + "'s Phase");}
+                currentTeamUI.SetText(player2.playerName.text + "'s Phase");
+                CmdSetEndTurnButton();}
     }
 
     [Command(requiresAuthority = false)]
@@ -163,6 +195,7 @@ public class GameManager : NetworkBehaviour {
     [Command(requiresAuthority=false)]
     public void CmdSwitchCurrentPlayer() {
         RpcResetUnitsActions(currentTeam);
+        RpcSetEndTurnButton();
         currentTeam++;
         if (currentTeam == 2) {
             currentTeam = 0;}
