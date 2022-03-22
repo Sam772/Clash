@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using PlayFab;
+using PlayFab.ClientModels;
 public class JoinScreen : MenuScreen {
     #pragma warning disable 649
     [SerializeField] private TMP_InputField playerNameInput;
@@ -44,5 +45,16 @@ public class JoinScreen : MenuScreen {
     private bool IsInputsValid() {
         return MenuUtil.IsPlayerNameValid(playerNameInput.text)
             && MenuUtil.IsValidIPAddress(hostIPInput.text);
+    }
+
+    public void GetPlayerProfile(string playFabId) {
+        PlayFabClientAPI.GetPlayerProfile( new GetPlayerProfileRequest() {
+            PlayFabId = playFabId,
+            ProfileConstraints = new PlayerProfileViewConstraints() {
+                ShowDisplayName = true
+            }
+        },
+        result => playerNameInput.text = result.PlayerProfile.DisplayName,
+        error => Debug.LogError(error.GenerateErrorReport()));
     }
 }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class HostScreen : MenuScreen {
     #pragma warning disable 649
@@ -9,7 +11,6 @@ public class HostScreen : MenuScreen {
     #pragma warning restore 649
 
     private void Awake() {
-        playerNameInput.text = MenuUtil.GetNameFromPlayerPrefs();
         createLobbyButton.interactable = false;
     }
 
@@ -32,5 +33,16 @@ public class HostScreen : MenuScreen {
     protected override void OnShow() {
         base.OnShow();
         ResetValidityState();
+    }
+
+    public void GetPlayerProfile(string playFabId) {
+        PlayFabClientAPI.GetPlayerProfile( new GetPlayerProfileRequest() {
+            PlayFabId = playFabId,
+            ProfileConstraints = new PlayerProfileViewConstraints() {
+                ShowDisplayName = true
+            }
+        },
+        result => playerNameInput.text = result.PlayerProfile.DisplayName,
+        error => Debug.LogError(error.GenerateErrorReport()));
     }
 }

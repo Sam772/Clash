@@ -543,7 +543,7 @@ public class GameManager : NetworkBehaviour {
     public void RpcPlayerWinConditionOne() {
         if (!isServer) {
             Debug.Log(player1.playerName.text + " has lost!");
-            //leaderboard.SendLossesLeaderboard(1);
+            leaderboard.SendLossesLeaderboard(1);
         }
     }
 
@@ -551,7 +551,7 @@ public class GameManager : NetworkBehaviour {
     public void RpcPlayerWinConditionTwo() {
         if (!isServer) {
             Debug.Log(player1.playerName.text + " has won!");
-            //leaderboard.SendLeaderboard(1);
+            leaderboard.SendLeaderboard(1);
         }
     }
 
@@ -582,14 +582,14 @@ public class GameManager : NetworkBehaviour {
         if (team1 == 0) {
             RpcSetWinScreenTwo();
             Debug.Log(player2.playerName.text + " has lost!");
-            //leaderboard.SendLossesLeaderboard(1);
+            leaderboard.SendLossesLeaderboard(1);
             RpcPlayerWinConditionTwo();
         }
         
         if (team2 == 0) {
             RpcSetWinScreenOne();
             Debug.Log(player2.playerName.text + " has won!");
-            //leaderboard.SendLeaderboard(1);
+            leaderboard.SendLeaderboard(1);
             RpcPlayerWinConditionOne();
         }
     }
