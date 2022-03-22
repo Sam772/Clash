@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -932,9 +932,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The Paladin is a unit located on the Sandlands map. It has good defences,
+    but struggles to fight in the desert due to its poor range. You will need to
+    make sure this unit is near a pot so it can make use of it as soon as any ranged
+    attackers are close by.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -4584,9 +4585,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The Elder is a unit located on the Frostlands map, it is a magic unit that
+    is quite effective against the Champion, due to their lack of resistance. It
+    can also avoid counters from them so it would be a good idea to take advantage
+    of the Champion and attack them through a wall as a chokepoint.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -4613,8 +4615,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 27
+  m_fontSizeBase: 27
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5527,9 +5529,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The healing pot serves as an interactable object in the Sandlands map,
+    which heals the unit that breaks it. This is quite useful if your units are low
+    on health and can't initiate combat safely. They could be used as barriers or
+    immediately destroyed to prevent enemies from making use of them.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -9353,7 +9356,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -100, y: 0}
-  m_SizeDelta: {x: 600, y: 50}
+  m_SizeDelta: {x: 580, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &316670600
 MonoBehaviour:
@@ -9375,9 +9378,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The log serves as an interactable object in the Grasslands map, which can
+    be used a barrier from attacks. Its poor defence makes them unreliable for protection.
+    They can also be used to attack enemies through them for safe positioning or
+    as a chokepoint.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -11957,7 +11961,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -100}
+  m_AnchoredPosition: {x: -120, y: -100}
   m_SizeDelta: {x: 560, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &447745918
@@ -11980,9 +11984,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The Sorcerer is a unit located on the Sandlands map. It is very powerful
+    but also quite frail so make sure not to keep this unit in range of any enemy
+    units as its quite likely it will die on the enemy phase. The main use of the
+    Sorcerer is to threaten your Paladins as their damage is quite reliable and can
+    avoid counters from them.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -12009,8 +12015,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -14680,7 +14686,7 @@ MonoBehaviour:
 
     0
 
-    2
+    3
 
     4'
   m_isRightToLeft: 0
@@ -15228,10 +15234,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: has a very strong physical attack stat and good bulk but poor movement,
-    try to position this unit so that it can be in range to attack an enemy unit
-    on your following turn but try to not position it adjacent to a forest or your
-    opponent could take advantage of the captains poor movement
+  m_text: The Captain has a very strong physical attack stat and good bulk, but it
+    suffers from poor movement. Try to position this unit so that it can be in range
+    to attack an enemy unit on your following turn but avoid positioning him adjacent
+    to a forest or your opponent could take advantage of the Captain's movement.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -16698,7 +16704,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -100, y: -100}
-  m_SizeDelta: {x: 600, y: 50}
+  m_SizeDelta: {x: 620, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &667735762
 MonoBehaviour:
@@ -16720,10 +16726,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very good unit for chipping enemy health down, good for initially damaging
-    knights and then finishing knights off with other units, can take advantage of
-    forest terrain for dealing with captains, make sure not to leave archers in range
-    of knights of captains as they are very vulnerable.
+  m_text: The Archer excels in chipping enemy health down. This is a good option
+    for initially damaging Knights and then finishing him off with other units. They
+    can take advantage of forest terrain for dealing with Captains. Avoid leaving
+    Archers in range of Knights or Captains as they are very vulnerable.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -17098,8 +17104,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 0}
-  m_SizeDelta: {x: 600, y: 50}
+  m_AnchoredPosition: {x: -120, y: 0}
+  m_SizeDelta: {x: 580, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673981710
 MonoBehaviour:
@@ -17121,9 +17127,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The stone cracked wall serves as an interactable object that is located
+    near the fortress of the Frostlands map. If a unit intends to break into the
+    fortress, they must destroy the wall, as it is only entry point. This object
+    can also be used as a barrier or chokepoint to prevent enemies from moving.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -17467,7 +17474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &698556234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18906,9 +18913,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The Dragoon is a unit located on the Sandlands map. It has excellent range,
+    but its damage is not very effective against Paladins. They are more useful for
+    taking out Sorcerers that threaten your Paladins. You can also use them for reaching
+    out to get health back from healing pots.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -23178,9 +23186,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: good stats all around, good for taking out archers with their one range
-    that would threaten your captain otherwise, not great against captain as their
-    physical stats can't keep up with the captain
+  m_text: The Knight has good stats all around, good for taking out Archers with
+    their one range that would threaten your Captain otherwise, not great against
+    Captain as their physical stats can't keep up with the Captain.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -26706,9 +26714,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists
+  m_text: Warriors are known for their very high strength  to destroy threats quickly
+    but has poor defences making it a glass cannon, so don't leave it out in a position
+    where it can be killed very quickly by Arcanists.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -27920,9 +27928,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The Clasher is a unit located on the Frostlands map, it is the most powerful
+    physical unit however you can only control one on the map so you should utilise
+    them effectively. It is good against all units on the map so think which enemies
+    would be threatening and use the Clasher to take them out first.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -27949,8 +27958,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -28056,9 +28065,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The Champion is a unit located on the Frostlands map, it is a very strong
+    physical unit with good physical defences but poor resistance. Its main purpose
+    is to take out the Elder as they threaten the Champion itself.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -32293,9 +32302,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'has mediocre stats across the board apart from movement which makes it
-    excellent for sniping arcanist that may threaten your warriors, not recommended
-    to fight warriors as their stats cannot compete '
+  m_text: The Ranger has mediocre stats across the board apart from movement, which
+    makes it excellent for sniping Arcanist that may threaten your warriors. Rangers
+    are not recommended to fight warriors, as their stats cannot compete.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -40588,9 +40597,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: its magic stat cripples through the warrior, can attack boulders from a
-    safe position to initiate their aoe damage on other units within the boulder
-    damage range, be wary not to put it in range of physical attackers
+  m_text: That Arcanist's magic stat cripples through the Warrior, and they can attack
+    boulders from a safe position to initiate their aoe damage on other units within
+    the range. Be wary not to put it in range of physical attackers.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -41939,11 +41948,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: '5
 
+    5
+
     3
 
-    2
-
-    2
+    3
 
     1
 
@@ -46336,7 +46345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 0}
+  m_AnchoredPosition: {x: -100, y: 20}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2046819878
@@ -46359,9 +46368,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: very strong strength makes it a good glass cannon to destroy threats quickly
-    but has poor defences so don't leave it out in a position where it can be killed
-    very quickly by arcanists (need work)
+  m_text: The boulder serves as an interactable object in the Highlands map, which
+    can be used as bait against enemies. In a radius around the boulder if units
+    are present, all of them will take two damage once the boulder is destroyed so
+    you should avoid positioning units around them especially if the enemy can advantage
+    of that. The Arcanist unit can attack from afar and avoid the damage from the
+    boulder.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
