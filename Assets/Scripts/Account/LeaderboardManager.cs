@@ -71,7 +71,8 @@ public class LeaderboardManager : MonoBehaviour {
             GameObject row = Instantiate(rowPrefab, rowsParent);
             TMP_Text[] texts = row.GetComponentsInChildren<TMP_Text>();
             texts[0].text = (item.Position + 1).ToString();
-            texts[1].text = item.StatValue.ToString();
+            texts[1].text = item.DisplayName;
+            texts[2].text = item.StatValue.ToString();
 
             Debug.Log("Leaderboard Position: " + item.Position + " ID: " + item.PlayFabId + " Score: " + item.StatValue);
         }

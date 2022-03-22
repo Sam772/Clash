@@ -195,7 +195,6 @@ public class GameManager : NetworkBehaviour {
     [Command(requiresAuthority=false)]
     public void CmdSwitchCurrentPlayer() {
         RpcResetUnitsActions(currentTeam);
-        RpcSetEndTurnButton();
         currentTeam++;
         if (currentTeam == 2) {
             currentTeam = 0;}

@@ -43,7 +43,10 @@ public class PlayFabManager : MonoBehaviour {
     public void LoginButton() {
         var request = new LoginWithEmailAddressRequest {
             Email = emailInput.text,
-            Password = passwordInput.text
+            Password = passwordInput.text,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams {
+                GetPlayerProfile = true
+            }
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
     }
@@ -51,7 +54,14 @@ public class PlayFabManager : MonoBehaviour {
     public void OnLoginSuccess(LoginResult result) {
         messageText.text = "Logged in!";
         Debug.Log("Successful login/account created!");
-        mainMenu.ReturnToMainScreenClicked();
+        string name = null;
+        if (result.InfoResultPayload.PlayerProfile != null)
+            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+
+        if (name == null)
+            mainMenu.DisplayNameSent();
+        else
+            mainMenu.ReturnToMainScreenClicked();
     }
 
     public void ResetPasswordButton() {

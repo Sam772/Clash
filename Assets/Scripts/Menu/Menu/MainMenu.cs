@@ -4,6 +4,7 @@ public class MainMenu : MonoBehaviour {
 
     #pragma warning disable 649
     [SerializeField] private AccountScreen accountScreen;
+    [SerializeField] private DisplayNameScreen displayNameScreen;
     [SerializeField] private MainScreen mainScreen;
     [SerializeField] private MapSelectionScreen mapSelectionScreen;
     [SerializeField] private SettingsScreen settingsScreen; 
@@ -51,6 +52,7 @@ public class MainMenu : MonoBehaviour {
         networkManager.RegisterMainMenu(this);
         lobby.Setup(this);
         accountScreen.Setup(this);
+        displayNameScreen.Setup(this);
         mainScreen.Setup(this);
         playScreen.Setup(this);
         settingsScreen.Setup(this);
@@ -63,6 +65,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void BeginScreen() => ShowScreen(accountScreen);
+    public void DisplayNameSent() => ShowScreen(displayNameScreen);
     public void LoginButtonClicked() => ShowScreen(mainScreen);
     public void PlayGameClicked() => ShowScreen(mapSelectionScreen);
     public void SettingsScreenClicked() => ShowScreen(settingsScreen);
@@ -118,6 +121,7 @@ public class MainMenu : MonoBehaviour {
         if (currentScreen == screen) return;
             
         if (screen != accountScreen) accountScreen.Hide();
+        if (screen != displayNameScreen) displayNameScreen.Hide();
         if (screen != lobby) lobby.Hide();
         if (screen != hostScreen) hostScreen.Hide();
         if (screen != settingsScreen) settingsScreen.Hide();
