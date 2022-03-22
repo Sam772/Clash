@@ -2231,17 +2231,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '12
-
-    7
+  m_text: '10
 
     2
 
-    2
-
-    1
-
-    5'
+    0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -4291,15 +4285,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HP:
 
-    STR:
-
     DEF:
 
     RES:
 
-    RNG:
-
-    MOV:'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -5514,7 +5504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -100}
+  m_AnchoredPosition: {x: -100, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &171417128
@@ -5748,11 +5738,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '8
+  m_text: '10
 
-    5
+    7
 
-    2
+    3
 
     0
 
@@ -9362,7 +9352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -100}
+  m_AnchoredPosition: {x: -100, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &316670600
@@ -14096,7 +14086,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HP:
 
-    STR:
+    MAG:
 
     DEF:
 
@@ -15973,8 +15963,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 512, y: 684}
-  m_SizeDelta: {x: 250, y: 100}
+  m_AnchoredPosition: {x: 0, y: 300}
+  m_SizeDelta: {x: 280, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &637560128
 MonoBehaviour:
@@ -17108,7 +17098,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -100}
+  m_AnchoredPosition: {x: -100, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673981710
@@ -17960,17 +17950,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '12
+  m_text: '5
 
-    7
+    0
 
-    2
-
-    2
-
-    1
-
-    5'
+    2'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -29739,15 +29723,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HP:
 
-    STR:
-
     DEF:
 
     RES:
 
-    RNG:
-
-    MOV:'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -29883,11 +29863,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: '5
 
-    3
+    6
+
+    2
 
     1
-
-    0
 
     1
 
@@ -30710,7 +30690,7 @@ GameObject:
   - component: {fileID: 1354848666}
   - component: {fileID: 1354848665}
   m_Layer: 5
-  m_Name: DragoonText
+  m_Name: Sorceror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30755,7 +30735,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dragoon
+  m_text: Sorceror
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -34023,17 +34003,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '12
-
-    7
-
-    2
-
-    2
+  m_text: '10
 
     1
 
-    5'
+    0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -35746,7 +35720,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HP:
 
-    STR:
+    MAG:
 
     DEF:
 
@@ -37141,15 +37115,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HP:
 
-    STR:
-
     DEF:
 
     RES:
 
-    RNG:
-
-    MOV:'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -42364,15 +42334,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HP:
 
-    STR:
-
     DEF:
 
     RES:
 
-    RNG:
-
-    MOV:'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -42583,7 +42549,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HP:
 
-    STR:
+    MAG:
 
     DEF:
 
@@ -42973,7 +42939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1928189676
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43306,17 +43272,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '12
+  m_text: '6
 
-    7
+    0
 
-    2
-
-    2
-
-    1
-
-    5'
+    0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -46376,7 +46336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -100}
+  m_AnchoredPosition: {x: -100, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2046819878
@@ -47429,15 +47389,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '5
+  m_text: '4
 
     3
 
     1
 
-    0
+    2
 
-    1
+    2
 
     5'
   m_isRightToLeft: 0
@@ -48261,7 +48221,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: '4
 
-    3
+    5
 
     2
 
