@@ -10,6 +10,8 @@ public class SkillManager : NetworkBehaviour
     [SyncVar]
     public GameObject selectedUnit;
     public GameManager gameManager;
+    [SyncVar]
+    public bool NoSkillRanger = false;
 
 
 
@@ -136,6 +138,29 @@ public class SkillManager : NetworkBehaviour
         RpcCaptainSkill();
     }
 
+    [Command (requiresAuthority =false)]
+    public void CmdKnightSkill()
+    { 
+        RpcKnightSkill();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdWarriorSkill()
+    {
+        RpcWarriorSkill();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdArcanistSkill()
+    {
+        RpcArcanistSkill();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdRangerSkill()
+    {
+        RpcRangerSkill();
+    }
 
 
     #endregion
@@ -161,7 +186,43 @@ public class SkillManager : NetworkBehaviour
             TMS.HighlightUnitRange();
         }
     }
+    [ClientRpc]
+    public void RpcKnightSkill()
+    {
+        TMS.skillUsed = true;
+        selectedUnit.GetComponent<PhysicalUnit>().strength += 1;
+    }
 
+    [ClientRpc]
+    public void RpcWarriorSkill()
+    {
+        TMS.skillUsed = true;
+        selectedUnit.GetComponent<PhysicalUnit>().strength += 2;
+        selectedUnit.GetComponent<PhysicalUnit>().currentHealth -= 2;
+    }
+
+    [ClientRpc]
+    public void RpcArcanistSkill()
+    {
+        TMS.skillUsed = true;
+        TMS.DisableHighlightUnitRange();
+        selectedUnit.GetComponent<MagicalUnit>().range += 3;
+        selectedUnit.GetComponent<MagicalUnit>().maxHealth = 1;
+        selectedUnit.GetComponent<MagicalUnit>().currentHealth = 1;
+        TMS.HighlightUnitAttackOptionsFromPosition();
+    }
+
+    [ClientRpc]
+    public void RpcRangerSkill()
+    {
+        print("RPCRangerBeforeIf");
+        if (!NoSkillRanger)
+        {
+            NoSkillRanger = true;
+            print("RPCRangerIf");
+            TMS.skillUsed = true;
+        }
+    }
     #endregion
     //All the following call the Rpc version again
     #region Cmd Skill Off
@@ -176,6 +237,31 @@ public class SkillManager : NetworkBehaviour
     public void CmdCaptainSkillOff()
     {
         RpcCaptainSkillOff();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdKnightSkillOff()
+    {
+        RpcKnightSkillOff();
+    }
+
+
+    [Command(requiresAuthority = false)]
+    public void CmdWarriorSkillOff()
+    {
+        RpcWarriorSkillOff();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdArcanistSkillOff()
+    {
+        RpcArcanistSkillOff();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdRangerSkillOff()
+    {
+        RpcRangerSkillOff();
     }
     #endregion
     //All the following reset whatever stat was changed in the activation
@@ -194,6 +280,36 @@ public class SkillManager : NetworkBehaviour
         TMS.skillUsed = false;
         selectedUnit.GetComponent<GenericUnit>().move -= 1;
     }
-    #endregion
 
+    [ClientRpc]
+    public void RpcKnightSkillOff()
+    {
+        TMS.skillUsed = false;
+        selectedUnit.GetComponent<PhysicalUnit>().strength -= 1;
+    }
+    [ClientRpc]
+    public void RpcWarriorSkillOff()
+    {
+        TMS.skillUsed = false;
+        selectedUnit.GetComponent<PhysicalUnit>().strength -= 1;
+    }
+
+    [ClientRpc]
+    public void RpcArcanistSkillOff()
+    {
+        TMS.skillUsed = false;
+    }
+    [ClientRpc]
+    public void RpcRangerSkillOff()
+    {
+        TMS.skillUsed = false;
+        Invoke("RangerReset", 1f);
+        NoSkillRanger = true;
+    }
+    #endregion
+    public void RangerReset()
+    {
+        selectedUnit.GetComponent<GenericUnit>().SetMovementState(0);
+        selectedUnit.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
+    }
 }

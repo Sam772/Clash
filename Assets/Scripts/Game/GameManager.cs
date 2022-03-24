@@ -194,6 +194,8 @@ public class GameManager : NetworkBehaviour {
 
     [Command(requiresAuthority=false)]
     public void CmdSwitchCurrentPlayer() {
+        skillManager.NoSkillRanger = false;
+
         RpcResetUnitsActions(currentTeam);
         currentTeam++;
         if (currentTeam == 2) {
