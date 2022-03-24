@@ -2677,7 +2677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &70155024
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25159,7 +25159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &881631436
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27965,8 +27965,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: The Frostlands are an ice cold land with a central stone fortress that
-    would be the ideal place for your army to claim by breaking through and moving
-    your units to the perfect position for them to strike.
+    would be the ideal place for the Champion, Elder and Clashers to claim by breaking
+    through and moving your units to the ideal position to strike.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -36893,7 +36893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1314463144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48837,7 +48837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1732393111
 MonoBehaviour:
   m_ObjectHideFlags: 0
