@@ -4,7 +4,7 @@ Clash is a 3D online networked multiplayer turn-based rpg game currently in deve
 
 ![clash-main-menu](/Assets/Textures/MapPreview/MainMenuPreview.png)
 
-## Changelog v0.1.0 - v0.9.1
+## Changelog v0.1.0 - v1.0.0
 
 ### User Interface
 - Added a main menu
@@ -35,6 +35,7 @@ Clash is a 3D online networked multiplayer turn-based rpg game currently in deve
 - Added password reset functionality
 - Added leaderboard functionality which displays rank and wins
 - Added main menu button animations and sound effects
+- Added main menu music
 
 ## Online Setup
 - Forward a port on your router with UDP protocol setting.
