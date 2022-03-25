@@ -126,7 +126,7 @@ public abstract class GenericTileMap : NetworkBehaviour {
     }
 
     public Vector3 TileCoordToWorldCoord(int x, int y) {
-        return new Vector3(x, 0.75f, y);
+        return new Vector3(x, 0.88f, y);
     }
 
     public void GeneratePathTo(int x, int y) {
