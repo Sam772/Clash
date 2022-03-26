@@ -162,6 +162,23 @@ public class SkillManager : NetworkBehaviour
         RpcRangerSkill();
     }
 
+    [Command (requiresAuthority =false)]
+    public void CmdSorcererSkill()
+    {
+        RpcSorcererSkill();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdDragoonSkill()
+    {
+        RpcDragoonSkill();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdPaladinSkill()
+    {
+        RpcPaladinSkill();
+    }
 
     #endregion
     //All the functions here are the actual skills, they change stats/various things to change how the unit behaves
@@ -186,6 +203,7 @@ public class SkillManager : NetworkBehaviour
             TMS.HighlightUnitRange();
         }
     }
+
     [ClientRpc]
     public void RpcKnightSkill()
     {
@@ -196,9 +214,13 @@ public class SkillManager : NetworkBehaviour
     [ClientRpc]
     public void RpcWarriorSkill()
     {
-        TMS.skillUsed = true;
-        selectedUnit.GetComponent<PhysicalUnit>().strength += 2;
-        selectedUnit.GetComponent<PhysicalUnit>().currentHealth -= 2;
+        if (selectedUnit.GetComponent<PhysicalUnit>().currentHealth > 2)
+        {
+            TMS.skillUsed = true;
+            selectedUnit.GetComponent<PhysicalUnit>().strength += 2;
+            selectedUnit.GetComponent<PhysicalUnit>().currentHealth -= 2;
+            selectedUnit.GetComponent<PhysicalUnit>().UpdateHealthUI();
+        }
     }
 
     [ClientRpc]
@@ -209,6 +231,7 @@ public class SkillManager : NetworkBehaviour
         selectedUnit.GetComponent<MagicalUnit>().range += 3;
         selectedUnit.GetComponent<MagicalUnit>().maxHealth = 1;
         selectedUnit.GetComponent<MagicalUnit>().currentHealth = 1;
+        selectedUnit.GetComponent<PhysicalUnit>().UpdateHealthUI();
         TMS.HighlightUnitAttackOptionsFromPosition();
     }
 
@@ -223,6 +246,39 @@ public class SkillManager : NetworkBehaviour
             TMS.skillUsed = true;
         }
     }
+
+    [ClientRpc]
+    public void RpcSorcererSkill()
+    {
+        TMS.skillUsed = true;
+        selectedUnit.GetComponent<MagicalUnit>().magic+=3;
+    }
+    [ClientRpc]
+    public void RpcDragoonSkill()
+    {
+        TMS.skillUsed = true;
+        TMS.DisableHighlightUnitRange();
+        selectedUnit.GetComponent<GenericUnit>().move += 3;
+        if (TMS.selectedUnit != null)
+        {
+            TMS.HighlightUnitRange();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcPaladinSkill()
+    {
+        TMS.skillUsed = true;
+        TMS.DisableHighlightUnitRange();
+        selectedUnit.GetComponent<GenericUnit>().move -= 1;
+        if (TMS.selectedUnit != null)
+        {
+            TMS.HighlightUnitRange();
+        }
+        selectedUnit.GetComponent<GenericUnit>().defence += 1;
+        selectedUnit.GetComponent<GenericUnit>().resistance += 1;
+    }
+
     #endregion
     //All the following call the Rpc version again
     #region Cmd Skill Off
@@ -262,6 +318,25 @@ public class SkillManager : NetworkBehaviour
     public void CmdRangerSkillOff()
     {
         RpcRangerSkillOff();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdSorcererSkillOff()
+    {
+        RpcSorcererSkillOff();
+    }
+
+    [Command (requiresAuthority =false)]
+    public void CmdDragoonSkillOff()
+    {
+        RpcDragoonSkillOff();
+    }
+
+
+    [Command (requiresAuthority =false)]
+    public void CmdPaladinSkillOff()
+    {
+        RpcPaladinSkillOff();
     }
     #endregion
     //All the following reset whatever stat was changed in the activation
@@ -305,6 +380,25 @@ public class SkillManager : NetworkBehaviour
         TMS.skillUsed = false;
         Invoke("RangerReset", 1f);
         NoSkillRanger = true;
+    }
+
+    [ClientRpc]
+    public void RpcSorcererSkillOff()
+    {
+        TMS.skillUsed = false;
+    }
+
+    [ClientRpc]
+    public void RpcDragoonSkillOff()
+    {
+        TMS.skillUsed = false;
+        selectedUnit.GetComponent<PhysicalUnit>().move -= 3;
+    }
+
+    [ClientRpc]
+    public void RpcPaladinSkillOff()
+    {
+        TMS.skillUsed = false;
     }
     #endregion
     public void RangerReset()
