@@ -19,7 +19,7 @@ public class TacticianTipsScreen : MenuScreen {
     [SerializeField] private GameObject howtowininfo;
     
         
-
+    // At startup, first screen menu will be active by default
     void Start(){
         unitsinfo.SetActive(true);
         movementinfo.SetActive(false);
@@ -34,6 +34,7 @@ public class TacticianTipsScreen : MenuScreen {
 
     }
 
+    // Clicking unit info button displays unit info and hides other info
     public void ShowUnitsInfo(){
         unitsinfo.SetActive(true);
         movementinfo.SetActive(false);
@@ -47,6 +48,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
    
+   // Clicking movement button displays movement info and hides other info
     public void ShowMovementInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(true);
@@ -60,6 +62,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking Turn Order button displays Turn Order info and hides other info
     public void ShowTurnOrderInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
@@ -73,6 +76,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking unit Stats button displays unit stats info and hides other info
     public void ShowUnitStatsInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
@@ -86,6 +90,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking Attacking button displays Attacking info and hides other info
     public void ShowAttackingInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
@@ -99,6 +104,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking Terrain button displays Terrain info and hides other info
     public void ShowTerrainInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
@@ -112,6 +118,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking Skills button displays Skills info and hides other info
     public void ShowSkillsInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
@@ -125,6 +132,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking Tiles button displays Tiles info and hides other info
     public void ShowTilesInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
@@ -138,6 +146,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking Camera button displays Camera info and hides other info
     public void ShowCameraInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
@@ -151,6 +160,7 @@ public class TacticianTipsScreen : MenuScreen {
         howtowininfo.SetActive(false);        
     }
 
+    // Clicking How to win button displays How to win info and hides other info
     public void ShowHowToWinInfo(){
         unitsinfo.SetActive(false);
         movementinfo.SetActive(false);
