@@ -276,7 +276,6 @@ MonoBehaviour:
   map: {fileID: 0}
   holder2D: {fileID: 7167615610641930586}
   unitMoveState: 0
-  BMS: {fileID: 0}
   strength: 7
 --- !u!114 &3787111004911756464
 MonoBehaviour:
