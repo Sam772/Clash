@@ -19732,7 +19732,7 @@ GameObject:
   - component: {fileID: 637560129}
   - component: {fileID: 637560128}
   m_Layer: 5
-  m_Name: SorcerorBox
+  m_Name: SorcererBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20397,7 +20397,7 @@ GameObject:
   - component: {fileID: 648920519}
   - component: {fileID: 648920518}
   m_Layer: 5
-  m_Name: SorcerorImage
+  m_Name: SorcererImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38894,7 +38894,7 @@ GameObject:
   - component: {fileID: 1354848666}
   - component: {fileID: 1354848665}
   m_Layer: 5
-  m_Name: Sorceror
+  m_Name: Sorcerer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38939,7 +38939,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sorceror
+  m_text: Sorcerer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -40125,7 +40125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1388937264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61044,7 +61044,7 @@ GameObject:
   - component: {fileID: 2082719614}
   - component: {fileID: 2082719613}
   m_Layer: 5
-  m_Name: SorcerorInfoScreen
+  m_Name: SorcererInfoScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
