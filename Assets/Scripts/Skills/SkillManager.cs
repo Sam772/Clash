@@ -190,6 +190,10 @@ public class SkillManager : NetworkBehaviour
         TMS.DisableHighlightUnitRange();
         selectedUnit.GetComponent<GenericUnit>().range += 1;
         TMS.HighlightUnitAttackOptionsFromPosition();
+        if (TMS.selectedUnit != null)
+        { 
+        TMS.HighlightUnitRange();
+        }
     }
     [ClientRpc]
     public void RpcCaptainSkill()
@@ -214,9 +218,10 @@ public class SkillManager : NetworkBehaviour
     [ClientRpc]
     public void RpcWarriorSkill()
     {
-        if (selectedUnit.GetComponent<PhysicalUnit>().currentHealth > 2)
+        if (selectedUnit.GetComponent<PhysicalUnit>().currentHealth > 2 && !selectedUnit.GetComponent<GenericUnit>().permSkill)
         {
             TMS.skillUsed = true;
+            selectedUnit.GetComponent<GenericUnit>().permSkill = true;
             selectedUnit.GetComponent<PhysicalUnit>().strength += 2;
             selectedUnit.GetComponent<PhysicalUnit>().currentHealth -= 2;
             selectedUnit.GetComponent<PhysicalUnit>().UpdateHealthUI();
@@ -226,13 +231,22 @@ public class SkillManager : NetworkBehaviour
     [ClientRpc]
     public void RpcArcanistSkill()
     {
-        TMS.skillUsed = true;
-        TMS.DisableHighlightUnitRange();
-        selectedUnit.GetComponent<MagicalUnit>().range += 3;
-        selectedUnit.GetComponent<MagicalUnit>().maxHealth = 1;
-        selectedUnit.GetComponent<MagicalUnit>().currentHealth = 1;
-        selectedUnit.GetComponent<PhysicalUnit>().UpdateHealthUI();
-        TMS.HighlightUnitAttackOptionsFromPosition();
+        if (!selectedUnit.GetComponent<GenericUnit>().permSkill)
+        {
+            TMS.skillUsed = true;
+            TMS.DisableHighlightUnitRange();
+            selectedUnit.GetComponent<GenericUnit>().permSkill = true;
+            selectedUnit.GetComponent<MagicalUnit>().range += 3;
+            selectedUnit.GetComponent<MagicalUnit>().maxHealth = 1;
+            selectedUnit.GetComponent<MagicalUnit>().currentHealth = 1;
+            selectedUnit.GetComponent<MagicalUnit>().UpdateHealthUI();
+            if (TMS.selectedUnit != null)
+            {
+                TMS.HighlightUnitRange();
+
+                TMS.HighlightUnitAttackOptionsFromPosition();
+            }
+        }
     }
 
     [ClientRpc]
@@ -268,15 +282,19 @@ public class SkillManager : NetworkBehaviour
     [ClientRpc]
     public void RpcPaladinSkill()
     {
-        TMS.skillUsed = true;
-        TMS.DisableHighlightUnitRange();
-        selectedUnit.GetComponent<GenericUnit>().move -= 1;
-        if (TMS.selectedUnit != null)
+        if (!selectedUnit.GetComponent<GenericUnit>().permSkill)
         {
-            TMS.HighlightUnitRange();
+            TMS.skillUsed = true;
+            TMS.DisableHighlightUnitRange();
+            selectedUnit.GetComponent<GenericUnit>().move -= 1;
+            selectedUnit.GetComponent<GenericUnit>().permSkill = true;
+            if (TMS.selectedUnit != null)
+            {
+                TMS.HighlightUnitRange();
+            }
+            selectedUnit.GetComponent<GenericUnit>().defence += 1;
+            selectedUnit.GetComponent<GenericUnit>().resistance += 1;
         }
-        selectedUnit.GetComponent<GenericUnit>().defence += 1;
-        selectedUnit.GetComponent<GenericUnit>().resistance += 1;
     }
 
     #endregion
@@ -391,8 +409,8 @@ public class SkillManager : NetworkBehaviour
     [ClientRpc]
     public void RpcDragoonSkillOff()
     {
-        TMS.skillUsed = false;
-        selectedUnit.GetComponent<PhysicalUnit>().move -= 3;
+            TMS.skillUsed = false;
+            selectedUnit.GetComponent<GenericUnit>().move -= 3;
     }
 
     [ClientRpc]

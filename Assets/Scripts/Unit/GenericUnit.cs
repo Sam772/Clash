@@ -31,6 +31,7 @@ public abstract class GenericUnit : NetworkBehaviour {
     public Image healthBar;
     public GenericTileMap map;
     public GameObject holder2D;
+    public bool permSkill;
     public enum MovementStates {
         Unselected,
         Selected,
